@@ -24,12 +24,12 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC2ZUz4GNlF-rA6Inaw8WicsPAioZuydjY",
-  authDomain: "cortes-335a1.firebaseapp.com",
-  projectId: "cortes-335a1",
-  storageBucket: "cortes-335a1.firebasestorage.app",
-  messagingSenderId: "712833600204",
-  appId: "1:712833600204:web:764c546d76a060eeb81069"
+  apiKey: "AIzaSyDHKkG05Ou9OHLXCbeND3k8wgwU2j6q5Y4",
+  authDomain: "metodoitr-4249f.firebaseapp.com",
+  projectId: "metodoitr-4249f",
+  storageBucket: "metodoitr-4249f.firebasestorage.app",
+  messagingSenderId: "755730416442",
+  appId: "1:755730416442:web:46265d524c47508fbf8603"
 };
 
 const app = initializeApp(firebaseConfig);
