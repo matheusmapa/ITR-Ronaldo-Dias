@@ -1,858 +1,570 @@
-import React, { useState, useEffect, createContext, useContext, useMemo } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
-import { 
-  collection, addDoc, query, where, orderBy, onSnapshot, 
-  doc, updateDoc, serverTimestamp, runTransaction, getDoc 
-} from 'firebase/firestore';
-import { auth, db, loginUser, registerUser, logoutUser } from './firebase';
-
-// Ícones (Lucide React)
-import { 
-  LayoutDashboard, ShoppingBag, Wallet, Settings, LogOut, 
-  PlusCircle, Video, Search, Filter, AlertTriangle, CheckCircle, 
-  XCircle, Clock, UploadCloud, ChevronRight, TrendingUp, Users, 
-  DollarSign, FileText, Image as ImageIcon, ExternalLink, ShieldAlert
+import React, { useState, useEffect } from 'react';
+import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
+import {
+    Brain, CheckCircle, Clock, BookOpen, MessageCircle,
+    Shield, Award, Globe, Play, Sparkles, ChevronDown, ChevronUp, Bot, Users, Gift, MonitorPlay, Plane
 } from 'lucide-react';
+import './index.css';
 
-/* ==================================================================================
-   1. UTILITIES & CONFIG
-   ================================================================================== */
+// =====================================
+// Componentes Utilitários 3D / Premium
+// =====================================
 
-const CURRENCY = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-const DATE_FMT = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit' });
+// Botão com efeito "Glow" e Hover Magnético
+const MagneticButton = ({ children, onClick, className = '' }) => {
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
 
-const STATUS_COLORS = {
-    pending: "bg-yellow-50 text-yellow-700 border-yellow-200",
-    under_review: "bg-blue-50 text-blue-700 border-blue-200",
-    approved: "bg-green-50 text-green-700 border-green-200",
-    rejected: "bg-red-50 text-red-700 border-red-200",
-    paid: "bg-purple-50 text-purple-700 border-purple-200"
-};
-
-const STATUS_LABELS = {
-    pending: "Aguardando",
-    under_review: "Em Análise",
-    approved: "Aprovado (A Pagar)",
-    rejected: "Rejeitado",
-    paid: "Pago"
-};
-
-/* ==================================================================================
-   2. CONTEXTS & HOOKS
-   ================================================================================== */
-
-const AuthContext = createContext();
-
-const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubAuth = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
-      if (currentUser) {
-        // Realtime Listener for Profile (Balance updates instantly)
-        const unsubDb = onSnapshot(doc(db, "users", currentUser.uid), (docSnap) => {
-            if (docSnap.exists()) setProfile(docSnap.data());
-        });
-        return () => unsubDb();
-      } else {
-        setProfile(null);
-      }
-      setLoading(false);
-    });
-    return unsubAuth;
-  }, []);
-
-  return (
-    <AuthContext.Provider value={{ user, profile, loading }}>
-      {!loading ? children : (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
-            <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p className="animate-pulse">Carregando Ecossistema...</p>
-        </div>
-      )}
-    </AuthContext.Provider>
-  );
-};
-const useAuth = () => useContext(AuthContext);
-
-// Toast Notification System (Simple implementation)
-const ToastContext = createContext();
-const ToastProvider = ({ children }) => {
-    const [toast, setToast] = useState(null);
-    const showToast = (msg, type = 'success') => {
-        setToast({ msg, type });
-        setTimeout(() => setToast(null), 4000);
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const xPos = e.clientX - rect.left - rect.width / 2;
+        const yPos = e.clientY - rect.top - rect.height / 2;
+        x.set(xPos * 0.2); // Fator de atração
+        y.set(yPos * 0.2);
     };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
     return (
-        <ToastContext.Provider value={showToast}>
-            {children}
-            {toast && (
-                <div className={`fixed bottom-5 right-5 px-6 py-3 rounded-lg shadow-xl text-white font-bold z-50 animate-bounce ${toast.type === 'error' ? 'bg-red-600' : 'bg-green-600'}`}>
-                    {toast.msg}
-                </div>
-            )}
-        </ToastContext.Provider>
+        <motion.button
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            style={{ x, y }}
+            onClick={onClick}
+            className={`relative group overflow-hidden ${className}`}
+        >
+            {/* Brilho de fundo rotativo */}
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-teal-500 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+
+            {/* Corpo do botão */}
+            <div className="relative z-10 flex items-center justify-center bg-emerald-500 text-slate-950 px-8 py-4 rounded-full font-extrabold text-lg shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                {children}
+            </div>
+        </motion.button>
     );
 };
-const useToast = () => useContext(ToastContext);
 
-/* ==================================================================================
-   3. SHARED COMPONENTS (UI LIBRARY)
-   ================================================================================== */
+// Card 3D que rotaciona conforme o mouse (Tilt Effect)
+const TiltCard = ({ children, className = '' }) => {
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
 
-const Sidebar = () => {
-    const { profile } = useAuth();
-    const location = useLocation();
-    
-    const menuItems = profile?.role === 'advertiser' ? [
-        { icon: LayoutDashboard, label: 'Visão Geral', path: '/' },
-        { icon: PlusCircle, label: 'Criar Campanha', path: '/campaigns/new' },
-        { icon: FileText, label: 'Auditoria & Envios', path: '/audit' },
-        { icon: Wallet, label: 'Financeiro', path: '/wallet' },
-    ] : [
-        { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
-        { icon: ShoppingBag, label: 'Mercado de Cortes', path: '/marketplace' },
-        { icon: Video, label: 'Meus Envios', path: '/submissions' },
-        { icon: Wallet, label: 'Minha Carteira', path: '/wallet' },
+    const mouseXSpring = useTransform(x, [-100, 100], [-10, 10]);
+    const mouseYSpring = useTransform(y, [-100, 100], [10, -10]);
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // Distância do centro
+        x.set(e.clientX - rect.left - centerX);
+        y.set(e.clientY - rect.top - centerY);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
+    return (
+        <motion.div
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{
+                rotateX: mouseYSpring,
+                rotateY: mouseXSpring,
+                perspective: 1000
+            }}
+            className={`relative rounded-3xl border border-slate-800/50 bg-slate-900/40 backdrop-blur-xl shrink-0 overflow-hidden ${className}`}
+        >
+            {/* Reflexo sutil acompanhando o mouse */}
+            <motion.div
+                className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
+                style={{
+                    background: useTransform(
+                        [x, y],
+                        ([latestX, latestY]) => `radial-gradient(600px circle at ${latestX + 150}px ${latestY + 150}px, rgba(16,185,129,0.1), transparent 40%)`
+                    )
+                }}
+            />
+            {children}
+        </motion.div>
+    );
+};
+
+// =====================================
+// Sections
+// =====================================
+
+const HeroSection = () => {
+    return (
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050510] pt-20 pb-10">
+            {/* Background Gradients (Apple Style) */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/20 blur-[120px] rounded-full pointer-events-none"></div>
+            <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+            {/* Grid pattern */}
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-20"></div>
+
+            <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-16">
+
+                {/* Lado Esquerdo - Textos */}
+                <div className="w-full lg:w-1/2 text-center lg:text-left">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-semibold mb-8 backdrop-blur-md"
+                    >
+                        <Sparkles className="w-4 h-4" />
+                        <span>ITR | Inglês em Tempo Recorde</span>
+                    </motion.div>
+
+                    <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className="text-5xl md:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight"
+                    >
+                        Aprimore seu <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">
+                            Inglês de uma <br className="hidden md:block" />vez por todas
+                        </span>
+                    </motion.h1>
+
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="text-lg md:text-xl text-slate-400 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
+                    >
+                        Vou te mostrar o segredo para atingir a fluência real. Uma nova metodologia, direto ao ponto, envolvendo técnicas de memorização <strong className="text-white font-semibold">que funcionam de verdade.</strong>
+                    </motion.p>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                        className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start"
+                    >
+                        <MagneticButton onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
+                            COMEÇAR AGORA
+                        </MagneticButton>
+
+                        <div className="flex -space-x-3 items-center">
+                            <img src="https://i.pravatar.cc/100?img=1" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover" alt="Student" />
+                            <img src="https://i.pravatar.cc/100?img=2" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover" alt="Student" />
+                            <img src="https://i.pravatar.cc/100?img=3" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover" alt="Student" />
+                            <div className="ml-5 flex flex-col pl-2">
+                                <div className="flex text-yellow-500">
+                                    <Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" />
+                                </div>
+                                <span className="text-xs text-slate-400 font-medium">Testado e validado</span>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* Lado Direito - 3D Mockup / Carta Oculta */}
+                <div className="w-full lg:w-1/2 flex justify-center perspective-[2000px]">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8, rotateY: -15, rotateX: 10 }}
+                        animate={{ opacity: 1, scale: 1, rotateY: -5, rotateX: 5 }}
+                        transition={{ duration: 1, type: 'spring', bounce: 0.4 }}
+                        className="w-full max-w-lg relative group"
+                    >
+                        {/* Sombras Coloridas para Efeito "Premium" */}
+                        <div className="absolute -inset-1 bg-gradient-to-tr from-emerald-500 to-teal-600 rounded-[2.5rem] blur-2xl opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
+
+                        <TiltCard className="p-2 bg-slate-900/80 rounded-[2rem] border border-slate-700/50 shadow-2xl backdrop-blur-3xl">
+                            <div className="rounded-[1.5rem] bg-[#0A0A12] border border-slate-800 p-8 pt-10 h-[500px] flex flex-col relative overflow-hidden">
+                                <div className="absolute top-4 right-4 text-emerald-500/20"><Globe size={180} /></div>
+
+                                <h3 className="text-2xl font-bold text-white mb-2 z-10 flex items-center gap-3">
+                                    <Brain className="text-emerald-400" /> Método ITR
+                                </h3>
+                                <p className="text-slate-400 mb-8 z-10">Pense sem traduzir.</p>
+
+                                <div className="space-y-4 z-10">
+                                    {[
+                                        "Pensar em inglês sem traduzir",
+                                        "Dominar a escuta com naturalidade",
+                                        "Memorizar palavras em tempo recorde"
+                                    ].map((text, i) => (
+                                        <motion.div
+                                            key={i}
+                                            initial={{ opacity: 0, x: 20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0.5 + (i * 0.1) }}
+                                            className="bg-slate-800/50 border border-slate-700 p-4 rounded-xl flex items-center gap-4"
+                                        >
+                                            <CheckCircle className="text-emerald-400 w-5 h-5 shrink-0" />
+                                            <span className="text-slate-200 text-sm font-medium">{text}</span>
+                                        </motion.div>
+                                    ))}
+                                </div>
+
+                                <div className="mt-auto z-10 pt-6">
+                                    <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: "100%" }}
+                                            transition={{ duration: 1.5, delay: 1 }}
+                                            className="h-full bg-emerald-500"
+                                        />
+                                    </div>
+                                    <div className="flex justify-between text-xs text-slate-500 mt-2 font-medium">
+                                        <span>Progresso de Evolução</span>
+                                        <span className="text-emerald-400">Tempo Recorde</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </TiltCard>
+                    </motion.div>
+                </div>
+
+            </div>
+        </section>
+    );
+};
+
+const BentoBento = () => {
+    return (
+        <section className="py-32 px-6 bg-[#030308] relative">
+            <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-20">
+                    <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                        O que você vai <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">conquistar</span>
+                    </h2>
+                    <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+                        Abandone os métodos antigos. O ITR é desenhado para acelerar o seu cérebro, construir vocabulário e destravar a sua língua.
+                    </p>
+                </div>
+
+                {/* Bento Grid layout */}
+                <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 max-w-5xl mx-auto">
+
+                    {/* Card 1 - Grande */}
+                    <TiltCard className="md:col-span-2 md:row-span-1 p-8 group">
+                        <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
+                            <MessageCircle className="text-emerald-400 w-6 h-6" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">Confiança na Conversão</h3>
+                        <p className="text-slate-400 leading-relaxed font-light text-lg">
+                            Domine a conversação e a escuta com extrema naturalidade. Sem travar na hora de responder, apenas a fala fluindo.
+                        </p>
+                    </TiltCard>
+
+                    {/* Card 2 */}
+                    <TiltCard className="p-8 group">
+                        <div className="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
+                            <Clock className="text-blue-400 w-6 h-6" />
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-3">Tempo Recorde</h3>
+                        <p className="text-slate-400 leading-relaxed font-light">
+                            Memorize centenas de palavras novas de forma permanente, otimizando o seu tempo de estudos.
+                        </p>
+                    </TiltCard>
+
+                    {/* Card 3 */}
+                    <TiltCard className="p-8 group">
+                        <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
+                            <Shield className="text-purple-400 w-6 h-6" />
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-3">Método Validado</h3>
+                        <p className="text-slate-400 leading-relaxed font-light">
+                            Testado e aprovado por pessoas reais que saíram do zero à fluência sem complicações.
+                        </p>
+                    </TiltCard>
+
+                    {/* Card 4 - Grande */}
+                    <TiltCard className="md:col-span-2 md:row-span-1 p-8 group overflow-hidden relative">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <Brain className="w-32 h-32" />
+                        </div>
+                        <div className="w-12 h-12 bg-teal-500/10 rounded-2xl flex items-center justify-center mb-6 border border-teal-500/20 group-hover:bg-teal-500/20 transition-colors">
+                            <Sparkles className="text-teal-400 w-6 h-6" />
+                        </div>
+                        <h3 className="text-3xl font-bold text-white mb-3 tracking-tight">O Fim da Tradução Mental</h3>
+                        <p className="text-slate-400 leading-relaxed font-light text-lg max-w-md relative z-10">
+                            Desenvolva o mecanismo interno para <strong className="text-white">pensar diretamente em inglês</strong>, como um nativo faria.
+                        </p>
+                    </TiltCard>
+
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const ParaVoceSection = () => {
+    return (
+        <section className="py-24 px-6 bg-[#050510]">
+            <div className="max-w-4xl mx-auto">
+                <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-white">
+                    Esse curso é <span className="text-emerald-400 font-black">para você</span>
+                </h2>
+
+                <div className="space-y-4">
+                    {[
+                        { text: "Já fez curso de inglês e desistiu no meio do caminho", delay: 0 },
+                        { text: "Está fazendo inglês e quer acelerar brutalmente seus resultados", delay: 0.1 },
+                        { text: "Terminou um curso, mas sente que empacou na conversação", delay: 0.2 },
+                        { text: "Nunca aprendeu inglês até hoje por causa de métodos travados", delay: 0.3 }
+                    ].map((item, idx) => (
+                        <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: item.delay, duration: 0.5 }}
+                            className="group flex items-center bg-slate-900/50 p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-800 transition-all cursor-default"
+                        >
+                            <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center mr-6 shrink-0 group-hover:scale-110 transition-transform">
+                                <CheckCircle className="w-5 h-5 text-emerald-400" />
+                            </div>
+                            <p className="text-slate-300 font-medium md:text-lg">{item.text}</p>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    )
+}
+
+const Modulos = () => {
+    const modulos = [
+        { num: "0", title: "Comece por aqui", desc: "Apresentação detalhada da metodologia." },
+        { num: "1", title: "A Base do Método", desc: "Técnicas iniciais para preparar sua mente." },
+        { num: "2", title: "Inglês Zero e Básico", desc: "Direcionamento p/ quem está começando do zero." },
+        { num: "3", title: "Inglês Intermediário", desc: "Focado em quem entende algo, mas trava ao evoluir." },
+        { num: "4", title: "Inglês Avançado", desc: "Destrave dificuldades em níveis profundos." },
+        { num: "5", title: "O Próximo Nível", desc: "Kit prático para manter sua evolução eterna." }
     ];
 
     return (
-        <aside className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col h-screen fixed left-0 top-0 z-10">
-            <div className="p-6 border-b border-gray-100">
-                <h1 className="text-2xl font-black text-gray-800 flex items-center gap-2">
-                    <span className="bg-purple-600 text-white p-1 rounded">VR</span> ViralReward
-                </h1>
-                <p className="text-xs text-gray-400 mt-1 uppercase font-bold tracking-wider">{profile?.role === 'advertiser' ? 'Advertiser Pro' : 'Clipper Studio'}</p>
-            </div>
-            
-            <nav className="flex-1 p-4 space-y-2">
-                {menuItems.map((item) => (
-                    <Link 
-                        key={item.path} 
-                        to={item.path} 
-                        className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-medium ${location.pathname === item.path ? 'bg-purple-50 text-purple-700 border border-purple-100' : 'text-gray-600 hover:bg-gray-50'}`}
-                    >
-                        <item.icon size={20} />
-                        {item.label}
-                    </Link>
-                ))}
-            </nav>
+        <section className="py-32 px-6 bg-[#030308] border-t border-slate-900">
+            <div className="max-w-6xl mx-auto">
+                <h2 className="text-3xl md:text-5xl font-bold text-center mb-20 text-white">
+                    Estrutura <span className="text-teal-400 font-black">Completa</span>
+                </h2>
 
-            <div className="p-4 border-t border-gray-100">
-                <div className="bg-gray-900 rounded-xl p-4 text-white mb-4">
-                    <p className="text-xs text-gray-400 mb-1">Saldo Disponível</p>
-                    <p className="text-xl font-bold">{CURRENCY.format(profile?.balance || 0)}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {modulos.map((mod, i) => (
+                        <TiltCard key={i} className="bg-slate-900/40 p-8 border-slate-800/80 hover:border-teal-500/30">
+                            <span className="text-teal-400/20 text-6xl font-black absolute top-4 right-4 pointer-events-none">{mod.num}</span>
+                            <h3 className="text-xl font-bold text-white mb-3 mt-4 relative z-10">Módulo {mod.num} <br /> <span className="text-teal-400">{mod.title}</span></h3>
+                            <p className="text-slate-400 font-light relative z-10">{mod.desc}</p>
+                        </TiltCard>
+                    ))}
                 </div>
-                <button onClick={logoutUser} className="flex items-center gap-2 text-red-500 hover:bg-red-50 w-full p-2 rounded transition text-sm font-bold">
-                    <LogOut size={16} /> Sair do Sistema
-                </button>
             </div>
-        </aside>
-    );
-};
+        </section>
+    )
+}
 
-const Modal = ({ isOpen, onClose, title, children }) => {
-    if (!isOpen) return null;
+const Exclusivo = () => {
     return (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto animate-fadeIn">
-                <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50 rounded-t-2xl">
-                    <h3 className="font-bold text-lg text-gray-800">{title}</h3>
-                    <button onClick={onClose} className="text-gray-400 hover:text-red-500"><XCircle size={24}/></button>
-                </div>
-                <div className="p-6">{children}</div>
-            </div>
-        </div>
-    );
-};
+        <section className="py-24 px-6 bg-[#050510] relative overflow-hidden">
+            {/* Glow Effects */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[100px]"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-yellow-500/10 rounded-full blur-[120px]"></div>
 
-/* ==================================================================================
-   4. MODULES & PAGES
-   ================================================================================== */
-
-// --- AUTHENTICATION MODULE ---
-const AuthPage = () => {
-    const [isRegister, setIsRegister] = useState(false);
-    const [role, setRole] = useState('clipper');
-    const [form, setForm] = useState({ email: '', password: '', name: '', pix: '', social: '' });
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
-    const { profile } = useAuth(); // Redirect if already logged in
-
-    if (profile) return <Navigate to="/" />;
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true); setError('');
-        try {
-            if (isRegister) {
-                await registerUser(form.email, form.password, form.name, role, form.pix, form.social);
-            } else {
-                await loginUser(form.email, form.password);
-            }
-        } catch (err) {
-            setError(err.message.replace('Firebase:', ''));
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-purple-900 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl flex overflow-hidden min-h-[600px]">
-                {/* Left Side: Marketing */}
-                <div className="hidden md:flex flex-col justify-center p-12 w-1/2 bg-purple-600 text-white relative">
-                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
-                    <h1 className="text-4xl font-black mb-4 z-10">Monetize seus Cortes.</h1>
-                    <p className="text-purple-100 text-lg z-10">A plataforma #1 para Influenciadores e Clipadores profissionais. Segurança, auditoria e pagamentos automáticos.</p>
+            <div className="max-w-6xl mx-auto relative z-10">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                        Garantindo hoje, você leva <span className="text-yellow-400 font-black">Bônus</span>
+                    </h2>
                 </div>
 
-                {/* Right Side: Form */}
-                <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-2">{isRegister ? 'Crie sua conta' : 'Bem-vindo de volta'}</h2>
-                    <p className="text-gray-500 mb-8 text-sm">Gerencie campanhas ou fature com views.</p>
+                <div className="grid md:grid-cols-3 gap-6 mb-20">
+                    <TiltCard className="bg-gradient-to-br from-slate-900 to-[#0A0D14] p-8 border-slate-800 hover:border-yellow-500/30">
+                        <Brain className="w-10 h-10 text-yellow-500 mb-6" />
+                        <h3 className="text-xl font-bold text-white mb-3">Módulo Expansão</h3>
+                        <p className="text-slate-400 font-light">Técnicas de memorização testadas em outras áreas.</p>
+                    </TiltCard>
 
-                    {isRegister && (
-                        <div className="flex bg-gray-100 p-1 rounded-lg mb-6">
-                            <button onClick={() => setRole('clipper')} className={`flex-1 py-2 text-sm font-bold rounded-md transition ${role === 'clipper' ? 'bg-white shadow text-purple-700' : 'text-gray-500'}`}>Sou Clipador</button>
-                            <button onClick={() => setRole('advertiser')} className={`flex-1 py-2 text-sm font-bold rounded-md transition ${role === 'advertiser' ? 'bg-white shadow text-blue-700' : 'text-gray-500'}`}>Sou Anunciante</button>
-                        </div>
-                    )}
+                    <TiltCard className="bg-gradient-to-br from-slate-900 to-[#0A0D14] p-8 border-slate-800 hover:border-yellow-500/30">
+                        <Bot className="w-10 h-10 text-yellow-500 mb-6" />
+                        <h3 className="text-xl font-bold text-white mb-3">IA Personalizada</h3>
+                        <p className="text-slate-400 font-light">Inteligência Artificial programada para te treinar 24/7.</p>
+                    </TiltCard>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        {isRegister && (
-                            <>
-                                <input type="text" placeholder="Nome Completo" required className="input-field" value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
-                                <div className="grid grid-cols-2 gap-4">
-                                    <input type="text" placeholder="Chave PIX" required className="input-field" value={form.pix} onChange={e => setForm({...form, pix: e.target.value})} />
-                                    <input type="text" placeholder="@Instagram/TikTok" required className="input-field" value={form.social} onChange={e => setForm({...form, social: e.target.value})} />
-                                </div>
-                            </>
-                        )}
-                        <input type="email" placeholder="Email Corporativo" required className="input-field" value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
-                        <input type="password" placeholder="Senha" required className="input-field" value={form.password} onChange={e => setForm({...form, password: e.target.value})} />
+                    <TiltCard className="bg-gradient-to-br from-slate-900 to-[#0A0D14] p-8 border-slate-800 hover:border-yellow-500/30">
+                        <Users className="w-10 h-10 text-yellow-500 mb-6" />
+                        <h3 className="text-xl font-bold text-white mb-3">Comunidade VIP</h3>
+                        <p className="text-slate-400 font-light">Acesso no WhatsApp para suporte e desafios diários.</p>
+                    </TiltCard>
+                </div>
 
-                        {error && <div className="bg-red-100 text-red-700 p-3 rounded text-sm text-center font-medium">{error}</div>}
+                <div className="bg-slate-900/60 border border-slate-800 p-10 md:p-16 rounded-3xl backdrop-blur-md relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <Plane className="w-64 h-64 text-emerald-400 -translate-y-10 translate-x-10" />
+                    </div>
 
-                        <button disabled={loading} className="w-full bg-gray-900 text-white font-bold py-3.5 rounded-lg hover:bg-black transition shadow-lg disabled:opacity-70">
-                            {loading ? 'Processando...' : (isRegister ? 'Finalizar Cadastro' : 'Acessar Painel')}
-                        </button>
-                    </form>
-
-                    <p className="mt-6 text-center text-sm text-gray-500">
-                        {isRegister ? 'Já possui conta?' : 'Novo por aqui?'} 
-                        <button onClick={() => setIsRegister(!isRegister)} className="ml-1 text-purple-600 font-bold hover:underline">
-                            {isRegister ? 'Fazer Login' : 'Criar Conta Grátis'}
-                        </button>
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 relative z-10 italic">"Feche os olhos e imagine..."</h3>
+                    <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed max-w-3xl relative z-10 italic border-l-4 border-emerald-500 pl-6">
+                        Você fazendo a viagem dos sonhos, assistindo filmes sem legenda e dominando o mundo ao seu redor. Tudo por uma escolha hoje.
                     </p>
                 </div>
             </div>
-        </div>
+        </section>
     );
-};
+}
 
-// --- ADVERTISER MODULE ---
-
-const AdvertiserDashboard = () => {
-    const { user } = useAuth();
-    const [stats, setStats] = useState({ activeCampaigns: 0, totalSpent: 0, pendingAudits: 0 });
-
-    useEffect(() => {
-        // Mocking aggregation (Firestore needs cloud functions for real aggregation, doing client-side for MVP)
-        const qCamp = query(collection(db, "campaigns"), where("advertiserId", "==", user.uid));
-        const unsub = onSnapshot(qCamp, (snap) => {
-            let spent = 0;
-            snap.forEach(doc => spent += doc.data().budgetSpent);
-            setStats(prev => ({ ...prev, activeCampaigns: snap.size, totalSpent: spent }));
-        });
-        
-        const qSubs = query(collection(db, "submissions"), where("status", "==", "pending")); // In prod: filter by adv ID
-        const unsub2 = onSnapshot(qSubs, (snap) => {
-             // Client side filter due to lack of composite index in MVP
-             const pending = snap.docs.filter(d => d.data().advertiserId === user.uid).length;
-             setStats(prev => ({ ...prev, pendingAudits: pending }));
-        });
-        return () => { unsub(); unsub2(); };
-    }, [user]);
-
+const Oferta = () => {
     return (
-        <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800">Visão Geral</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
-                    <div className="p-4 bg-purple-100 text-purple-600 rounded-full"><Video size={24}/></div>
-                    <div>
-                        <p className="text-gray-500 text-sm font-medium">Campanhas Ativas</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.activeCampaigns}</p>
+        <section id="oferta" className="py-32 px-6 bg-[#030308] flex justify-center items-center">
+            <div className="w-full max-w-4xl">
+                <TiltCard className="bg-gradient-to-b from-slate-900 to-[#0A0D14] border-t-4 border-t-emerald-500 border-x-slate-800 border-b-slate-800 overflow-hidden relative">
+
+                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTYsMTg1LDEyOSwwLjA1KSIvPjwvc3ZnPg==')] opacity-40"></div>
+
+                    <div className="p-10 md:p-16 text-center relative z-10 flex flex-col items-center">
+                        <h2 className="text-3xl md:text-5xl font-black text-white mb-4">A hora de agir é <span className="text-emerald-400">agora</span></h2>
+                        <p className="text-slate-400 text-lg mb-10 max-w-xl">
+                            Tenha acesso imediato a todo o método ITR, todos os módulos e todos os bônus exclusivos.
+                        </p>
+
+                        <div className="mb-10 flex flex-col items-center">
+                            <span className="text-slate-500 font-medium line-through mb-2 text-xl">De R$ 399,00</span>
+                            <div className="flex items-start justify-center gap-3">
+                                <span className="text-2xl font-bold text-slate-400 mt-2">por</span>
+                                <span className="text-7xl md:text-8xl font-black text-emerald-400 tracking-tighter drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">R$ 200</span>
+                            </div>
+                            <span className="bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full font-medium text-sm mt-6 border border-emerald-500/20">Acesso Vitalício</span>
+                        </div>
+
+                        <MagneticButton className="w-full md:w-auto shadow-2xl! shadow-emerald-500/50!">
+                            GARANTIR MINHA VAGA AGORA
+                        </MagneticButton>
+
+                        <div className="flex gap-6 mt-8 opacity-60">
+                            <div className="flex items-center gap-2 text-sm text-slate-300 font-medium"><Shield className="w-4 h-4 text-emerald-400" /> Compra Segura</div>
+                            <div className="flex items-center gap-2 text-sm text-slate-300 font-medium"><Award className="w-4 h-4 text-emerald-400" /> 7 Dias de Garantia</div>
+                        </div>
                     </div>
-                </div>
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
-                    <div className="p-4 bg-green-100 text-green-600 rounded-full"><DollarSign size={24}/></div>
-                    <div>
-                        <p className="text-gray-500 text-sm font-medium">Total Investido</p>
-                        <p className="text-2xl font-bold text-gray-900">{CURRENCY.format(stats.totalSpent)}</p>
-                    </div>
-                </div>
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 cursor-pointer hover:shadow-md transition">
-                    <div className="p-4 bg-yellow-100 text-yellow-600 rounded-full"><AlertTriangle size={24}/></div>
-                    <div>
-                        <p className="text-gray-500 text-sm font-medium">Pendentes de Auditoria</p>
-                        <p className="text-2xl font-bold text-gray-900">{stats.pendingAudits}</p>
-                        <Link to="/audit" className="text-xs text-blue-600 hover:underline">Resolver Agora &rarr;</Link>
-                    </div>
-                </div>
+                </TiltCard>
             </div>
-            {/* Chart placeholder could go here */}
-        </div>
-    );
-};
+        </section>
+    )
+}
 
-const CreateCampaign = () => {
-    const { user, profile } = useAuth();
-    const showToast = useToast();
-    const [form, setForm] = useState({ title: '', rpm: '', budget: '', rules: '', hashtag: '' });
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (profile.balance < Number(form.budget)) return showToast("Saldo insuficiente na carteira!", 'error');
-
-        try {
-            await addDoc(collection(db, "campaigns"), {
-                advertiserId: user.uid,
-                advertiserName: profile.displayName,
-                title: form.title,
-                hashtag: form.hashtag,
-                rpm: Number(form.rpm),
-                budgetTotal: Number(form.budget),
-                budgetSpent: 0,
-                rules: form.rules,
-                status: 'active',
-                createdAt: serverTimestamp()
-            });
-            showToast("Campanha lançada com sucesso!");
-            setForm({ title: '', rpm: '', budget: '', rules: '', hashtag: '' });
-        } catch (e) {
-            showToast("Erro ao criar campanha", 'error');
-        }
-    };
-
+const FaqItem = ({ q, a }) => {
+    const [isOpen, setIsOpen] = useState(false);
     return (
-        <div className="max-w-3xl mx-auto">
-            <h1 className="text-2xl font-bold mb-6 text-gray-800">Nova Campanha</h1>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="col-span-2">
-                            <label className="form-label">Título da Campanha</label>
-                            <input type="text" className="input-field" placeholder="Ex: Lançamento MedImporter 2.0" value={form.title} onChange={e => setForm({...form, title: e.target.value})} required />
+        <div className={`border ${isOpen ? 'border-emerald-500/50 bg-slate-800/80' : 'border-slate-800 bg-slate-900/40'} rounded-2xl overflow-hidden transition-all duration-300 backdrop-blur-sm`}>
+            <button
+                className="w-full px-6 py-6 text-left flex justify-between items-center focus:outline-none group"
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                <span className={`font-bold pr-4 transition-colors ${isOpen ? 'text-emerald-400' : 'text-slate-200 group-hover:text-white'}`}>{q}</span>
+                <motion.div animate={{ rotate: isOpen ? 180 : 0 }}>
+                    <ChevronDown className={`w-5 h-5 shrink-0 ${isOpen ? 'text-emerald-400' : 'text-slate-500'}`} />
+                </motion.div>
+            </button>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
+                    >
+                        <div className="px-6 pb-6 text-slate-400 leading-relaxed font-light">
+                            {a}
                         </div>
-                        <div>
-                            <label className="form-label">RPM (R$ por 1k views)</label>
-                            <div className="relative">
-                                <span className="absolute left-3 top-3 text-gray-400">R$</span>
-                                <input type="number" className="input-field pl-10" placeholder="10.00" value={form.rpm} onChange={e => setForm({...form, rpm: e.target.value})} required />
-                            </div>
-                            <p className="text-xs text-gray-500 mt-1">Valor pago ao clipador a cada mil visualizações.</p>
-                        </div>
-                        <div>
-                            <label className="form-label">Orçamento Total (Budget)</label>
-                            <div className="relative">
-                                <span className="absolute left-3 top-3 text-gray-400">R$</span>
-                                <input type="number" className="input-field pl-10" placeholder="1000.00" value={form.budget} onChange={e => setForm({...form, budget: e.target.value})} required />
-                            </div>
-                            <p className="text-xs text-gray-500 mt-1">A campanha pausa automaticamente ao atingir este valor.</p>
-                        </div>
-                        <div className="col-span-2">
-                            <label className="form-label">Hashtag Obrigatória</label>
-                            <input type="text" className="input-field" placeholder="#MedImporter #CortesMedicina" value={form.hashtag} onChange={e => setForm({...form, hashtag: e.target.value})} required />
-                        </div>
-                        <div className="col-span-2">
-                            <label className="form-label">Regras de Aprovação</label>
-                            <textarea className="input-field h-32" placeholder="- Vídeo deve ter boa qualidade&#10;- Não pode conter palavrões&#10;- Obrigatório marcar o perfil @medimporter" value={form.rules} onChange={e => setForm({...form, rules: e.target.value})} required ></textarea>
-                        </div>
-                    </div>
-                    <div className="flex justify-end pt-4 border-t border-gray-100">
-                        <button className="bg-purple-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-purple-700 shadow-lg transition">
-                            Publicar e Alocar Saldo
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
-};
-
-const AuditSubmissions = () => {
-    const { user } = useAuth();
-    const showToast = useToast();
-    const [submissions, setSubmissions] = useState([]);
-    const [selectedSub, setSelectedSub] = useState(null); // For Modal
-
-    // Load submissions needing audit
-    useEffect(() => {
-        const q = query(collection(db, "submissions"), orderBy("createdAt", "desc"));
-        const unsub = onSnapshot(q, (snap) => {
-            // Client-side filtering for MVP simplicity
-            const mySubs = snap.docs
-                .map(d => ({id: d.id, ...d.data()}))
-                .filter(d => d.advertiserId === user.uid && d.status !== 'pending_payment'); // Show all history or just pending? Let's show all but sort pending first
-            
-            setSubmissions(mySubs.sort((a,b) => (a.status === 'pending' ? -1 : 1)));
-        });
-        return unsub;
-    }, [user]);
-
-    const handleAction = async (action, auditData = null) => {
-        if (!selectedSub) return;
-        
-        try {
-            if (action === 'reject') {
-                await updateDoc(doc(db, "submissions", selectedSub.id), {
-                    status: 'rejected',
-                    rejectionReason: auditData, // Reason text
-                    auditedAt: serverTimestamp()
-                });
-                showToast("Vídeo rejeitado.", 'success');
-            } else if (action === 'approve') {
-                const { realViews } = auditData;
-                const cost = (realViews / 1000) * selectedSub.rpmSnapshot;
-
-                await runTransaction(db, async (t) => {
-                    const advRef = doc(db, "users", user.uid);
-                    const clipRef = doc(db, "users", selectedSub.clipperId);
-                    const campRef = doc(db, "campaigns", selectedSub.campaignId);
-                    const subRef = doc(db, "submissions", selectedSub.id);
-
-                    const advDoc = await t.get(advRef);
-                    const campDoc = await t.get(campRef);
-
-                    // Financial Logic
-                    if (advDoc.data().balance < cost) throw "Saldo insuficiente no momento.";
-                    if (campDoc.data().budgetSpent + cost > campDoc.data().budgetTotal) throw "Budget da campanha estourado.";
-
-                    // 1. Move Money
-                    t.update(advRef, { balance: advDoc.data().balance - cost });
-                    t.update(clipRef, { balance: (await t.get(clipRef)).data().balance + cost });
-
-                    // 2. Register Transactions
-                    const txRef = doc(collection(db, "transactions"));
-                    t.set(txRef, { userId: selectedSub.clipperId, type: 'payment', amount: cost, from: user.uid, date: serverTimestamp() });
-                    
-                    const txDebitRef = doc(collection(db, "transactions"));
-                    t.set(txDebitRef, { userId: user.uid, type: 'payment_fee', amount: -cost, to: selectedSub.clipperId, date: serverTimestamp() });
-
-                    // 3. Update Status
-                    t.update(campRef, { budgetSpent: campDoc.data().budgetSpent + cost });
-                    t.update(subRef, { 
-                        status: 'paid', 
-                        auditedViews: realViews, 
-                        rewardAmount: cost,
-                        auditedAt: serverTimestamp()
-                    });
-                });
-                showToast(`Pago R$ ${cost.toFixed(2)} ao clipador!`, 'success');
-            }
-            setSelectedSub(null);
-        } catch (e) {
-            showToast("Erro: " + e, 'error');
-        }
-    };
-
-    return (
-        <div className="space-y-6">
-            <h1 className="text-2xl font-bold text-gray-800">Auditoria de Envios (Estilo Airtable)</h1>
-            
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm whitespace-nowrap">
-                        <thead className="bg-gray-50 border-b border-gray-200 text-gray-500 font-semibold uppercase tracking-wider text-xs">
-                            <tr>
-                                <th className="p-4">Data</th>
-                                <th className="p-4">Clipador</th>
-                                <th className="p-4">Campanha</th>
-                                <th className="p-4">Link / Prova</th>
-                                <th className="p-4 text-right">Views Declaradas</th>
-                                <th className="p-4 text-center">Status</th>
-                                <th className="p-4 text-center">Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                            {submissions.map(sub => (
-                                <tr key={sub.id} className="hover:bg-gray-50 transition">
-                                    <td className="p-4 text-gray-500">{sub.createdAt?.toDate().toLocaleDateString()}</td>
-                                    <td className="p-4 font-medium flex flex-col">
-                                        <span className="text-gray-900">{sub.clipperName}</span>
-                                        <span className="text-xs text-gray-400">{sub.clipperSocial}</span>
-                                    </td>
-                                    <td className="p-4">{sub.campaignTitle}</td>
-                                    <td className="p-4">
-                                        <div className="flex gap-2">
-                                            <a href={sub.videoLink} target="_blank" className="flex items-center gap-1 text-blue-600 hover:underline"><Video size={14}/> Vídeo</a>
-                                            {sub.printUrl && (
-                                                <a href={sub.printUrl} target="_blank" className="flex items-center gap-1 text-purple-600 hover:underline"><ImageIcon size={14}/> Print</a>
-                                            )}
-                                        </div>
-                                    </td>
-                                    <td className="p-4 text-right font-mono text-gray-700">{sub.declaredViews.toLocaleString()}</td>
-                                    <td className="p-4 text-center">
-                                        <span className={`px-2 py-1 rounded text-xs font-bold border ${STATUS_COLORS[sub.status]}`}>
-                                            {STATUS_LABELS[sub.status]}
-                                        </span>
-                                    </td>
-                                    <td className="p-4 text-center">
-                                        {sub.status === 'pending' ? (
-                                            <button onClick={() => setSelectedSub(sub)} className="bg-gray-900 text-white px-3 py-1.5 rounded text-xs font-bold hover:bg-black transition">
-                                                Auditar
-                                            </button>
-                                        ) : (
-                                            <span className="text-gray-400">-</span>
-                                        )}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            {/* AUDIT MODAL */}
-            <Modal isOpen={!!selectedSub} onClose={() => setSelectedSub(null)} title="Auditar Envio">
-                {selectedSub && (
-                    <div className="space-y-6">
-                        {/* Evidence Section */}
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="col-span-2 bg-yellow-50 p-3 rounded text-xs text-yellow-800 flex gap-2">
-                                <ShieldAlert size={16}/>
-                                <span>Verifique se o vídeo tem mais de 24h e se as hashtags estão corretas.</span>
-                            </div>
-                            
-                            <a href={selectedSub.videoLink} target="_blank" className="block p-4 bg-gray-50 rounded border text-center hover:bg-gray-100">
-                                <Video className="mx-auto mb-2 text-blue-600"/>
-                                <span className="text-blue-600 font-bold underline text-sm">Abrir Vídeo Original</span>
-                            </a>
-                            
-                            {selectedSub.printUrl ? (
-                                <div className="border rounded p-1">
-                                    <img src={selectedSub.printUrl} alt="Print" className="w-full h-32 object-cover rounded cursor-pointer" onClick={() => window.open(selectedSub.printUrl)} />
-                                </div>
-                            ) : (
-                                <div className="flex items-center justify-center border rounded bg-gray-50 text-gray-400 text-xs">Sem Print</div>
-                            )}
-                        </div>
-
-                        {/* Audit Form */}
-                        <div className="border-t pt-4">
-                            <label className="text-sm font-bold text-gray-700 block mb-2">Visualizações Reais (Auditadas)</label>
-                            <input type="number" id="auditViews" className="w-full border-2 border-purple-100 p-3 rounded-lg text-lg font-bold text-purple-700 focus:outline-none focus:border-purple-500" placeholder={selectedSub.declaredViews} />
-                            <p className="text-xs text-gray-500 mt-1">RPM contratado: <b>R$ {selectedSub.rpmSnapshot.toFixed(2)}</b></p>
-                        </div>
-
-                        <div className="flex gap-3">
-                            <button 
-                                onClick={() => {
-                                    const reason = prompt("Motivo da rejeição (Ex: Fraude, link quebrado):");
-                                    if(reason) handleAction('reject', reason);
-                                }}
-                                className="flex-1 border border-red-200 text-red-600 py-3 rounded-lg font-bold hover:bg-red-50"
-                            >
-                                Rejeitar
-                            </button>
-                            <button 
-                                onClick={() => {
-                                    const val = document.getElementById('auditViews').value;
-                                    if(!val) return alert("Digite as views auditadas!");
-                                    handleAction('approve', { realViews: parseInt(val) });
-                                }}
-                                className="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 shadow-lg"
-                            >
-                                Aprovar e Pagar
-                            </button>
-                        </div>
-                    </div>
+                    </motion.div>
                 )}
-            </Modal>
+            </AnimatePresence>
         </div>
-    );
-};
+    )
+}
 
-// --- CLIPPER MODULE ---
+const Faq = () => {
+    const faqs = [
+        { q: "Minha rotina é corrida, consigo acompanhar?", a: "O acesso é vitalício e as aulas são otimizadas. Perfeito pra quem tem pouco tempo." },
+        { q: "Tenho zero conhecimento, serve para mim?", a: "Sim! Começamos do absoluto zero até a fluência natural." },
+        { q: "Tem certificado aprovado pelo MEC?", a: "Seu certificado será o resultado ensurdecedor na hora que você abrir a boca pra falar com um nativo." },
+        { q: "Caso eu mude de ideia, tenho garantia?", a: "100% livre de risco. Você tem 7 dias para testar, se não curtir, devolvemos seu dinheiro." }
+    ];
 
-const Marketplace = () => {
-    const { user, profile } = useAuth();
-    const showToast = useToast();
-    const [campaigns, setCampaigns] = useState([]);
-    const [filter, setFilter] = useState('');
-    const [submitModal, setSubmitModal] = useState(null);
-    
-    // Form State
-    const [link, setLink] = useState('');
-    const [views, setViews] = useState('');
-    const [printFile, setPrintFile] = useState(null); // Simulated
+    return (
+        <section className="py-24 px-6 bg-[#050510]">
+            <div className="max-w-3xl mx-auto">
+                <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-white">
+                    Perguntas <span className="text-emerald-400">Frequentes</span>
+                </h2>
+                <div className="space-y-4">
+                    {faqs.map((f, i) => <FaqItem key={i} q={f.q} a={f.a} />)}
+                </div>
+            </div>
+        </section>
+    )
+}
 
+const Mentor = () => {
+    return (
+        <section className="py-32 px-6 bg-[#030308] border-t border-slate-900 border-b relative overflow-hidden">
+            {/* Abstract background shape */}
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+            <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
+                <div className="w-full md:w-5/12">
+                    <TiltCard className="aspect-[4/5] bg-slate-800 rounded-[2rem] overflow-hidden flex items-center justify-center p-0 border-4 border-slate-800 shadow-2xl relative">
+                        {/* FOTO AQUI */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#030308] via-transparent to-transparent z-10"></div>
+                        <div className="text-slate-600 flex flex-col items-center">
+                            <Users className="w-16 h-16 mb-4 opacity-50" />
+                            <span>Foto Ronaldo Dias</span>
+                        </div>
+                    </TiltCard>
+                </div>
+                <div className="w-full md:w-7/12 text-slate-300">
+                    <h2 className="text-3xl md:text-5xl font-black text-white mb-8 tracking-tight">O mentor que estará com você</h2>
+                    <div className="space-y-6 text-lg font-light leading-relaxed">
+                        <p>Passei por quatro escolas, fiz aulas tradicionais, e a sensação sempre foi de frustração.</p>
+                        <p className="border-l-4 border-emerald-500 pl-4 py-2 bg-emerald-500/5 font-medium text-emerald-400 italic rounded-r-lg">
+                            "Descobri que o problema nunca foi comigo — e sim com o método arcaico."
+                        </p>
+                        <p>Mergulhei na memorização, destravei meu cérebro e decidi transformar isso num método prático que vai te poupar anos de batida de cabeça.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}
+
+// =====================================
+// Montagem Principal
+// =====================================
+const LandingPageRonaldoDias = () => {
     useEffect(() => {
-        const q = query(collection(db, "campaigns"), where("status", "==", "active"));
-        const unsub = onSnapshot(q, (snap) => {
-            setCampaigns(snap.docs.map(d => ({id: d.id, ...d.data()})));
-        });
-        return unsub;
+        document.title = "ITR | Inglês em Tempo Recorde";
     }, []);
 
-    const filtered = campaigns.filter(c => c.title.toLowerCase().includes(filter.toLowerCase()));
-
-    const handleSubmit = async () => {
-        if (!link || !views) return showToast("Preencha todos os campos", 'error');
-        
-        // Simulating Image Upload (In real app: uploadBytes to Firebase Storage -> getDownloadURL)
-        const fakeUrl = printFile ? URL.createObjectURL(printFile) : null; 
-
-        try {
-            await addDoc(collection(db, "submissions"), {
-                campaignId: submitModal.id,
-                campaignTitle: submitModal.title,
-                advertiserId: submitModal.advertiserId,
-                clipperId: user.uid,
-                clipperName: profile.displayName,
-                clipperSocial: profile.socialHandle,
-                videoLink: link,
-                printUrl: fakeUrl, // Use storage URL here in production
-                declaredViews: Number(views),
-                rpmSnapshot: submitModal.rpm,
-                status: 'pending',
-                createdAt: serverTimestamp()
-            });
-            showToast("Trabalho enviado para auditoria!", 'success');
-            setSubmitModal(null); setLink(''); setViews(''); setPrintFile(null);
-        } catch(e) {
-            showToast("Erro no envio", 'error');
-        }
-    };
-
     return (
-        <div className="space-y-6">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                <h1 className="text-2xl font-bold text-gray-800">Mural de Oportunidades</h1>
-                <div className="relative w-full md:w-64">
-                    <Search className="absolute left-3 top-3 text-gray-400" size={18}/>
-                    <input type="text" placeholder="Buscar campanhas..." className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" value={filter} onChange={e => setFilter(e.target.value)} />
-                </div>
-            </div>
+        <div className="min-h-screen bg-[#030308] font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+            <HeroSection />
+            <BentoBento />
+            <ParaVoceSection />
+            <Modulos />
+            <Exclusivo />
+            <Oferta />
+            <Faq />
+            <Mentor />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filtered.map(camp => (
-                    <div key={camp.id} className="bg-white rounded-xl border border-gray-200 hover:shadow-lg transition flex flex-col overflow-hidden group">
-                        <div className="p-6 flex-1">
-                            <div className="flex justify-between items-start mb-4">
-                                <div className="bg-purple-100 text-purple-700 p-2 rounded-lg font-bold text-xs uppercase tracking-wide">
-                                    {camp.hashtag}
-                                </div>
-                                <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded-full">
-                                    Ativa
-                                </span>
-                            </div>
-                            <h3 className="font-bold text-lg text-gray-900 mb-1">{camp.title}</h3>
-                            <p className="text-sm text-gray-500 mb-4">por {camp.advertiserName}</p>
-                            
-                            <div className="flex items-center gap-2 mb-4 bg-gray-50 p-3 rounded-lg">
-                                <TrendingUp className="text-green-600" size={20}/>
-                                <div>
-                                    <p className="text-xs text-gray-400 uppercase font-bold">Paga por 1k views</p>
-                                    <p className="text-lg font-black text-green-600">{CURRENCY.format(camp.rpm)}</p>
-                                </div>
-                            </div>
-
-                            <p className="text-sm text-gray-600 line-clamp-3 bg-yellow-50 p-3 rounded border border-yellow-100 text-xs">
-                                ⚠️ Regras: {camp.rules}
-                            </p>
-                        </div>
-                        <div className="p-4 bg-gray-50 border-t border-gray-100">
-                            <button 
-                                onClick={() => setSubmitModal(camp)}
-                                className="w-full bg-gray-900 text-white font-bold py-3 rounded-lg hover:bg-purple-600 transition flex items-center justify-center gap-2"
-                            >
-                                <UploadCloud size={18}/> Enviar Corte
-                            </button>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            {/* SUBMIT MODAL */}
-            <Modal isOpen={!!submitModal} onClose={() => setSubmitModal(null)} title={`Enviar para: ${submitModal?.title}`}>
-                <div className="space-y-4">
-                    <div>
-                        <label className="form-label">Link da Publicação (TikTok/Reels/Shorts)</label>
-                        <input type="url" className="input-field" placeholder="https://..." value={link} onChange={e => setLink(e.target.value)} />
-                    </div>
-                    <div>
-                        <label className="form-label">Visualizações Atuais</label>
-                        <input type="number" className="input-field" placeholder="0" value={views} onChange={e => setViews(e.target.value)} />
-                    </div>
-                    <div>
-                        <label className="form-label">Print das Estatísticas (Prova)</label>
-                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50 transition relative">
-                            <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setPrintFile(e.target.files[0])} accept="image/*" />
-                            <div className="text-gray-400">
-                                {printFile ? (
-                                    <span className="text-purple-600 font-bold">{printFile.name}</span>
-                                ) : (
-                                    <>
-                                        <ImageIcon className="mx-auto mb-2"/>
-                                        <span className="text-sm">Clique para enviar print</span>
-                                    </>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="pt-4">
-                         <div className="bg-blue-50 text-blue-800 p-3 rounded text-xs mb-4 flex gap-2">
-                             <Clock size={16}/>
-                             O vídeo deve ter sido postado há pelo menos 24 horas.
-                         </div>
-                         <button onClick={handleSubmit} className="w-full bg-purple-600 text-white font-bold py-3 rounded-lg hover:bg-purple-700">Enviar para Análise</button>
-                    </div>
-                </div>
-            </Modal>
+            <footer className="bg-[#030308] py-8 text-center border-t border-slate-900 border-b-8 border-b-emerald-600">
+                <p className="text-slate-600 font-medium">© 2024 Ronaldo Dias | ITR. Todos os direitos reservados.</p>
+            </footer>
         </div>
     );
 };
 
-// --- WALLET MODULE ---
-
-const WalletPage = () => {
-    const { user, profile } = useAuth();
-    const [transactions, setTransactions] = useState([]);
-
-    useEffect(() => {
-        // Query transactions related to this user
-        const q = query(collection(db, "transactions"), where("userId", "==", user.uid), orderBy("date", "desc"));
-        const unsub = onSnapshot(q, snap => {
-            setTransactions(snap.docs.map(d => ({id: d.id, ...d.data()})));
-        });
-        return unsub;
-    }, [user]);
-
-    return (
-        <div className="max-w-4xl mx-auto space-y-8">
-            <h1 className="text-2xl font-bold text-gray-800">Minha Carteira</h1>
-            
-            {/* Balance Card */}
-            <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-8 text-white shadow-xl flex justify-between items-center">
-                <div>
-                    <p className="text-gray-400 font-medium mb-1">Saldo Total</p>
-                    <h2 className="text-4xl font-black tracking-tight">{CURRENCY.format(profile?.balance || 0)}</h2>
-                    <p className="text-sm text-gray-500 mt-2 font-mono">{profile?.pixKey ? `PIX: ${profile.pixKey}` : 'Sem chave PIX cadastrada'}</p>
-                </div>
-                <div className="bg-white/10 p-4 rounded-xl backdrop-blur-sm">
-                    <Wallet size={40} className="text-purple-400"/>
-                </div>
-            </div>
-
-            {/* History Table */}
-            <div>
-                <h3 className="font-bold text-gray-700 mb-4">Histórico de Transações</h3>
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <table className="w-full text-left text-sm">
-                        <thead className="bg-gray-50 text-gray-500 font-semibold border-b border-gray-200">
-                            <tr>
-                                <th className="p-4">Data</th>
-                                <th className="p-4">Descrição</th>
-                                <th className="p-4 text-right">Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                            {transactions.map(tx => (
-                                <tr key={tx.id}>
-                                    <td className="p-4 text-gray-500">{tx.date?.toDate().toLocaleString()}</td>
-                                    <td className="p-4 font-medium capitalize">
-                                        {tx.type === 'payment' ? 'Recebimento por Corte' : 
-                                         tx.type === 'payment_fee' ? 'Pagamento de Campanha' : 
-                                         tx.type === 'deposit' ? 'Depósito Inicial' : tx.type}
-                                    </td>
-                                    <td className={`p-4 text-right font-bold ${tx.amount > 0 ? 'text-green-600' : 'text-gray-900'}`}>
-                                        {tx.amount > 0 ? '+' : ''}{CURRENCY.format(tx.amount)}
-                                    </td>
-                                </tr>
-                            ))}
-                            {transactions.length === 0 && (
-                                <tr>
-                                    <td colSpan="3" className="p-8 text-center text-gray-400">Nenhuma movimentação ainda.</td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-/* ==================================================================================
-   5. ROUTER & APP LAYOUT
-   ================================================================================== */
-
-const AppLayout = () => {
-    const { profile } = useAuth();
-    if (!profile) return <Navigate to="/auth" />;
-
-    return (
-        <div className="flex min-h-screen bg-gray-50 font-sans">
-            <Sidebar />
-            <main className="flex-1 md:ml-64 p-4 md:p-8 overflow-y-auto">
-                <div className="max-w-7xl mx-auto animate-fadeIn">
-                    <Routes>
-                        {/* Rotas Dinâmicas baseadas na Role */}
-                        <Route path="/" element={profile.role === 'advertiser' ? <AdvertiserDashboard /> : <div className="text-center py-20"><h1 className="text-3xl font-bold">Bem vindo, Clipador!</h1><p className="text-gray-500 mb-6">Vá ao mercado para começar.</p><Link to="/marketplace" className="btn-primary">Ir ao Mercado</Link></div>} />
-                        
-                        {/* Advertiser Routes */}
-                        {profile.role === 'advertiser' && (
-                            <>
-                                <Route path="/campaigns/new" element={<CreateCampaign />} />
-                                <Route path="/audit" element={<AuditSubmissions />} />
-                            </>
-                        )}
-
-                        {/* Clipper Routes */}
-                        {profile.role === 'clipper' && (
-                            <>
-                                <Route path="/marketplace" element={<Marketplace />} />
-                                <Route path="/submissions" element={<div className="p-4">Histórico de Envios (Implementar Reuse de Tabela)</div>} />
-                            </>
-                        )}
-
-                        {/* Shared Routes */}
-                        <Route path="/wallet" element={<WalletPage />} />
-                        <Route path="*" element={<Navigate to="/" />} />
-                    </Routes>
-                </div>
-            </main>
-        </div>
-    );
-};
-
-const App = () => {
-  return (
-    <Router>
-      <AuthProvider>
-        <ToastProvider>
-            <Routes>
-                <Route path="/auth" element={<AuthPage />} />
-                <Route path="/*" element={<AppLayout />} />
-            </Routes>
-        </ToastProvider>
-      </AuthProvider>
-    </Router>
-  );
-};
-
-// CSS in JS Utility classes (Simulated tailwind injection for clarity if missing)
-const styles = `
-    .input-field { @apply w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all; }
-    .form-label { @apply block text-sm font-bold text-gray-700 mb-1; }
-    .btn-primary { @apply bg-purple-600 text-white font-bold py-2 px-4 rounded hover:bg-purple-700 transition; }
-`;
-
-export default App;
+export default LandingPageRonaldoDias;
