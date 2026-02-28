@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
 import {
     Brain, CheckCircle, Clock, BookOpen, MessageCircle,
-    Shield, Award, Globe, Play, Sparkles, ChevronDown, ChevronUp, Bot, Users, Gift, MonitorPlay, Plane, Star, ArrowRight, Smartphone
+    Shield, Award, Globe, Play, Sparkles, ChevronDown, ChevronUp, Bot, Users, Gift, MonitorPlay, Plane, Star, ArrowRight, Smartphone, Zap, ArrowRightCircle
 } from 'lucide-react';
 import './index.css';
 
@@ -138,18 +138,27 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-lg md:text-xl text-slate-300 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-semibold underline decoration-emerald-500/30 underline-offset-8"
+                        className="text-lg md:text-xl text-slate-300 mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed font-bold"
                     >
-                        Destrave sua Fluência e Fale Inglês com Naturalidade.
+                        O Fim da Tradução Mental: Destrave sua Fluência e Fale Inglês com Naturalidade.
                     </motion.p>
 
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.25 }}
-                        className="text-base md:text-lg text-slate-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
+                        className="text-base md:text-lg text-slate-400 mb-4 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
                     >
-                        Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar.
+                        Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar — mesmo que você já tenha tentado de tudo.
+                    </motion.p>
+
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.28 }}
+                        className="text-base md:text-lg text-emerald-400/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium italic"
+                    >
+                        Você não precisa de mais anos pagando mensalidades para aprender gramática na teoria. Você precisa da ordem certa para construir a sua fluência.
                     </motion.p>
 
                     <motion.div
@@ -160,8 +169,8 @@ const HeroSection = () => {
                     >
                         {[
                             { title: "Destrua o bloqueio da fala", desc: "Forme frases instantaneamente, sem traduzir palavra por palavra." },
-                            { title: "Absorção em Tempo Recorde", desc: "Memorize o vocabulário estratégico que os nativos realmente usam." },
-                            { title: "Método Validado", desc: "Prática real para ter segurança na comunicação hoje mesmo." }
+                            { title: "Absorção em Tempo Recorde", desc: "Memorize o vocabulário estratégico de alta frequência que os nativos realmente usam." },
+                            { title: "Método Validado", desc: "A aplicação prática para você sair da teoria e ter segurança na comunicação hoje mesmo." }
                         ].map((item, idx) => (
                             <div key={idx} className="flex items-start gap-3">
                                 <div className="mt-1 bg-emerald-500/20 p-1 rounded-full">
@@ -177,7 +186,7 @@ const HeroSection = () => {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
+                        transition={{ duration: 0.6, delay: 0.35 }}
                         className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start"
                     >
                         <div className="flex flex-col items-center lg:items-start gap-4">
@@ -261,147 +270,69 @@ const HeroSection = () => {
     );
 };
 
-const ProblemSection = () => {
+const BentoBento = () => {
     return (
-        <section className="py-24 px-6 bg-[#030308] border-t border-slate-900/50">
-            <div className="max-w-4xl mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-8 tracking-tight">
-                        <span className="text-red-500">🚨 O PROBLEMA REAL:</span> <br />
-                        Por que você ainda trava?
-                    </h2>
-                    <p className="text-xl text-slate-300 leading-relaxed font-light">
-                        A grande maioria das pessoas passa anos matriculada em escolas de inglês... <br />
-                        <span className="text-white font-semibold">Mas continua travando na hora de falar.</span>
-                    </p>
-                </motion.div>
-
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="space-y-6 text-slate-400 text-lg font-light leading-relaxed"
-                    >
-                        <p>
-                            O coração acelera, o suor frio bate e a voz simplesmente some.
-                            Não é falta de inteligência. Não é falta de esforço.
-                            <strong className="text-white"> É porque você começou pelo lugar errado.</strong>
-                        </p>
-                        <p>
-                            As escolas tradicionais forçam você a dominar regras gramaticais complexas antes de te dar o bloco de construção básico: <span className="text-emerald-400 underline decoration-emerald-500/30 underline-offset-4">as palavras.</span>
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="bg-slate-900/50 border border-slate-800 p-8 rounded-3xl relative overflow-hidden group"
-                    >
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-2xl rounded-full"></div>
-                        <p className="relative z-10 text-slate-300 italic">
-                            "Você pode saber todas as regras, mas se a palavra não vier à mente em milissegundos, você não consegue formar a frase."
-                        </p>
-                        <div className="mt-6 flex items-center gap-4">
-                            <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
-                                <motion.div
-                                    initial={{ width: "100%" }}
-                                    whileInView={{ width: "30%" }}
-                                    transition={{ duration: 2, delay: 0.5 }}
-                                    className="h-full bg-red-500"
-                                />
-                            </div>
-                            <span className="text-xs text-red-400 font-bold whitespace-nowrap">BLOQUEIO MENTAL</span>
-                        </div>
-                    </motion.div>
-                </div>
-            </div>
-        </section>
-    );
-};
-
-const SolutionSection = () => {
-    return (
-        <section className="py-24 px-6 bg-gradient-to-b from-[#030308] to-[#050510] relative overflow-hidden">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"></div>
-
-            <div className="max-w-4xl mx-auto text-center relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                >
-                    <div className="inline-block px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-bold mb-6">
-                        A SOLUÇÃO LÓGICA
-                    </div>
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-8 tracking-tight">
-                        A fluência <span className="text-emerald-400">não começa</span> na gramática.
-                    </h2>
-                    <p className="text-xl text-slate-300 leading-relaxed mb-12">
-                        Ela começa na ativação inteligente do seu vocabulário. Cerca de 80% das conversas são sustentadas por um grupo pequeno de palavras.
-                    </p>
-
-                    <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 p-8 md:p-12 rounded-[2.5rem] shadow-2xl shadow-emerald-500/5">
-                        <p className="text-2xl md:text-3xl text-white font-medium mb-4 leading-snug">
-                            O <span className="text-emerald-400 font-black">Método ITR</span> foi criado para inverter a lógica ultrapassada.
-                        </p>
-                        <p className="text-slate-400">Domine primeiro o que realmente importa e o resto virá naturalmente.</p>
-                    </div>
-                </motion.div>
-            </div>
-        </section>
-    );
-};
-
-const HowItWorks = () => {
-    const pillars = [
-        {
-            icon: <Zap className="w-8 h-8 text-emerald-400" />,
-            title: "O Filtro de Alta Frequência",
-            desc: "Você aprende primeiro o que realmente é usado na vida real, ignorando palavras que você raramente vai precisar."
-        },
-        {
-            icon: <Brain className="w-8 h-8 text-emerald-400" />,
-            title: "Engenharia da Memorização",
-            desc: "Associação visual e ancoragem mental para transformar palavras passivas em vocabulário ativo. O que você aprende, não esquece mais."
-        },
-        {
-            icon: <ArrowRightCircle className="w-8 h-8 text-emerald-400" />,
-            title: "Aplicação Imediata",
-            desc: "Você aprende, fixa e usa. Esse ciclo contínuo gera evolução perceptível em semanas, não em anos."
-        }
-    ];
-
-    return (
-        <section className="py-24 px-6 bg-[#050510]">
+        <section className="py-32 px-6 bg-[#030308] relative">
             <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tight">
-                        Engrenagens do <span className="text-emerald-400 text-glow">Método ITR</span>
+                <div className="text-center mb-20">
+                    <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                        O que você vai <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">conquistar</span>
                     </h2>
-                    <p className="text-slate-400 max-w-2xl mx-auto font-light">
-                        Dividimos o aprendizado em três pilares estratégicos para máxima eficiência.
+                    <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+                        Abandone os métodos antigos. O ITR é desenhado para acelerar o seu cérebro, construir vocabulário e destravar a sua língua.
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8">
-                    {pillars.map((p, i) => (
-                        <TiltCard key={i} className="h-full">
-                            <div className="bg-slate-900/50 border border-slate-800 p-8 rounded-[2rem] h-full flex flex-col hover:border-emerald-500/30 transition-colors group">
-                                <div className="mb-6 bg-emerald-500/10 w-16 h-16 rounded-2xl flex items-center justify-center border border-emerald-500/20 group-hover:scale-110 transition-transform">
-                                    {p.icon}
-                                </div>
-                                <h3 className="text-xl font-bold text-white mb-4">{p.title}</h3>
-                                <p className="text-slate-400 leading-relaxed font-light">{p.desc}</p>
-                            </div>
-                        </TiltCard>
-                    ))}
+                {/* Bento Grid layout */}
+                <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 max-w-5xl mx-auto">
+
+                    {/* Card 1 - Grande */}
+                    <TiltCard className="md:col-span-2 md:row-span-1 p-8 group">
+                        <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
+                            <MessageCircle className="text-emerald-400 w-6 h-6" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">Confiança na Conversão</h3>
+                        <p className="text-slate-400 leading-relaxed font-light text-lg">
+                            Domine a conversação e a escuta com extrema naturalidade. Sem travar na hora de responder, apenas a fala fluindo.
+                        </p>
+                    </TiltCard>
+
+                    {/* Card 2 */}
+                    <TiltCard className="p-8 group">
+                        <div className="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
+                            <Clock className="text-blue-400 w-6 h-6" />
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-3">Tempo Recorde</h3>
+                        <p className="text-slate-400 leading-relaxed font-light">
+                            Memorize centenas de palavras novas de forma permanente, otimizando o seu tempo de estudos.
+                        </p>
+                    </TiltCard>
+
+                    {/* Card 3 */}
+                    <TiltCard className="p-8 group">
+                        <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
+                            <Shield className="text-purple-400 w-6 h-6" />
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-3">Método Validado</h3>
+                        <p className="text-slate-400 leading-relaxed font-light">
+                            Testado e aprovado por pessoas reais que saíram do zero à fluência sem complicações.
+                        </p>
+                    </TiltCard>
+
+                    {/* Card 4 - Grande */}
+                    <TiltCard className="md:col-span-2 md:row-span-1 p-8 group overflow-hidden relative">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <Brain className="w-32 h-32" />
+                        </div>
+                        <div className="w-12 h-12 bg-teal-500/10 rounded-2xl flex items-center justify-center mb-6 border border-teal-500/20 group-hover:bg-teal-500/20 transition-colors">
+                            <Sparkles className="text-teal-400 w-6 h-6" />
+                        </div>
+                        <h3 className="text-3xl font-bold text-white mb-3 tracking-tight">O Fim da Tradução Mental</h3>
+                        <p className="text-slate-400 leading-relaxed font-light text-lg max-w-md relative z-10">
+                            Desenvolva o mecanismo interno para <strong className="text-white">pensar diretamente em inglês</strong>, como um nativo faria.
+                        </p>
+                    </TiltCard>
+
                 </div>
             </div>
         </section>
@@ -522,73 +453,72 @@ const FormationList = () => {
     );
 };
 
-const EvolucaoFases = () => {
-    const fases = [
-        { num: 0, title: "Fase 0: Preparação", sub: "Mental e Estratégia", desc: "Entenda como o seu cérebro aprende idiomas e como usar isso a seu favor desde o dia um." },
-        { num: 1, title: "Fase 1: Vocabulário", sub: "Base Essencial", desc: "Domínio absoluto do vocabulário mais importante e estratégico da língua inglesa." },
-        { num: 2, title: "Fase 2: Conversação", sub: "Destravando a fala", desc: "Aprenda a organizar frases com mais naturalidade e segurança, sem medo de errar." },
-        { num: 3, title: "Fase 3: Consolidação", sub: "Nível Intermediário", desc: "Ampliação de vocabulário e compreensão de estruturas mais avançadas." },
-        { num: 4, title: "Fase 4: Evolução", sub: "Velocidade Contínua", desc: "Ferramentas práticas para continuar crescendo sem depender de um curso para sempre." }
+const Modulos = () => {
+    const modulos = [
+        { num: "0", title: "Comece por aqui", desc: "Apresentação detalhada da metodologia." },
+        { num: "1", title: "A Base do Método", desc: "Técnicas iniciais para preparar sua mente." },
+        { num: "2", title: "Inglês Zero e Básico", desc: "Direcionamento p/ quem está começando do zero." },
+        { num: "3", title: "Inglês Intermediário", desc: "Focado em quem entende algo, mas trava ao evoluir." },
+        { num: "4", title: "Inglês Avançado", desc: "Destrave dificuldades em níveis profundos." },
+        { num: "5", title: "O Próximo Nível", desc: "Kit prático para manter sua evolução eterna." }
     ];
 
     return (
-        <section className="py-24 px-6 bg-[#030308] relative">
+        <section className="py-32 px-6 bg-[#030308] border-t border-slate-900">
             <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-20">
-                    <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
-                        Jornada de <span className="text-emerald-400">Evolução</span>
-                    </h2>
-                    <p className="text-slate-400 text-lg max-w-2xl mx-auto font-light">
-                        Um plano de ação cirúrgico e organizado:
-                    </p>
-                </div>
+                <h2 className="text-3xl md:text-5xl font-bold text-center mb-20 text-white">
+                    Estrutura <span className="text-teal-400 font-black">Completa</span>
+                </h2>
 
-                <div className="grid gap-6 max-w-4xl mx-auto">
-                    {fases.map((f, i) => (
-                        <div key={i} className="flex flex-col md:flex-row gap-6 items-center bg-slate-900/30 border border-slate-800 rounded-3xl p-8 hover:border-emerald-500/30 transition-colors group">
-                            <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-2xl font-black text-emerald-400 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-all duration-300">
-                                {f.num}
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-bold text-white mb-1">{f.title}</h3>
-                                <p className="text-emerald-400 font-bold text-xs tracking-widest uppercase mb-3">{f.sub}</p>
-                                <p className="text-slate-400 font-light leading-relaxed">{f.desc}</p>
-                            </div>
-                        </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {modulos.map((mod, i) => (
+                        <TiltCard key={i} className="bg-slate-900/40 p-8 border-slate-800/80 hover:border-teal-500/30">
+                            <span className="text-teal-400/20 text-6xl font-black absolute top-4 right-4 pointer-events-none">{mod.num}</span>
+                            <h3 className="text-xl font-bold text-white mb-3 mt-4 relative z-10">Módulo {mod.num} <br /> <span className="text-teal-400">{mod.title}</span></h3>
+                            <p className="text-slate-400 font-light relative z-10">{mod.desc}</p>
+                        </TiltCard>
                     ))}
                 </div>
             </div>
         </section>
-    );
-};
+    )
+}
 
 const ParaVoceSection = () => {
     return (
-        <section className="py-24 px-6 bg-[#050510] border-t border-slate-900/50">
-            <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-4xl md:text-6xl font-black text-white mb-16 tracking-tight">
-                    Esse método é <span className="text-emerald-400 text-glow">exatamente</span> para quem:
+        <section className="py-24 px-6 bg-[#050510]">
+            <div className="max-w-4xl mx-auto">
+                <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-white">
+                    Esse curso é <span className="text-emerald-400 font-black">para você</span>
                 </h2>
-                <div className="grid gap-4 text-left">
+
+                <div className="space-y-4">
                     {[
-                        "Já tentou aprender inglês, desistiu no meio do caminho e sente que sempre trava.",
-                        "Estuda, mas não consegue transformar o conhecimento passivo em fala ativa.",
-                        "Quer acelerar sua evolução de forma estratégica para viagens ou carreira.",
-                        "Está cansado de metodologias lentas que ensinam regra atrás de regra."
+                        { text: "Já fez curso de inglês e desistiu no meio do caminho", delay: 0 },
+                        { text: "Está fazendo inglês e quer acelerar brutalmente seus resultados", delay: 0.1 },
+                        { text: "Terminou um curso, mas sente que empacou na conversação", delay: 0.2 },
+                        { text: "Nunca aprendeu inglês até hoje por causa de métodos travados", delay: 0.3 },
+                        { text: "Quer atingir a fluência em tempo recorde de uma vez por todas", delay: 0.4 }
                     ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-6 bg-slate-900/50 border border-slate-800 p-6 rounded-2xl hover:bg-slate-800/80 transition-all">
-                            <CheckCircle className="text-emerald-400 w-6 h-6 shrink-0" />
-                            <p className="text-slate-300 font-medium md:text-lg">{item}</p>
-                        </div>
+                        <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: item.delay, duration: 0.5 }}
+                            className="group flex items-center bg-slate-900/50 p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-800 transition-all cursor-default"
+                        >
+                            <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center mr-6 shrink-0 group-hover:scale-110 transition-transform">
+                                <CheckCircle className="w-5 h-5 text-emerald-400" />
+                            </div>
+                            <p className="text-slate-300 font-medium md:text-lg">{item.text}</p>
+                        </motion.div>
                     ))}
                 </div>
-                <p className="mt-12 text-slate-500 italic text-sm font-medium">
-                    Aviso: Este treinamento não é para quem quer mil PDFs de teoria infinita. É para quem busca resultado prático.
-                </p>
             </div>
         </section>
-    );
-};
+    )
+}
 
 const Exclusivo = () => {
     return (
@@ -815,13 +745,11 @@ const LandingPageRonaldoDias = () => {
     return (
         <div className="min-h-screen bg-[#030308] font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
             <HeroSection />
-            <ProblemSection />
-            <SolutionSection />
-            <HowItWorks />
-            <EvolucaoFases />
-            <ParaVoceSection />
+            <BentoBento />
             <ProvasSociais />
             <FormationList />
+            <Modulos />
+            <ParaVoceSection />
             <Exclusivo />
             <Oferta />
             <Faq />
