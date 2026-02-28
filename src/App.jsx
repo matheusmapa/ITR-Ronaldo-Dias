@@ -108,10 +108,10 @@ const HeroSection = () => {
             {/* Grid pattern */}
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUscDAuMDUpIi8+PC9zdmc+')] opacity-20"></div>
 
-            <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
+            <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
 
-                {/* Lado Esquerdo - Textos */}
-                <div className="w-full lg:w-1/2 text-center lg:text-left">
+                {/* Lado Esquerdo - Textos (60%) */}
+                <div className="w-full lg:w-[60%] text-center lg:text-left">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -138,7 +138,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-lg md:text-xl text-emerald-400 mb-3 max-w-xl mx-auto lg:mx-0 leading-relaxed font-bold uppercase tracking-widest"
+                        className="text-lg md:text-xl text-emerald-400 mb-2 max-w-xl mx-auto lg:mx-0 leading-relaxed font-bold uppercase tracking-widest"
                     >
                         Destrave sua Fluência e Fale Inglês com Naturalidade.
                     </motion.p>
@@ -147,7 +147,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.25 }}
-                        className="text-base md:text-lg text-slate-400 mb-3 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
+                        className="text-base md:text-lg text-slate-400 mb-2 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
                     >
                         Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar — mesmo que você já tenha tentado de tudo.
                     </motion.p>
@@ -156,7 +156,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.28 }}
-                        className="text-base md:text-lg text-emerald-400/80 mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium italic"
+                        className="text-base md:text-lg text-emerald-400/80 mb-4 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium italic"
                     >
                         Você não precisa de mais anos pagando mensalidades para aprender gramática na teoria. Você precisa da ordem certa para construir a sua fluência.
                     </motion.p>
@@ -165,7 +165,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
-                        className="space-y-3 mb-6 text-left max-w-xl mx-auto lg:mx-0"
+                        className="space-y-2 mb-4 text-left max-w-xl mx-auto lg:mx-0"
                     >
                         {[
                             { title: "Destrua o bloqueio da fala", desc: "Forme frases instantaneamente, sem traduzir palavra por palavra." },
@@ -187,14 +187,14 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.35 }}
-                        className="flex flex-col sm:flex-row items-center gap-8 justify-center lg:justify-start pt-2"
+                        className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start pt-1"
                     >
-                        <div className="flex flex-col items-center lg:items-start gap-3">
+                        <div className="flex flex-col items-center lg:items-start gap-2">
                             <MagneticButton onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
                                 QUERO ACELERAR MEU INGLÊS AGORA
                             </MagneticButton>
-                            <p className="text-[10px] md:text-xs text-slate-500 font-medium tracking-wide">
-                                Acesso Imediato • 7 Dias de Garantia • Pagamento Único
+                            <p className="text-[10px] text-slate-500 font-medium tracking-wide">
+                                Acesso Imediato • 7 Dias de Garantia
                             </p>
                         </div>
 
@@ -218,19 +218,19 @@ const HeroSection = () => {
                     </motion.div>
                 </div>
 
-                {/* Lado Direito - 3D Mockup */}
-                <div className="w-full lg:w-1/2 flex justify-center perspective-[2000px]">
+                {/* Lado Direito - 3D Mockup (40%) */}
+                <div className="w-full lg:w-[40%] flex justify-center perspective-[2000px]">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8, rotateY: -15, rotateX: 10 }}
-                        animate={{ opacity: 1, scale: 1, rotateY: -5, rotateX: 5 }}
+                        animate={{ opacity: 1, scale: 0.9, rotateY: -5, rotateX: 5 }}
                         transition={{ duration: 1, type: 'spring', bounce: 0.4 }}
-                        className="w-full max-w-lg relative group"
+                        className="w-full max-w-sm relative group"
                     >
-                        <div className="absolute -inset-1 bg-gradient-to-tr from-emerald-500 to-teal-600 rounded-[2.5rem] blur-2xl opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+                        <div className="absolute -inset-1 bg-gradient-to-tr from-emerald-500 to-teal-600 rounded-[2.5rem] blur-2xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
 
-                        <TiltCard className="p-2 bg-slate-900/80 rounded-[2rem] border border-slate-700/50 shadow-2xl backdrop-blur-3xl">
-                            <div className="rounded-[1.5rem] bg-[#0A0A12] border border-slate-800 p-8 pt-10 h-[500px] flex flex-col relative overflow-hidden">
-                                <div className="absolute top-4 right-4 text-emerald-500/20 scale-150 rotate-12"><Brain size={180} /></div>
+                        <TiltCard className="p-1.5 bg-slate-900/80 rounded-[2rem] border border-slate-700/50 shadow-2xl backdrop-blur-3xl">
+                            <div className="rounded-[1.5rem] bg-[#0A0A12] border border-slate-800 p-6 pt-8 h-[380px] flex flex-col relative overflow-hidden">
+                                <div className="absolute top-2 right-2 text-emerald-500/10 scale-125 rotate-12"><Brain size={120} /></div>
 
                                 <h3 className="text-3xl font-black text-white mb-2 z-10 flex items-center gap-3">
                                     MÉTODO <span className="text-emerald-400">ITR</span>
