@@ -144,41 +144,11 @@ const HeroSection = () => {
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.25 }}
-                    className="text-sm md:text-base text-slate-400 mb-2 max-w-3xl mx-auto leading-relaxed font-light"
+                    className="text-sm md:text-base text-slate-400 mb-8 max-w-3xl mx-auto leading-relaxed font-light"
                 >
                     Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar — mesmo que você já tenha tentado de tudo.
                 </motion.p>
 
-                <motion.p
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.28 }}
-                    className="text-sm md:text-base text-emerald-400/80 mb-5 max-w-2xl mx-auto leading-relaxed font-medium italic"
-                >
-                    Você não precisa de mais anos pagando mensalidades para aprender gramática na teoria. Você precisa da ordem certa para construir a sua fluência.
-                </motion.p>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6 text-left max-w-5xl mx-auto"
-                >
-                    {[
-                        { title: "Destrua o bloqueio da fala", desc: "Forme frases instantaneamente, sem traduzir palavra por palavra." },
-                        { title: "Absorção em Tempo Recorde", desc: "Memorize o vocabulário estratégico de alta frequência que os nativos realmente usam." },
-                        { title: "Método Validado", desc: "A aplicação prática para você sair da teoria e ter segurança na comunicação hoje mesmo." }
-                    ].map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-3 bg-white/5 p-3.5 rounded-xl border border-white/10 hover:border-emerald-500/30 transition-colors">
-                            <div className="mt-0.5 bg-emerald-500/20 p-1 rounded-full shrink-0">
-                                <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-                            </div>
-                            <p className="text-slate-300 text-[11px] md:text-xs">
-                                <strong className="text-white font-bold block mb-0.5">{item.title}:</strong> {item.desc}
-                            </p>
-                        </div>
-                    ))}
-                </motion.div>
 
                 <motion.div
                     initial={{ opacity: 0, y: 15 }}
@@ -212,6 +182,37 @@ const HeroSection = () => {
                             <span className="text-[10px] text-slate-400 font-bold tracking-tight whitespace-nowrap">+1.200 alunos satisfeitos</span>
                         </div>
                     </div>
+                </motion.div>
+            </div>
+        </section>
+    );
+};
+
+const BeneficiosTransition = () => {
+    return (
+        <section className="bg-[#050510] py-6 px-6 relative z-20 -mt-10 mb-10">
+            <div className="max-w-5xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.6 }}
+                    className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                >
+                    {[
+                        { title: "Destrua o bloqueio da fala", desc: "Forme frases instantaneamente, sem traduzir palavra por palavra." },
+                        { title: "Absorção em Tempo Recorde", desc: "Memorize o vocabulário estratégico de alta frequência que os nativos realmente usam." },
+                        { title: "Método Validado", desc: "A aplicação prática para você sair da teoria e ter segurança na comunicação hoje mesmo." }
+                    ].map((item, idx) => (
+                        <div key={idx} className="flex items-start gap-3 bg-[#0a0f18]/80 backdrop-blur-sm p-5 rounded-2xl border border-white/5 hover:border-emerald-500/30 transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+                            <div className="mt-1 bg-emerald-500/10 p-1.5 rounded-full shrink-0 border border-emerald-500/20">
+                                <CheckCircle className="w-4 h-4 text-emerald-400" />
+                            </div>
+                            <p className="text-slate-300 text-[12px] md:text-sm leading-relaxed">
+                                <strong className="text-white font-bold block mb-1 tracking-wide">{item.title}</strong> {item.desc}
+                            </p>
+                        </div>
+                    ))}
                 </motion.div>
             </div>
         </section>
@@ -526,6 +527,10 @@ const Oferta = () => {
                     <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTYsMTg1LDEyOSwwLjA1KSIvPjwvc3ZnPg==')] opacity-40"></div>
 
                     <div className="p-10 md:p-16 text-center relative z-10 flex flex-col items-center">
+                        <p className="text-base md:text-lg text-emerald-400/90 mb-6 max-w-2xl mx-auto leading-relaxed font-medium italic border-l-2 border-r-2 border-emerald-500/30 px-6">
+                            "Você não precisa de mais anos pagando mensalidades para aprender gramática na teoria. Você precisa da ordem certa para construir a sua fluência."
+                        </p>
+
                         <h2 className="text-3xl md:text-5xl font-black text-white mb-4">A hora de agir é <span className="text-emerald-400">agora</span></h2>
                         <p className="text-slate-400 text-lg mb-10 max-w-xl">
                             Tenha acesso imediato a todo o método ITR, todos os módulos e todos os bônus exclusivos.
@@ -693,6 +698,7 @@ const LandingPageRonaldoDias = () => {
     return (
         <div className="min-h-screen bg-[#030308] font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
             <HeroSection />
+            <BeneficiosTransition />
             <BentoBento />
             <ProvasSociais />
             <FormationList />
