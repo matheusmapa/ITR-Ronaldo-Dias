@@ -39,7 +39,7 @@ Contexto e Visual: Antes de gerar código para o ITR, considere o design voltado
 Passos Curtos e Validação: Vamos construir e ajustar as seções da página uma a uma (Hero, Prova Social, Módulos, FAQ) e testar a responsividade no Vite antes do deploy.
 
 Sem instalações surpresa: Explique a necessidade de qualquer nova biblioteca (como animações de scroll ou componentes de vídeo) antes de sugerir o comando de instalação.
-
+Evitar Correntes Longas de Comandos: Para garantir que o `SafeToAutoRun` funcione sem interrupções, evite enviar cadeias muito longas ou complexas de comandos em uma única linha (usando `;`), especialmente se incluírem acessos externos via `curl`. Divida a execução em blocos lógicos menores ou scripts dedicados para manter o fluxo dinâmico e sem pedidos de confirmação desnecessários.
 Resolução de Bugs: Enviarei os erros do console ou terminal e analisaremos juntos a causa antes de qualquer correção.
 
 Idioma e Tom: Toda a comunicação e o código serão em português do Brasil, mantendo um tom motivador e profissional, condizente com um curso de sucesso.
