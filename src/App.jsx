@@ -100,7 +100,7 @@ const TiltCard = ({ children, className = '' }) => {
 
 const HeroSection = () => {
     return (
-        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#050510] pt-16 pb-6">
+        <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#050510] pt-12 pb-6">
             {/* Background Gradients (Apple Style) */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/20 blur-[120px] rounded-full pointer-events-none"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/10 blur-[100px] rounded-full pointer-events-none"></div>
@@ -110,20 +110,20 @@ const HeroSection = () => {
 
             <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-semibold mb-4 backdrop-blur-md"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-3 backdrop-blur-md"
                 >
-                    <Sparkles className="w-4 h-4" />
+                    <Sparkles className="w-3.5 h-3.5" />
                     <span>ITR | Inglês em Tempo Recorde</span>
                 </motion.div>
 
                 <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
-                    className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] mb-4 tracking-tight"
+                    className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-3 tracking-tight"
                 >
                     O Fim da <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 text-glow">
@@ -132,59 +132,59 @@ const HeroSection = () => {
                 </motion.h1>
 
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="text-lg md:text-xl text-emerald-400 mb-2 max-w-2xl mx-auto leading-relaxed font-bold uppercase tracking-widest"
+                    className="text-base md:text-lg text-emerald-400 mb-1.5 max-w-2xl mx-auto leading-relaxed font-bold uppercase tracking-widest"
                 >
                     Destrave sua Fluência e Fale Inglês com Naturalidade.
                 </motion.p>
 
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.25 }}
-                    className="text-base md:text-lg text-slate-400 mb-2 max-w-3xl mx-auto leading-relaxed font-light"
+                    className="text-sm md:text-base text-slate-400 mb-2 max-w-3xl mx-auto leading-relaxed font-light"
                 >
                     Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar — mesmo que você já tenha tentado de tudo.
                 </motion.p>
 
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.28 }}
-                    className="text-base md:text-lg text-emerald-400/80 mb-6 max-w-2xl mx-auto leading-relaxed font-medium italic"
+                    className="text-sm md:text-base text-emerald-400/80 mb-5 max-w-2xl mx-auto leading-relaxed font-medium italic"
                 >
                     Você não precisa de mais anos pagando mensalidades para aprender gramática na teoria. Você precisa da ordem certa para construir a sua fluência.
                 </motion.p>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.3 }}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-left max-w-5xl mx-auto"
+                    className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6 text-left max-w-5xl mx-auto"
                 >
                     {[
                         { title: "Destrua o bloqueio da fala", desc: "Forme frases instantaneamente, sem traduzir palavra por palavra." },
                         { title: "Absorção em Tempo Recorde", desc: "Memorize o vocabulário estratégico de alta frequência que os nativos realmente usam." },
                         { title: "Método Validado", desc: "A aplicação prática para você sair da teoria e ter segurança na comunicação hoje mesmo." }
                     ].map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-3 bg-white/5 p-4 rounded-2xl border border-white/10 hover:border-emerald-500/30 transition-colors">
-                            <div className="mt-1 bg-emerald-500/20 p-1 rounded-full shrink-0">
-                                <CheckCircle className="w-4 h-4 text-emerald-400" />
+                        <div key={idx} className="flex items-start gap-3 bg-white/5 p-3.5 rounded-xl border border-white/10 hover:border-emerald-500/30 transition-colors">
+                            <div className="mt-0.5 bg-emerald-500/20 p-1 rounded-full shrink-0">
+                                <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
                             </div>
-                            <p className="text-slate-300 text-xs md:text-sm">
-                                <strong className="text-white font-bold block mb-1">{item.title}:</strong> {item.desc}
+                            <p className="text-slate-300 text-[11px] md:text-xs">
+                                <strong className="text-white font-bold block mb-0.5">{item.title}:</strong> {item.desc}
                             </p>
                         </div>
                     ))}
                 </motion.div>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.35 }}
-                    className="flex flex-col items-center gap-6 justify-center"
+                    className="flex flex-col items-center gap-5 justify-center"
                 >
                     <div className="flex flex-col items-center gap-2">
                         <MagneticButton onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
@@ -195,21 +195,21 @@ const HeroSection = () => {
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-4 bg-slate-900/40 p-3 rounded-2xl border border-slate-800/50">
+                    <div className="flex items-center gap-4 bg-slate-900/40 p-2.5 rounded-xl border border-slate-800/50">
                         <div className="flex -space-x-3">
-                            <img src="https://i.pravatar.cc/100?img=1" className="w-9 h-9 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
-                            <img src="https://i.pravatar.cc/100?img=2" className="w-9 h-9 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
-                            <img src="https://i.pravatar.cc/100?img=3" className="w-9 h-9 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                            <img src="https://i.pravatar.cc/100?img=1" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                            <img src="https://i.pravatar.cc/100?img=2" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                            <img src="https://i.pravatar.cc/100?img=3" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
                         </div>
                         <div className="flex flex-col text-left">
                             <div className="flex text-yellow-500 gap-0.5">
-                                <Star className="w-3.5 h-3.5 fill-current" />
-                                <Star className="w-3.5 h-3.5 fill-current" />
-                                <Star className="w-3.5 h-3.5 fill-current" />
-                                <Star className="w-3.5 h-3.5 fill-current" />
-                                <Star className="w-3.5 h-3.5 fill-current" />
+                                <Star className="w-3 h-3 fill-current" />
+                                <Star className="w-3 h-3 fill-current" />
+                                <Star className="w-3 h-3 fill-current" />
+                                <Star className="w-3 h-3 fill-current" />
+                                <Star className="w-3 h-3 fill-current" />
                             </div>
-                            <span className="text-[11px] text-slate-400 font-bold tracking-tight whitespace-nowrap">+1.200 alunos satisfeitos</span>
+                            <span className="text-[10px] text-slate-400 font-bold tracking-tight whitespace-nowrap">+1.200 alunos satisfeitos</span>
                         </div>
                     </div>
                 </motion.div>
