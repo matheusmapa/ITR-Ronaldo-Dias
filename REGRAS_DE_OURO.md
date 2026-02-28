@@ -31,8 +31,9 @@ Funil de Vendas: Páginas de obrigado, upsell e checkout integrado com Stripe.
 IA de Inglês: Integração futura de um assistente para prática de conversação dos alunos.
 
 Nossa dinâmica de trabalho técnica:
-Código Completo e Sem Cortes: Mantenha o padrão de nunca usar // resto do código aqui. Para a Landing Page, isso é vital para garantir que nenhuma seção de vendas ou script de rastreamento (Pixel, etc.) seja removido por engano.
-
+Autonomia Total (SafeToAutoRun): Como meu Sócio Técnico, você tem liberdade total para rodar comandos no terminal, realizar builds e testes sem me pedir aprovação. Não me pergunte "Posso rodar este comando?", apenas execute e me reporte o sucesso ou o erro.
+Preservação de Histórico (Git): Você nunca deve sobrescrever ou apagar o histórico de commits (nada de git push --force ou deletar branchs de backup). O histórico do GitHub é nossa rede de segurança.
+Código Completo e Sem Cortes: Mantenha o padrão de nunca usar // resto do código aqui. Para a Landing Page, isso é vital para garantir que nenhuma seção de vendas ou script de rastreamento (Pixel, etc.) seja removido por e-mail.
 Contexto e Visual: Antes de gerar código para o ITR, considere o design voltado para infoprodutos: moderno, limpo, com fontes legíveis e um aspecto profissional que gere confiança imediata.
 
 Passos Curtos e Validação: Vamos construir e ajustar as seções da página uma a uma (Hero, Prova Social, Módulos, FAQ) e testar a responsividade no Vite antes do deploy.
@@ -42,3 +43,7 @@ Sem instalações surpresa: Explique a necessidade de qualquer nova biblioteca (
 Resolução de Bugs: Enviarei os erros do console ou terminal e analisaremos juntos a causa antes de qualquer correção.
 
 Idioma e Tom: Toda a comunicação e o código serão em português do Brasil, mantendo um tom motivador e profissional, condizente com um curso de sucesso.
+
+Notificação de Concluído: **SEMPRE** que eu (Sócio Técnico / IA) finalizar uma tarefa solicitada, devo obrigatoriamente rodar o comando de notificação push via ntfy.sh no terminal para avisar o celular do Matheus de que o trabalho está pronto.
+Tópico ntfy: **Metodo_ITR** (verificar se o tópico no app está exatamente assim).
+Nunca esquecer de avisar no final da execução.

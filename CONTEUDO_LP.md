@@ -1,144 +1,184 @@
-## LOGO ITR (Inglês em tempo recorde)
+# Ideia site atual
 
-## Inglês em tempo recorde - Aprimore seu Inglês de uma vez por todas
+### 🧠 HERO SECTION (A Primeira Impressão)
 
-Vou te mostrar o segredo para melhorar seu inglês e atingir a fluência de uma vez por todas, nova metodologia, direto ao ponto, envolvendo técnicas de memorização que funcionam de verdade
+**O Fim da Tradução Mental: Destrave sua Fluência e Fale Inglês com Naturalidade.**
 
- 
+Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar — mesmo que você já tenha tentado de tudo.
 
-### SIM, EU QUERO APRIMORAR MEU INGLÊS
+Você não precisa de mais anos pagando mensalidades para aprender gramática na teoria. Você precisa da ordem certa para construir a sua fluência.
 
-### **O que você vai conquistar**
+✔️ **Destrua o bloqueio da fala:** Forme frases instantaneamente, sem traduzir palavra por palavra.
+✔️ **Absorção em Tempo Recorde:** Memorize o vocabulário estratégico de alta frequência que os nativos realmente usam.
+✔️ **Método Validado:** A aplicação prática para você sair da teoria e ter segurança na comunicação hoje mesmo.
 
-- Aprenda a **pensar em inglês sem traduzir**
-- Domine a conversação e escuta com **confiança e naturalidade**
-- Memorize **centenas de palavras em tempo recorde**
-- Use um **método testado e validado por alunos reais**
-- Aprenda no seu ritmo, **sem complicações**
-- Em uma semana você percebera uma evolução inimaginável
+**[ QUERO ACELERAR MEU INGLÊS AGORA ]***(Acesso Imediato • 7 Dias de Garantia • Pagamento Único)*
 
-### Esse curso é para você
+---
 
-SE VOCÊ JA FEZ CURSO DE INGLES E DESISTIO
+### 🚨 O PROBLEMA REAL (A Agitação da Dor)
 
-SE VOCÊ ESTÁ FAZENDO INGLES E QUER ACELERAR SEUS RESULTADOS
+A grande maioria das pessoas passa anos matriculada em escolas de inglês...
+Mas continua travando na hora de falar.
 
-SE VOCÊ JA TERMINOU UM CURSO, MAS PERCEBE QUE TEM ALGUMAS LIMITAÇÕES
+O coração acelera, o suor frio bate e a voz simplesmente some.
+Não é falta de inteligência. Não é falta de esforço.
+**É porque você começou pelo lugar errado.**
 
-SE VOCÊ NÃO APRENDEU INGLES ATÉ HOJE POR CONTA DE METODOS EQUIVOCADOS
+As escolas tradicionais forçam você a dominar regras gramaticais complexas antes de te dar o bloco de construção básico de qualquer idioma: as palavras. E sem um vocabulário ativo instalado na sua memória de longo prazo, não existe fluência.
 
-SE VOCÊ QUER ATINGIR A FLUENCIA EM TEMPO RECORDE
+Você pode saber todas as regras do *Present Perfect*, mas se a palavra não vier à mente em milissegundos, você não consegue formar a frase.
 
-### SIM, EU QUERO APRIMORAR MEU INGLÊS
+---
 
-### 8 PRINTS WHATSAPP
+### 💡 A QUEBRA DE CRENÇA (A Solução Lógica)
 
-### **Bill Gates - Fundador da Microsoft**
+A fluência não começa na gramática. Ela começa na ativação inteligente do seu vocabulário.
 
-> “Em um mundo que está cada vez mais conectado, quem domina o inglês sai na frente.”
-> 
+Cerca de 80% das conversas do dia a dia em inglês são sustentadas por um grupo relativamente pequeno de palavras. O problema é que ninguém te ensinou a dominar primeiro o que realmente importa.
 
-### **Warren Buffett - Considerado o mais bem sucedido investidor do século XX**
+O **Método ITR (Inglês em Tempo Recorde)** foi criado exatamente para inverter essa lógica ultrapassada.
 
-> “O melhor investimento que você pode fazer é em si mesmo. Quanto mais você aprende, mais você ganha.”
-> 
+---
 
-### **Gustavo Kuerten (Guga)** – Considerado o maior tenista da história do Brasil
+### ⚙️ COMO O MÉTODO ITR FUNCIONA
 
-> "O inglês abriu portas na minha carreira internacional. Se eu não falasse, ia perder metade das oportunidades."
-> 
+Em vez de sobrecarregar você com conteúdo solto, o método é dividido em três pilares estratégicos:
 
-O ITR é formado por
+1️⃣ **O Filtro de Alta Frequência:** Você aprende primeiro o que realmente é usado na vida real, ignorando palavras que você raramente vai precisar.
+2️⃣ **Engenharia da Memorização:**  Técnicas avançadas de **associação visual e ancoragem mental** para transformar palavras passivas em vocabulário ativo. Você cria "ganchos" na sua memória tão fortes que o que você aprende, não esquece mais.
+3️⃣ **Aplicação Imediata:** Você aprende, fixa e usa. Esse ciclo contínuo é o que gera evolução perceptível em semanas, não em anos.
 
-- Módulos direcionados para o seu nível de inglês atual
-- Acesso imediato ao curso completo
-- Aulas curtas e práticas com direcionamento completo
-- Material de apoio
-- Suporte direto com o criador do método
-- Diversos Bônus
+---
 
-MODULOS 
+### 🚀 SUA JORNADA DE EVOLUÇÃO (As Fases)
 
-Modulo 0 - Apresentação de como funcionara o curso
+Isso não é um amontoado de aulas. É um plano de ação cirúrgico e organizado:
 
-Modulo 1 - Todo o conhecimento e técnicas necessárias para iniciar o seu aprendizado
+- **Fase 0: Preparação Mental e Estratégia** – Entenda como o seu cérebro aprende idiomas e como usar isso a seu favor desde o dia um.
+- **Fase 1: Construção da Base Essencial** – Domínio absoluto do vocabulário mais importante da língua.
+- **Fase 2: Destravando a Conversação** – Aprenda a organizar frases com mais naturalidade e segurança, sem medo de errar.
+- **Fase 3: Consolidação Intermediária** – Ampliação de vocabulário e compreensão de estruturas mais avançadas.
+- **Fase 4: Evolução Contínua** – Ferramentas práticas para continuar crescendo e ganhando velocidade sem depender de um curso para sempre.
 
-Modulo 2 - Direcionamento para nível zero e básico de inglês
+---
 
-Modulo 3 - Direcionamento para nível intermediário 
+### 🎯 ESSE MÉTODO É EXATAMENTE PARA QUEM:
 
-Modulo 4 - Direcionamento para nível avançado com dificuldades especificas 
+- Já tentou aprender inglês, desistiu no meio do caminho e sente que sempre trava.
+- Estuda, mas não consegue transformar o conhecimento passivo em fala ativa.
+- Quer acelerar sua evolução de forma estratégica para viagens ou oportunidades profissionais.
+- Está cansado de metodologias lentas que ensinam regra atrás de regra.
 
-Modulo 5 - Mensagem final com kit de dicas para aplicar 
+*Aviso: Este treinamento não é para quem quer mil PDFs de teoria infinita. É para quem busca resultado prático.*
 
-BONUS
+---
 
--Modulo 6 com Técnicas memorização para outras áreas da vida
+### 🗣️ O QUE DIZEM OS ALUNOS ITR (Prova Social)
 
--Acesso a uma Inteligência Artificial personalizada para te ajudar com o inglês
+Prints WhatsApp e Fotos
 
--Comunidade do WhatsApp para trocarem experiencias e receber conteúdos exclusivos
+⭐️⭐️⭐️⭐️⭐️
+**"No começo achei estranho, mas depois de uns dias comecei a lembrar das palavras sem precisar traduzir. Ainda erro bastante, mas já consigo conversar bem melhor.***"*
+— **[Nome do Aluno], [Profissão/Idade]**
 
-Imagina você fazendo a viagem dos sonhos conversando de forma fluente, poder assistir conteúdos em inglês, filmes, séries e vídeos, fazer buscas na internet em inglês, tudo isso por conta de uma nova metodologia que você aprendeu
+⭐️⭐️⭐️⭐️⭐️
+**"Sinceramente, comprei sem muita expectativa porque já tinha tentado outras vezes e sempre travava. No começo achei estranho focar tanto em vocabulário, mas depois de alguns dias comecei a lembrar das palavras muito mais rápido, excelente curso me ajudou muito.***"*
+— **[Nome do Aluno], [Profissão/Idade]**
 
-### OFERTA
+⭐️⭐️⭐️⭐️⭐️
+**"O que mais mudou pra mim foi que eu parei de traduzir tudo. Antes eu montava frase em português e tentava converter. Agora já vem direto algumas palavras na cabeça. Não é automático 100% ainda, mas já é MUITO mais natural do que antes, sou muito grata por ter encontrado um método que realmente funciona pra mim.** *"*
+— **[Nome do Aluno], [Profissão/Idade]**
 
-399 por 200 
+---
 
-### FAQ
+### 👨🏫 A HISTÓRIA POR TRÁS DO MÉTODO
 
-Minha rotina é corrida e não tenho tempo para me dedicar
+Durante anos, eu tentei aprender inglês da forma tradicional. Passei por quatro escolas, fiz centenas de exercícios, segui os métodos prontos... e a sensação era sempre a mesma: muito esforço, pouco resultado. Era cansativo, desmotivador e parecia que eu nunca saía do lugar.
 
-O acesso é vitalício e  o conhecimento que passarei pode ser adaptado para diferentes rotinas.
+Tudo mudou quando meu pai sugeriu que eu fizesse um curso de memorização. Foi ali que eu entendi algo fundamental: **o problema nunca foi a minha capacidade. Era o método.**
 
-Tenho zero conhecimento em inglês, esse curso serve para mim?
+Eu estava tentando aprender um idioma sem entender como o cérebro realmente fixa informações. A partir desse momento, mergulhei no estudo da memorização aplicada a idiomas. Testei técnicas, organizei processos e estruturei o aprendizado na ordem certa: começando pelo vocabulário essencial e ativando a memória antes de aprofundar nas regras.
 
-Sim, ele vai te ajudar muito nessa jornada de aprender o inglês, esse curso foi projetado para pessoas que já tem certo nível de contato com a língua nem que seja básico, mas todas as técnicas de memorização e aprendizado são aplicadas para quem está iniciando fazendo com que você aprenda em tempo recorde.
+Absorvi centenas de palavras em tempo recorde — e, mais importante, mantive tudo na memória de longo prazo. Quando compartilhei essa estrutura com amigos e familiares, o padrão se repetiu: menos frustração e evolução perceptível.
 
-Tem certificado aprovado pelo MEC?
+Foi assim que nasceu o **Método ITR**. Não é um curso cheio de teoria inútil. É a organização que eu gostaria de ter encontrado anos atrás.
 
-Seu certificado será seu resultado assustador que você terá em pouco tempo.
+---
 
-Quando vou receber o acesso ao meu curso?
+### 🎁 BÔNUS EXCLUSIVOS (Aceleradores de Resultado)
 
-Logo após o pagamento você será redirecionado e receberá seu acesso imediato por e-mail
+Ao garantir sua vaga hoje, você recebe gratuitamente:
 
-A compra é segura?
+🤖 **Treinador com IA:** Pratique a sua conversação 24h por dia com uma Inteligência Artificial configurada para simular diálogos reais e corrigir seus erros sem julgamentos.
+📚 **E-book Dicionário Estratégico:** A lista organizada e mastigada das palavras mais importantes para a sua comunicação prática no dia a dia.
+🧠 **Comunidade VIP & Plano de Estudos:** Saiba exatamente o que fazer, em qual ordem, e troque experiências com pessoas que estão no mesmo objetivo que você.
 
-Sim o pagamento é feito de forma 100% segura, com todas suas informações protegidas
+---
 
-Não tenho dinheiro, o que eu faço?
+### 💰 A OFERTA (A Decisão Lógica)
 
-Imagina que esse curso, vai acelerar seu aprendizado em um nível absurdo, você vai economizar e muito em aulas de inglês. Lembre-se TEMPO não tem preço
+Faça as contas comigo: uma escola tradicional de inglês cobra, em média, R$ 300 de mensalidade. Em 3 anos de curso, você gasta **mais de R$ 10.800,00** (fora material didático e matrícula) para, muitas vezes, sair de lá com o certificado na mão e a voz travada na garganta.
 
-E se eu não tiver resultado com o método?
+O Método ITR te entrega a estrutura exata para a fluência de forma direta, sem mensalidades eternas.
 
-Eu garanto que você terá resultado, mas se você for a primeira pessoa a não ter resultado eu quero sentar com você e conversar sobre tudo que aconteceu, por que meu objetivo é que todos tenham sucesso, sem ninguém ficar para trás. 
+**De R$ 399,00Por apenas: R$ 200,00 à vista.***(Ou parcele em até 12x no cartão). (Valor promocional sujeito a alteração sem aviso prévio.)*
 
-Caso eu mude de ideia, posso realizar estorno?
+Acesso imediato. Pagamento único. Sem surpresas.
 
-Sim! Você tem 7 dias para alinhar seus pensamentos e iniciar nesse novo mundo, caso isso não aconteça iremos reembolsar o valor integral do seu investimento
+**[ QUERO GARANTIR MEU ACESSO AGORA ]**
 
-### SIM, EU QUERO APRIMORAR MEU INGLÊS
+---
 
-### Conheça o mentor que estará com você
+### 🛡️ RISCO ZERO: GARANTIA INCONDICIONAL DE 7 DIAS
 
-Durante anos, tentei aprender inglês da forma tradicional: passei por quatro escolas, fiz aulas, exercícios, mas a sensação era sempre a mesma — era chato, difícil e parecia que eu não saía do lugar. Tudo mudou quando meu pai sugeriu que eu fizesse um curso de memorização. Foi aí que virei a chave.
+Teste o método na prática. Assista às aulas, aplique a memorização e veja como seu cérebro reage. Se dentro de 7 dias você achar que o conteúdo não faz sentido para você, basta solicitar o reembolso. Devolvemos 100% do seu dinheiro sem letras miúdas.
 
-Descobri que o problema nunca foi comigo — e sim com o método.
+---
 
-A partir desse momento, mergulhei no universo da memorização e criei um plano passo a passo para aprimorar meu inglês de forma leve, natural e eficiente. Desenvolvi técnicas que me ajudaram a absorver centenas de palavras em tempo recorde — e mais importante: a manter tudo isso na minha memória de longo prazo. 
+### ❓ PERGUNTAS FREQUENTES
 
-Compartilhei esse método com amigos e familiares, e os resultados foram incríveis! Todos relataram melhorias não só no inglês, mas também nos estudos, no trabalho e na vida pessoal. 
+**Em quanto tempo começo a perceber evolução?**
+Se você aplicar o método corretamente, os primeiros sinais aparecem já nas primeiras semanas. Você começará a reconhecer mais palavras em séries e músicas, formar frases com mais facilidade e sentir menos bloqueio mental.
 
-Hoje, eu transformei essa experiência em um curso prático e direto ao ponto.
+**Minha rotina é corrida e não tenho tempo para estudar. Isso funciona pra mim?**
 
-É a metodologia que eu gostaria de ter conhecido anos atrás.
+Sim — e esse é exatamente o cenário da maioria dos alunos.
 
-Se você já tentou de tudo e ainda sente que o inglês é uma barreira, me deixa te mostrar um caminho diferente. Você não vai se arrepender.
+O método foi estruturado para ser aplicado em blocos curtos de tempo. Com cerca de 30 a 40 minutos por dia, você já consegue evoluir de forma consistente.
 
-Quantas oportunidades você já deixou passar? Faz essa ser diferente 
+Além disso, você não precisa seguir uma rotina engessada. O acesso é vitalício, e você pode adaptar o estudo à sua realidade — seja estudando todos os dias ou em dias alternados.
 
-### SIM, EU QUERO APRIMORAR MEU INGLÊS
+Mais importante do que a quantidade de tempo é a forma como você estuda. Com a estratégia correta, você evolui muito mais em menos tempo.
 
-Ronaldo Durães | Todos os direitos reservados
+**Funciona para iniciantes?**
+Completamente. O método começa do essencial e constrói a base correta desde o primeiro dia, evitando que você crie os vícios do ensino tradicional.
+
+"Quando recebo acesso ao curso?"
+
+O acesso é imediato.
+
+Assim que o pagamento for confirmado, você já é direcionado para a área de membros e também recebe os dados de acesso no seu e-mail.
+
+Em poucos minutos você já pode começar.
+
+**Funciona para quem já estudou antes e travou?**
+
+Sim — esse é exatamente o perfil da maioria dos alunos.
+
+Se você já estudou e sente que sabe, mas não consegue falar, o problema não é falta de conhecimento — é falta de organização mental e vocabulário ativo.
+
+O método ITR foi criado para destravar exatamente isso.
+
+**O curso oferece certificado?**
+O verdadeiro certificado é a sua evolução. Mais importante do que um papel na parede é perceber que você está entendendo mais, formando frases com naturalidade e destravando a sua comunicação com o mundo. Aqui o resultado é prático.
+
+---
+
+### 🔥 A DECISÃO FINAL
+
+Imagine assistir a uma série sem legenda e perceber que está entendendo o contexto. Imagine conversar e não precisar traduzir mentalmente cada palavra. Isso não acontece por mágica. Acontece por estrutura e método.
+
+Você pode continuar estudando do jeito tradicional... Ou pode finalmente organizar o seu aprendizado e destravar. A decisão é sua.
+
+**[ QUERO EVOLUIR MEU INGLÊS AGORA ]**
