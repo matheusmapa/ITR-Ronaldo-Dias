@@ -126,13 +126,13 @@ const TiltCard = ({ children, className = '' }) => {
 
 const HeroSection = () => {
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050510] pt-20 pb-10">
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white pt-20 pb-10">
             {/* Background Gradients (Apple Style) */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/20 blur-[120px] rounded-full pointer-events-none"></div>
-            <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-100 blur-[120px] rounded-full pointer-events-none"></div>
+            <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-100 blur-[100px] rounded-full pointer-events-none"></div>
 
             {/* Grid pattern */}
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-20"></div>
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMCwwLDAsMC4wNSkiLz48L3N2Zz4=')] opacity-30"></div>
 
             <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-16">
 
@@ -142,7 +142,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-semibold mb-8 backdrop-blur-md"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-200 bg-emerald-50 text-emerald-600 text-sm font-semibold mb-8 backdrop-blur-md"
                     >
                         <Sparkles className="w-4 h-4" />
                         <span>ITR | Inglês em Tempo Recorde</span>
@@ -152,10 +152,10 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-5xl md:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight"
+                        className="text-5xl md:text-7xl font-black text-slate-800 leading-[1.1] mb-6 tracking-tight"
                     >
                         Aprimore seu <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">
                             Inglês de uma <br className="hidden md:block" />vez por todas
                         </span>
                     </motion.h1>
@@ -164,9 +164,9 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-lg md:text-xl text-slate-400 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
+                        className="text-lg md:text-xl text-slate-600 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
                     >
-                        Vou te mostrar o segredo para atingir a fluência real. Uma nova metodologia, direto ao ponto, envolvendo técnicas de memorização <strong className="text-white font-semibold">que funcionam de verdade.</strong>
+                        Vou te mostrar o segredo para atingir a fluência real. Uma nova metodologia, direto ao ponto, envolvendo técnicas de memorização <strong className="text-slate-800 font-semibold">que funcionam de verdade.</strong>
                     </motion.p>
 
                     <motion.div
@@ -180,14 +180,14 @@ const HeroSection = () => {
                         </MagneticButton>
 
                         <div className="flex -space-x-3 items-center">
-                            <img src="https://i.pravatar.cc/100?img=1" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover" alt="Student" />
-                            <img src="https://i.pravatar.cc/100?img=2" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover" alt="Student" />
-                            <img src="https://i.pravatar.cc/100?img=3" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover" alt="Student" />
+                            <img src="https://i.pravatar.cc/100?img=1" className="w-10 h-10 rounded-full border-2 border-white object-cover" alt="Student" />
+                            <img src="https://i.pravatar.cc/100?img=2" className="w-10 h-10 rounded-full border-2 border-white object-cover" alt="Student" />
+                            <img src="https://i.pravatar.cc/100?img=3" className="w-10 h-10 rounded-full border-2 border-white object-cover" alt="Student" />
                             <div className="ml-5 flex flex-col pl-2">
                                 <div className="flex text-yellow-500">
                                     <Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" />
                                 </div>
-                                <span className="text-xs text-slate-400 font-medium">Testado e validado</span>
+                                <span className="text-xs text-slate-500 font-medium">Testado e validado</span>
                             </div>
                         </div>
                     </motion.div>
@@ -258,13 +258,13 @@ const HeroSection = () => {
 
 const BentoBento = () => {
     return (
-        <section className="py-32 px-6 bg-[#030308] relative">
+        <section className="py-32 px-6 bg-slate-50 relative">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-20">
-                    <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
-                        O que você vai <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">conquistar</span>
+                    <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">
+                        O que você vai <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">conquistar</span>
                     </h2>
-                    <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+                    <p className="text-slate-600 text-lg max-w-2xl mx-auto">
                         Abandone os métodos antigos. O ITR é desenhado para acelerar o seu cérebro, construir vocabulário e destravar a sua língua.
                     </p>
                 </div>
@@ -273,49 +273,49 @@ const BentoBento = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 max-w-5xl mx-auto">
 
                     {/* Card 1 - Grande */}
-                    <TiltCard className="md:col-span-2 md:row-span-1 p-8 group">
-                        <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 border border-emerald-500/20 group-hover:bg-emerald-500/20 transition-colors">
-                            <MessageCircle className="text-emerald-400 w-6 h-6" />
+                    <TiltCard className="md:col-span-2 md:row-span-1 p-8 group bg-white border border-slate-200 hover:border-emerald-300">
+                        <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6 border border-emerald-200 group-hover:bg-emerald-200 transition-colors">
+                            <MessageCircle className="text-emerald-500 w-6 h-6" />
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">Confiança na Conversão</h3>
-                        <p className="text-slate-400 leading-relaxed font-light text-lg">
+                        <h3 className="text-2xl font-bold text-slate-800 mb-3 tracking-tight">Confiança na Conversão</h3>
+                        <p className="text-slate-600 leading-relaxed font-light text-lg">
                             Domine a conversação e a escuta com extrema naturalidade. Sem travar na hora de responder, apenas a fala fluindo.
                         </p>
                     </TiltCard>
 
                     {/* Card 2 */}
-                    <TiltCard className="p-8 group">
-                        <div className="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
-                            <Clock className="text-blue-400 w-6 h-6" />
+                    <TiltCard className="p-8 group bg-white border border-slate-200 hover:border-blue-300">
+                        <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 border border-blue-200 group-hover:bg-blue-200 transition-colors">
+                            <Clock className="text-blue-500 w-6 h-6" />
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-3">Tempo Recorde</h3>
-                        <p className="text-slate-400 leading-relaxed font-light">
+                        <h3 className="text-xl font-bold text-slate-800 mb-3">Tempo Recorde</h3>
+                        <p className="text-slate-600 leading-relaxed font-light">
                             Memorize centenas de palavras novas de forma permanente, otimizando o seu tempo de estudos.
                         </p>
                     </TiltCard>
 
                     {/* Card 3 */}
-                    <TiltCard className="p-8 group">
-                        <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
-                            <Shield className="text-purple-400 w-6 h-6" />
+                    <TiltCard className="p-8 group bg-white border border-slate-200 hover:border-purple-300">
+                        <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 border border-purple-200 group-hover:bg-purple-200 transition-colors">
+                            <Shield className="text-purple-500 w-6 h-6" />
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-3">Método Validado</h3>
-                        <p className="text-slate-400 leading-relaxed font-light">
+                        <h3 className="text-xl font-bold text-slate-800 mb-3">Método Validado</h3>
+                        <p className="text-slate-600 leading-relaxed font-light">
                             Testado e aprovado por pessoas reais que saíram do zero à fluência sem complicações.
                         </p>
                     </TiltCard>
 
                     {/* Card 4 - Grande */}
-                    <TiltCard className="md:col-span-2 md:row-span-1 p-8 group overflow-hidden relative">
-                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                    <TiltCard className="md:col-span-2 md:row-span-1 p-8 group overflow-hidden relative bg-white border border-slate-200 hover:border-teal-300">
+                        <div className="absolute top-0 right-0 p-8 opacity-5">
                             <Brain className="w-32 h-32" />
                         </div>
-                        <div className="w-12 h-12 bg-teal-500/10 rounded-2xl flex items-center justify-center mb-6 border border-teal-500/20 group-hover:bg-teal-500/20 transition-colors">
-                            <Sparkles className="text-teal-400 w-6 h-6" />
+                        <div className="w-12 h-12 bg-teal-100 rounded-2xl flex items-center justify-center mb-6 border border-teal-200 group-hover:bg-teal-200 transition-colors">
+                            <Sparkles className="text-teal-500 w-6 h-6" />
                         </div>
-                        <h3 className="text-3xl font-bold text-white mb-3 tracking-tight">O Fim da Tradução Mental</h3>
-                        <p className="text-slate-400 leading-relaxed font-light text-lg max-w-md relative z-10">
-                            Desenvolva o mecanismo interno para <strong className="text-white">pensar diretamente em inglês</strong>, como um nativo faria.
+                        <h3 className="text-3xl font-bold text-slate-800 mb-3 tracking-tight">O Fim da Tradução Mental</h3>
+                        <p className="text-slate-600 leading-relaxed font-light text-lg max-w-md relative z-10">
+                            Desenvolva o mecanismo interno para <strong className="text-slate-800">pensar diretamente em inglês</strong>, como um nativo faria.
                         </p>
                     </TiltCard>
 
@@ -327,10 +327,10 @@ const BentoBento = () => {
 
 const ParaVoceSection = () => {
     return (
-        <section className="py-24 px-6 bg-[#050510]">
+        <section className="py-24 px-6 bg-white">
             <div className="max-w-4xl mx-auto">
-                <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-white">
-                    Esse curso é <span className="text-emerald-400 font-black">para você</span>
+                <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-slate-800">
+                    Esse curso é <span className="text-emerald-500 font-black">para você</span>
                 </h2>
 
                 <div className="space-y-4">
@@ -346,12 +346,12 @@ const ParaVoceSection = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: item.delay, duration: 0.5 }}
-                            className="group flex items-center bg-slate-900/50 p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-800 transition-all cursor-default"
+                            className="group flex items-center bg-slate-50 p-6 rounded-2xl border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/50 transition-all cursor-default"
                         >
-                            <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center mr-6 shrink-0 group-hover:scale-110 transition-transform">
-                                <CheckCircle className="w-5 h-5 text-emerald-400" />
+                            <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center mr-6 shrink-0 group-hover:scale-110 transition-transform">
+                                <CheckCircle className="w-5 h-5 text-emerald-500" />
                             </div>
-                            <p className="text-slate-300 font-medium md:text-lg">{item.text}</p>
+                            <p className="text-slate-700 font-medium md:text-lg">{item.text}</p>
                         </motion.div>
                     ))}
                 </div>
@@ -371,18 +371,18 @@ const Modulos = () => {
     ];
 
     return (
-        <section className="py-32 px-6 bg-[#030308] border-t border-slate-900">
+        <section className="py-32 px-6 bg-slate-50 border-t border-slate-200">
             <div className="max-w-6xl mx-auto">
-                <h2 className="text-3xl md:text-5xl font-bold text-center mb-20 text-white">
-                    Estrutura <span className="text-teal-400 font-black">Completa</span>
+                <h2 className="text-3xl md:text-5xl font-bold text-center mb-20 text-slate-800">
+                    Estrutura <span className="text-teal-500 font-black">Completa</span>
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {modulos.map((mod, i) => (
-                        <TiltCard key={i} className="bg-slate-900/40 p-8 border-slate-800/80 hover:border-teal-500/30">
-                            <span className="text-teal-400/20 text-6xl font-black absolute top-4 right-4 pointer-events-none">{mod.num}</span>
-                            <h3 className="text-xl font-bold text-white mb-3 mt-4 relative z-10">Módulo {mod.num} <br /> <span className="text-teal-400">{mod.title}</span></h3>
-                            <p className="text-slate-400 font-light relative z-10">{mod.desc}</p>
+                        <TiltCard key={i} className="bg-white p-8 border border-slate-200 hover:border-teal-300 shadow-sm">
+                            <span className="text-teal-500/10 text-6xl font-black absolute top-4 right-4 pointer-events-none">{mod.num}</span>
+                            <h3 className="text-xl font-bold text-slate-800 mb-3 mt-4 relative z-10">Módulo {mod.num} <br /> <span className="text-teal-600">{mod.title}</span></h3>
+                            <p className="text-slate-600 font-light relative z-10">{mod.desc}</p>
                         </TiltCard>
                     ))}
                 </div>
@@ -400,9 +400,9 @@ const Exclusivo = () => {
 
             <div className="max-w-6xl mx-auto relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 flex flex-col md:flex-row items-center justify-center gap-3">
+                    <h2 className="text-3xl md:text-5xl font-bold text-slate-800 mb-6 flex flex-col md:flex-row items-center justify-center gap-3">
                         <TypewriterText text="Garantindo hoje, você leva" />
-                        <motion.span 
+                        <motion.span
                             initial={{ opacity: 0, scale: 0 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
@@ -451,34 +451,34 @@ const Exclusivo = () => {
 
 const Oferta = () => {
     return (
-        <section id="oferta" className="py-32 px-6 bg-[#030308] flex justify-center items-center">
+        <section id="oferta" className="py-32 px-6 bg-slate-50 flex justify-center items-center">
             <div className="w-full max-w-4xl">
-                <TiltCard className="bg-gradient-to-b from-slate-900 to-[#0A0D14] border-t-4 border-t-emerald-500 border-x-slate-800 border-b-slate-800 overflow-hidden relative">
+                <TiltCard className="bg-white border-t-4 border-t-emerald-500 border-x border-b border-slate-200 shadow-xl overflow-hidden relative">
 
-                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTYsMTg1LDEyOSwwLjA1KSIvPjwvc3ZnPg==')] opacity-40"></div>
+                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTYsMTg1LDEyOSwwLjA1KSIvPjwvc3ZnPg==')] opacity-60"></div>
 
                     <div className="p-10 md:p-16 text-center relative z-10 flex flex-col items-center">
-                        <h2 className="text-3xl md:text-5xl font-black text-white mb-4">A hora de agir é <span className="text-emerald-400">agora</span></h2>
-                        <p className="text-slate-400 text-lg mb-10 max-w-xl">
+                        <h2 className="text-3xl md:text-5xl font-black text-slate-800 mb-4">A hora de agir é <span className="text-emerald-500">agora</span></h2>
+                        <p className="text-slate-600 text-lg mb-10 max-w-xl">
                             Tenha acesso imediato a todo o método ITR, todos os módulos e todos os bônus exclusivos.
                         </p>
 
                         <div className="mb-10 flex flex-col items-center">
                             <span className="text-slate-500 font-medium line-through mb-2 text-xl">De R$ 399,00</span>
                             <div className="flex items-start justify-center gap-3">
-                                <span className="text-2xl font-bold text-slate-400 mt-2">por</span>
-                                <span className="text-7xl md:text-8xl font-black text-emerald-400 tracking-tighter drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">R$ 200</span>
+                                <span className="text-2xl font-bold text-slate-500 mt-2">por</span>
+                                <span className="text-7xl md:text-8xl font-black text-emerald-500 tracking-tighter drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">R$ 200</span>
                             </div>
-                            <span className="bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full font-medium text-sm mt-6 border border-emerald-500/20">Acesso Vitalício</span>
+                            <span className="bg-emerald-100 text-emerald-600 px-4 py-1.5 rounded-full font-medium text-sm mt-6 border border-emerald-200">Acesso Vitalício</span>
                         </div>
 
-                        <MagneticButton className="w-full md:w-auto shadow-2xl! shadow-emerald-500/50!">
+                        <MagneticButton className="w-full md:w-auto shadow-xl shadow-emerald-500/20">
                             GARANTIR MINHA VAGA AGORA
                         </MagneticButton>
 
-                        <div className="flex gap-6 mt-8 opacity-60">
-                            <div className="flex items-center gap-2 text-sm text-slate-300 font-medium"><Shield className="w-4 h-4 text-emerald-400" /> Compra Segura</div>
-                            <div className="flex items-center gap-2 text-sm text-slate-300 font-medium"><Award className="w-4 h-4 text-emerald-400" /> 7 Dias de Garantia</div>
+                        <div className="flex gap-6 mt-8 opacity-70">
+                            <div className="flex items-center gap-2 text-sm text-slate-600 font-medium"><Shield className="w-4 h-4 text-emerald-500" /> Compra Segura</div>
+                            <div className="flex items-center gap-2 text-sm text-slate-600 font-medium"><Award className="w-4 h-4 text-emerald-500" /> 7 Dias de Garantia</div>
                         </div>
                     </div>
                 </TiltCard>
@@ -490,14 +490,14 @@ const Oferta = () => {
 const FaqItem = ({ q, a }) => {
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <div className={`border ${isOpen ? 'border-emerald-500/50 bg-slate-800/80' : 'border-slate-800 bg-slate-900/40'} rounded-2xl overflow-hidden transition-all duration-300 backdrop-blur-sm`}>
+        <div className={`border ${isOpen ? 'border-emerald-500 bg-white' : 'border-slate-200 bg-slate-50'} rounded-2xl overflow-hidden transition-all duration-300 shadow-sm`}>
             <button
                 className="w-full px-6 py-6 text-left flex justify-between items-center focus:outline-none group"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <span className={`font-bold pr-4 transition-colors ${isOpen ? 'text-emerald-400' : 'text-slate-200 group-hover:text-white'}`}>{q}</span>
+                <span className={`font-bold pr-4 transition-colors ${isOpen ? 'text-emerald-600' : 'text-slate-700 group-hover:text-slate-900'}`}>{q}</span>
                 <motion.div animate={{ rotate: isOpen ? 180 : 0 }}>
-                    <ChevronDown className={`w-5 h-5 shrink-0 ${isOpen ? 'text-emerald-400' : 'text-slate-500'}`} />
+                    <ChevronDown className={`w-5 h-5 shrink-0 ${isOpen ? 'text-emerald-500' : 'text-slate-400'}`} />
                 </motion.div>
             </button>
             <AnimatePresence>
@@ -508,7 +508,7 @@ const FaqItem = ({ q, a }) => {
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                     >
-                        <div className="px-6 pb-6 text-slate-400 leading-relaxed font-light">
+                        <div className="px-6 pb-6 text-slate-600 leading-relaxed font-light">
                             {a}
                         </div>
                     </motion.div>
@@ -527,10 +527,10 @@ const Faq = () => {
     ];
 
     return (
-        <section className="py-24 px-6 bg-[#050510]">
+        <section className="py-24 px-6 bg-white">
             <div className="max-w-3xl mx-auto">
-                <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-white">
-                    Perguntas <span className="text-emerald-400">Frequentes</span>
+                <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-slate-800">
+                    Perguntas <span className="text-emerald-500">Frequentes</span>
                 </h2>
                 <div className="space-y-4">
                     {faqs.map((f, i) => <FaqItem key={i} q={f.q} a={f.a} />)}
@@ -542,26 +542,26 @@ const Faq = () => {
 
 const Mentor = () => {
     return (
-        <section className="py-32 px-6 bg-[#030308] border-t border-slate-900 border-b relative overflow-hidden">
+        <section className="py-32 px-6 bg-slate-50 border-t border-slate-200 border-b relative overflow-hidden">
             {/* Abstract background shape */}
-            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-emerald-100/50 rounded-full blur-[100px] pointer-events-none"></div>
 
             <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
                 <div className="w-full md:w-5/12">
-                    <TiltCard className="aspect-[4/5] bg-slate-800 rounded-[2rem] overflow-hidden flex items-center justify-center p-0 border-4 border-slate-800 shadow-2xl relative">
+                    <TiltCard className="aspect-[4/5] bg-slate-200 rounded-[2rem] overflow-hidden flex items-center justify-center p-0 border-4 border-white shadow-xl relative">
                         {/* FOTO AQUI */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#030308] via-transparent to-transparent z-10"></div>
-                        <div className="text-slate-600 flex flex-col items-center">
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-100 via-transparent to-transparent z-10"></div>
+                        <div className="text-slate-400 flex flex-col items-center">
                             <Users className="w-16 h-16 mb-4 opacity-50" />
                             <span>Foto Ronaldo Dias</span>
                         </div>
                     </TiltCard>
                 </div>
-                <div className="w-full md:w-7/12 text-slate-300">
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-8 tracking-tight">O mentor que estará com você</h2>
+                <div className="w-full md:w-7/12 text-slate-600">
+                    <h2 className="text-3xl md:text-5xl font-black text-slate-800 mb-8 tracking-tight">O mentor que estará com você</h2>
                     <div className="space-y-6 text-lg font-light leading-relaxed">
                         <p>Passei por quatro escolas, fiz aulas tradicionais, e a sensação sempre foi de frustração.</p>
-                        <p className="border-l-4 border-emerald-500 pl-4 py-2 bg-emerald-500/5 font-medium text-emerald-400 italic rounded-r-lg">
+                        <p className="border-l-4 border-emerald-500 pl-4 py-2 bg-emerald-50 font-medium text-emerald-700 italic rounded-r-lg">
                             "Descobri que o problema nunca foi comigo — e sim com o método arcaico."
                         </p>
                         <p>Mergulhei na memorização, destravei meu cérebro e decidi transformar isso num método prático que vai te poupar anos de batida de cabeça.</p>
@@ -581,7 +581,7 @@ const LandingPageRonaldoDias = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-[#030308] font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+        <div className="min-h-screen bg-slate-50 font-sans selection:bg-emerald-200 selection:text-emerald-900">
             <HeroSection />
             <BentoBento />
             <ParaVoceSection />
@@ -591,8 +591,8 @@ const LandingPageRonaldoDias = () => {
             <Faq />
             <Mentor />
 
-            <footer className="bg-[#030308] py-8 text-center border-t border-slate-900 border-b-8 border-b-emerald-600">
-                <p className="text-slate-600 font-medium">© 2024 Ronaldo Dias | ITR. Todos os direitos reservados.</p>
+            <footer className="bg-slate-100 py-8 text-center border-t border-slate-200 border-b-8 border-b-emerald-500">
+                <p className="text-slate-500 font-medium">© 2024 Ronaldo Dias | ITR. Todos os direitos reservados.</p>
             </footer>
         </div>
     );
