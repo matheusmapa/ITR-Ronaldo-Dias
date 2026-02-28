@@ -130,11 +130,11 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-5xl md:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight"
+                        className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight"
                     >
-                        Aprimore seu <br />
+                        O Fim da <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">
-                            Inglês de uma <br className="hidden md:block" />vez por todas
+                            Tradução Mental
                         </span>
                     </motion.h1>
 
@@ -142,10 +142,41 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-lg md:text-xl text-slate-400 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
+                        className="text-lg md:text-xl text-slate-300 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-semibold"
                     >
-                        Vou te mostrar o segredo para atingir a fluência real. Uma nova metodologia, direto ao ponto, envolvendo técnicas de memorização <strong className="text-white font-semibold">que funcionam de verdade.</strong>
+                        Destrave sua Fluência e Fale Inglês com Naturalidade.
                     </motion.p>
+
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.25 }}
+                        className="text-base md:text-lg text-slate-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
+                    >
+                        Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar.
+                    </motion.p>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                        className="space-y-4 mb-10 text-left max-w-xl mx-auto lg:mx-0"
+                    >
+                        {[
+                            { title: "Destrua o bloqueio da fala", desc: "Forme frases instantaneamente, sem traduzir palavra por palavra." },
+                            { title: "Absorção em Tempo Recorde", desc: "Memorize o vocabulário estratégico que os nativos realmente usam." },
+                            { title: "Método Validado", desc: "Prática real para ter segurança na comunicação hoje mesmo." }
+                        ].map((item, idx) => (
+                            <div key={idx} className="flex items-start gap-3">
+                                <div className="mt-1 bg-emerald-500/20 p-1 rounded-full">
+                                    <CheckCircle className="w-4 h-4 text-emerald-400" />
+                                </div>
+                                <p className="text-slate-300 text-sm md:text-base">
+                                    <strong className="text-white font-bold">{item.title}:</strong> {item.desc}
+                                </p>
+                            </div>
+                        ))}
+                    </motion.div>
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -153,9 +184,14 @@ const HeroSection = () => {
                         transition={{ duration: 0.6, delay: 0.3 }}
                         className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start"
                     >
-                        <MagneticButton onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
-                            COMEÇAR AGORA
-                        </MagneticButton>
+                        <div className="flex flex-col items-center lg:items-start gap-4">
+                            <MagneticButton onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
+                                QUERO ACELERAR MEU INGLÊS AGORA
+                            </MagneticButton>
+                            <p className="text-[10px] md:text-xs text-slate-500 font-medium tracking-wide">
+                                Acesso Imediato • 7 Dias de Garantia • Pagamento Único
+                            </p>
+                        </div>
 
                         <div className="flex -space-x-3 items-center">
                             <img src="https://i.pravatar.cc/100?img=1" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover" alt="Student" />
