@@ -36,13 +36,13 @@ const MagneticButton = ({ children, onClick, className = '' }) => {
             whileTap={{ scale: 0.95 }}
             style={{ x, y }}
             onClick={onClick}
-            className={`relative group overflow-hidden ${className}`}
+            className={`relative group ${className} outline-none border-none`}
         >
-            {/* Brilho de fundo rotativo */}
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-teal-500 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+            {/* Brilho de fundo rotativo - sem overflow hidden no pai para evitar artefatos */}
+            <div className="absolute inset-[-4px] bg-gradient-to-r from-emerald-400 via-teal-500 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl rounded-full"></div>
 
             {/* Corpo do botão */}
-            <div className="relative z-10 flex items-center justify-center bg-emerald-500 text-slate-950 px-8 py-4 rounded-full font-extrabold text-lg shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+            <div className="relative z-10 flex items-center justify-center bg-emerald-500 text-slate-950 px-8 py-4 rounded-full font-extrabold text-lg shadow-[0_4px_20px_rgba(16,185,129,0.4)] group-hover:shadow-[0_8px_30px_rgba(16,185,129,0.6)] transition-shadow">
                 {children}
             </div>
         </motion.button>
@@ -100,15 +100,15 @@ const TiltCard = ({ children, className = '' }) => {
 
 const HeroSection = () => {
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050510] pt-20 pb-10">
+        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#050510] pt-16 pb-6">
             {/* Background Gradients (Apple Style) */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/20 blur-[120px] rounded-full pointer-events-none"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/10 blur-[100px] rounded-full pointer-events-none"></div>
 
             {/* Grid pattern */}
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-20"></div>
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUscDAuMDUpIi8+PC9zdmc+')] opacity-20"></div>
 
-            <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-16">
+            <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
 
                 {/* Lado Esquerdo - Textos */}
                 <div className="w-full lg:w-1/2 text-center lg:text-left">
@@ -116,7 +116,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-semibold mb-8 backdrop-blur-md"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-semibold mb-4 backdrop-blur-md"
                     >
                         <Sparkles className="w-4 h-4" />
                         <span>ITR | Inglês em Tempo Recorde</span>
@@ -126,7 +126,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight"
+                        className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-4 tracking-tight"
                     >
                         O Fim da <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 text-glow">
@@ -138,7 +138,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-lg md:text-xl text-emerald-400 mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed font-bold uppercase tracking-widest"
+                        className="text-lg md:text-xl text-emerald-400 mb-3 max-w-xl mx-auto lg:mx-0 leading-relaxed font-bold uppercase tracking-widest"
                     >
                         Destrave sua Fluência e Fale Inglês com Naturalidade.
                     </motion.p>
@@ -147,7 +147,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.25 }}
-                        className="text-base md:text-lg text-slate-400 mb-4 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
+                        className="text-base md:text-lg text-slate-400 mb-3 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
                     >
                         Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar — mesmo que você já tenha tentado de tudo.
                     </motion.p>
@@ -156,7 +156,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.28 }}
-                        className="text-base md:text-lg text-emerald-400/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium italic"
+                        className="text-base md:text-lg text-emerald-400/80 mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium italic"
                     >
                         Você não precisa de mais anos pagando mensalidades para aprender gramática na teoria. Você precisa da ordem certa para construir a sua fluência.
                     </motion.p>
@@ -165,7 +165,7 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
-                        className="space-y-4 mb-10 text-left max-w-xl mx-auto lg:mx-0"
+                        className="space-y-3 mb-6 text-left max-w-xl mx-auto lg:mx-0"
                     >
                         {[
                             { title: "Destrua o bloqueio da fala", desc: "Forme frases instantaneamente, sem traduzir palavra por palavra." },
@@ -187,9 +187,9 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.35 }}
-                        className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start"
+                        className="flex flex-col sm:flex-row items-center gap-8 justify-center lg:justify-start pt-2"
                     >
-                        <div className="flex flex-col items-center lg:items-start gap-4">
+                        <div className="flex flex-col items-center lg:items-start gap-3">
                             <MagneticButton onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
                                 QUERO ACELERAR MEU INGLÊS AGORA
                             </MagneticButton>
@@ -198,15 +198,21 @@ const HeroSection = () => {
                             </p>
                         </div>
 
-                        <div className="flex -space-x-3 items-center">
-                            <img src="https://i.pravatar.cc/100?img=1" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover shadow-lg" alt="Student" />
-                            <img src="https://i.pravatar.cc/100?img=2" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover shadow-lg" alt="Student" />
-                            <img src="https://i.pravatar.cc/100?img=3" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover shadow-lg" alt="Student" />
-                            <div className="ml-5 flex flex-col pl-2">
-                                <div className="flex text-yellow-500">
-                                    <Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" />
+                        <div className="flex items-center gap-4 bg-slate-900/40 p-3 rounded-2xl border border-slate-800/50">
+                            <div className="flex -space-x-3">
+                                <img src="https://i.pravatar.cc/100?img=1" className="w-9 h-9 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                                <img src="https://i.pravatar.cc/100?img=2" className="w-9 h-9 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                                <img src="https://i.pravatar.cc/100?img=3" className="w-9 h-9 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                            </div>
+                            <div className="flex flex-col">
+                                <div className="flex text-yellow-500 gap-0.5">
+                                    <Star className="w-3.5 h-3.5 fill-current" />
+                                    <Star className="w-3.5 h-3.5 fill-current" />
+                                    <Star className="w-3.5 h-3.5 fill-current" />
+                                    <Star className="w-3.5 h-3.5 fill-current" />
+                                    <Star className="w-3.5 h-3.5 fill-current" />
                                 </div>
-                                <span className="text-xs text-slate-400 font-medium">+1.200 alunos felizes</span>
+                                <span className="text-[11px] text-slate-400 font-bold tracking-tight whitespace-nowrap">+1.200 alunos satisfeitos</span>
                             </div>
                         </div>
                     </motion.div>
