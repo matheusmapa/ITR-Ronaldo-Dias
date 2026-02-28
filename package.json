@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "push": "node publish.js"
   },
   "dependencies": {
     "firebase": "^10.7.1",

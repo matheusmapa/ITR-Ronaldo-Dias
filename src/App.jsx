@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
 import {
-    Brain, CheckCircle, Clock, BookOpen, MessageCircle,
-    Shield, Award, Globe, Play, Sparkles, ChevronDown, ChevronUp, Bot, Users, Gift, MonitorPlay, Plane, Star, ArrowRight, Smartphone, Zap, ArrowRightCircle
+    Brain, Star, CheckCircle, Diamond, MessageCircle, PlayCircle, Lock, Trophy,
+    Sparkles, ChevronDown, Rocket, Target, Users, Shield, Award, Zap, ArrowRight,
+    Plane, ArrowUpRight, Clock, BookOpen, Globe, Play, ChevronUp, Bot, Gift,
+    MonitorPlay, Smartphone, ArrowRightCircle
 } from 'lucide-react';
 import './index.css';
 
@@ -98,6 +100,63 @@ const TiltCard = ({ children, className = '' }) => {
     );
 };
 
+const HolographicBrain = () => {
+    return (
+        <div className="relative w-full aspect-square max-w-[500px] flex items-center justify-center">
+            {/* Glows and Auras */}
+            <div className="absolute w-[120%] h-[120%] bg-emerald-500/10 rounded-full blur-[80px] animate-pulse"></div>
+            <div className="absolute w-[80%] h-[80%] bg-teal-400/20 rounded-full blur-[60px]"></div>
+
+            {/* Rotating 3D Container */}
+            <motion.div
+                animate={{ rotateY: 360 }}
+                transition={{ duration: 25, ease: "linear", repeat: Infinity }}
+                className="relative w-full h-full flex items-center justify-center preserve-3d"
+                style={{ transformStyle: 'preserve-3d' }}
+            >
+                {/* Core Brain Icon (Front) */}
+                <div className="absolute flex items-center justify-center transform translate-z-12 drop-shadow-[0_0_25px_rgba(16,185,129,0.8)]">
+                    <Brain className="w-64 h-64 text-emerald-400 stroke-[1] -ml-4" />
+                </div>
+
+                {/* Wireframe Layer 1 (Back/Depth) */}
+                <div className="absolute flex items-center justify-center transform -translate-z-12 opacity-40 scale-90 blur-[1px]">
+                    <Brain className="w-64 h-64 text-teal-500 stroke-[1.5] -ml-4" />
+                </div>
+
+                {/* Vertical Scanning Plane */}
+                <motion.div
+                    animate={{ y: ["-100%", "100%", "-100%"] }}
+                    transition={{ duration: 4, ease: "linear", repeat: Infinity }}
+                    className="absolute w-[80%] h-2 bg-gradient-to-r from-transparent via-emerald-300 to-transparent blur-[2px] opacity-60 z-10"
+                />
+
+                {/* Data Points / Nodes */}
+                {[...Array(12)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        className="absolute w-2 h-2 bg-emerald-300 rounded-full shadow-[0_0_10px_#34d399]"
+                        style={{
+                            top: `${Math.random() * 60 + 20}%`,
+                            left: `${Math.random() * 60 + 20}%`,
+                            transform: `translateZ(${Math.random() * 40 - 20}px)`,
+                        }}
+                        animate={{
+                            opacity: [0.2, 1, 0.2],
+                            scale: [0.8, 1.2, 0.8],
+                        }}
+                        transition={{
+                            duration: Math.random() * 2 + 1,
+                            repeat: Infinity,
+                            delay: Math.random() * 2,
+                        }}
+                    />
+                ))}
+            </motion.div>
+        </div>
+    );
+};
+
 const HeroSection = () => {
     return (
         <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#050510] pt-12 pb-6">
@@ -108,81 +167,95 @@ const HeroSection = () => {
             {/* Grid pattern */}
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUscDAuMDUpIi8+PC9zdmc+')] opacity-20"></div>
 
-            <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-                <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-3 backdrop-blur-md"
-                >
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>ITR | Inglês em Tempo Recorde</span>
-                </motion.div>
+            <div className="relative z-10 max-w-7xl w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
 
-                <motion.h1
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-3 tracking-tight"
-                >
-                    O Fim da <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 text-glow">
-                        Tradução Mental
-                    </span>
-                </motion.h1>
+                {/* Left Column: Copy & CTA */}
+                <div className="text-left flex flex-col items-start pt-8 md:pt-0">
+                    <motion.div
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-3 backdrop-blur-md"
+                    >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>ITR | Inglês em Tempo Recorde</span>
+                    </motion.div>
 
-                <motion.p
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="text-base md:text-lg text-emerald-400 mb-1.5 max-w-2xl mx-auto leading-relaxed font-bold uppercase tracking-widest"
-                >
-                    Destrave sua Fluência e Fale Inglês com Naturalidade.
-                </motion.p>
+                    <motion.h1
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-4 tracking-tight"
+                    >
+                        O Fim da <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 text-glow">
+                            Tradução Mental
+                        </span>
+                    </motion.h1>
 
-                <motion.p
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.25 }}
-                    className="text-sm md:text-base text-slate-400 mb-8 max-w-3xl mx-auto leading-relaxed font-light"
-                >
-                    Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar — mesmo que você já tenha tentado de tudo.
-                </motion.p>
+                    <motion.p
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="text-base md:text-lg text-emerald-400 mb-3 max-w-xl leading-relaxed font-bold uppercase tracking-widest"
+                    >
+                        Destrave sua Fluência e Fale Inglês com Naturalidade.
+                    </motion.p>
 
+                    <motion.p
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.25 }}
+                        className="text-sm md:text-base text-slate-400 mb-10 max-w-xl leading-relaxed font-light"
+                    >
+                        Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar — mesmo que você já tenha tentado de tudo.
+                    </motion.p>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.35 }}
-                    className="flex flex-col items-center gap-5 justify-center"
-                >
-                    <div className="flex flex-col items-center gap-2">
-                        <MagneticButton onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
-                            QUERO ACELERAR MEU INGLÊS AGORA
-                        </MagneticButton>
-                        <p className="text-[10px] text-slate-500 font-medium tracking-wide">
-                            Acesso Imediato • 7 Dias de Garantia
-                        </p>
-                    </div>
-
-                    <div className="flex items-center gap-4 bg-slate-900/40 p-2.5 rounded-xl border border-slate-800/50">
-                        <div className="flex -space-x-3">
-                            <img src="https://i.pravatar.cc/100?img=1" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
-                            <img src="https://i.pravatar.cc/100?img=2" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
-                            <img src="https://i.pravatar.cc/100?img=3" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                    <motion.div
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.35 }}
+                        className="flex flex-col items-start gap-5 w-full md:w-auto"
+                    >
+                        <div className="flex flex-col items-center md:items-start gap-2 w-full md:w-auto">
+                            <MagneticButton className="w-full md:w-auto text-center" onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
+                                QUERO ACELERAR MEU INGLÊS AGORA
+                            </MagneticButton>
+                            <p className="text-[10px] text-slate-500 font-medium tracking-wide w-full text-center md:text-left">
+                                Acesso Imediato • 7 Dias de Garantia
+                            </p>
                         </div>
-                        <div className="flex flex-col text-left">
-                            <div className="flex text-yellow-500 gap-0.5">
-                                <Star className="w-3 h-3 fill-current" />
-                                <Star className="w-3 h-3 fill-current" />
-                                <Star className="w-3 h-3 fill-current" />
-                                <Star className="w-3 h-3 fill-current" />
-                                <Star className="w-3 h-3 fill-current" />
+
+                        <div className="flex items-center gap-4 bg-slate-900/40 p-2.5 rounded-xl border border-slate-800/50 w-full md:w-auto justify-center md:justify-start">
+                            <div className="flex -space-x-3">
+                                <img src="https://i.pravatar.cc/100?img=1" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                                <img src="https://i.pravatar.cc/100?img=2" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                                <img src="https://i.pravatar.cc/100?img=3" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
                             </div>
-                            <span className="text-[10px] text-slate-400 font-bold tracking-tight whitespace-nowrap">+1.200 alunos satisfeitos</span>
+                            <div className="flex flex-col text-left">
+                                <div className="flex text-yellow-500 gap-0.5">
+                                    <Star className="w-3 h-3 fill-current" />
+                                    <Star className="w-3 h-3 fill-current" />
+                                    <Star className="w-3 h-3 fill-current" />
+                                    <Star className="w-3 h-3 fill-current" />
+                                    <Star className="w-3 h-3 fill-current" />
+                                </div>
+                                <span className="text-[10px] text-slate-400 font-bold tracking-tight whitespace-nowrap">+1.200 alunos satisfeitos</span>
+                            </div>
                         </div>
-                    </div>
+                    </motion.div>
+                </div>
+
+                {/* Right Column: Holographic Brain (Visível apenas em desktop) */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1, delay: 0.4 }}
+                    className="hidden lg:flex items-center justify-center"
+                >
+                    <HolographicBrain />
                 </motion.div>
+
             </div>
         </section>
     );
