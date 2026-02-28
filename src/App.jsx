@@ -102,169 +102,99 @@ const TiltCard = ({ children, className = '' }) => {
 // Sections
 // =====================================
 
-const HeroSection = () => {
+const ProblemSection = () => {
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050510] pt-20 pb-10">
-            {/* Background Gradients (Apple Style) */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/20 blur-[120px] rounded-full pointer-events-none"></div>
-            <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+        <section className="py-24 px-6 bg-[#030308] border-t border-slate-900/50">
+            <div className="max-w-4xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-16"
+                >
+                    <h2 className="text-3xl md:text-5xl font-black text-white mb-8 tracking-tight">
+                        <span className="text-red-500">🚨 O PROBLEMA REAL:</span> <br />
+                        Por que você ainda trava?
+                    </h2>
+                    <p className="text-xl text-slate-300 leading-relaxed font-light">
+                        A grande maioria das pessoas passa anos matriculada em escolas de inglês... <br />
+                        <span className="text-white font-semibold">Mas continua travando na hora de falar.</span>
+                    </p>
+                </motion.div>
 
-            {/* Grid pattern */}
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-20"></div>
-
-            <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-16">
-
-                {/* Lado Esquerdo - Textos */}
-                <div className="w-full lg:w-1/2 text-center lg:text-left">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-semibold mb-8 backdrop-blur-md"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="space-y-6 text-slate-400 text-lg font-light leading-relaxed"
                     >
-                        <Sparkles className="w-4 h-4" />
-                        <span>ITR | Inglês em Tempo Recorde</span>
-                    </motion.div>
-
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight"
-                    >
-                        O Fim da <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">
-                            Tradução Mental
-                        </span>
-                    </motion.h1>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-lg md:text-xl text-slate-300 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-semibold"
-                    >
-                        Destrave sua Fluência e Fale Inglês com Naturalidade.
-                    </motion.p>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.25 }}
-                        className="text-base md:text-lg text-slate-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
-                    >
-                        Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar.
-                    </motion.p>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                        className="space-y-4 mb-10 text-left max-w-xl mx-auto lg:mx-0"
-                    >
-                        {[
-                            { title: "Destrua o bloqueio da fala", desc: "Forme frases instantaneamente, sem traduzir palavra por palavra." },
-                            { title: "Absorção em Tempo Recorde", desc: "Memorize o vocabulário estratégico que os nativos realmente usam." },
-                            { title: "Método Validado", desc: "Prática real para ter segurança na comunicação hoje mesmo." }
-                        ].map((item, idx) => (
-                            <div key={idx} className="flex items-start gap-3">
-                                <div className="mt-1 bg-emerald-500/20 p-1 rounded-full">
-                                    <CheckCircle className="w-4 h-4 text-emerald-400" />
-                                </div>
-                                <p className="text-slate-300 text-sm md:text-base">
-                                    <strong className="text-white font-bold">{item.title}:</strong> {item.desc}
-                                </p>
-                            </div>
-                        ))}
+                        <p>
+                            O coração acelera, o suor frio bate e a voz simplesmente some.
+                            Não é falta de inteligência. Não é falta de esforço.
+                            <strong className="text-white"> É porque você começou pelo lugar errado.</strong>
+                        </p>
+                        <p>
+                            As escolas tradicionais forçam você a dominar regras gramaticais complexas antes de te dar o bloco de construção básico: <span className="text-emerald-400 underline decoration-emerald-500/30 underline-offset-4">as palavras.</span>
+                        </p>
                     </motion.div>
 
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                        className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start"
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="bg-slate-900/50 border border-slate-800 p-8 rounded-3xl relative overflow-hidden group"
                     >
-                        <div className="flex flex-col items-center lg:items-start gap-4">
-                            <MagneticButton onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
-                                QUERO ACELERAR MEU INGLÊS AGORA
-                            </MagneticButton>
-                            <p className="text-[10px] md:text-xs text-slate-500 font-medium tracking-wide">
-                                Acesso Imediato • 7 Dias de Garantia • Pagamento Único
-                            </p>
-                        </div>
-
-                        <div className="flex -space-x-3 items-center">
-                            <img src="https://i.pravatar.cc/100?img=1" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover" alt="Student" />
-                            <img src="https://i.pravatar.cc/100?img=2" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover" alt="Student" />
-                            <img src="https://i.pravatar.cc/100?img=3" className="w-10 h-10 rounded-full border-2 border-[#050510] object-cover" alt="Student" />
-                            <div className="ml-5 flex flex-col pl-2">
-                                <div className="flex text-yellow-500">
-                                    <Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" /><Award className="w-4 h-4 fill-current" />
-                                </div>
-                                <span className="text-xs text-slate-400 font-medium">Testado e validado</span>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-2xl rounded-full"></div>
+                        <p className="relative z-10 text-slate-300 italic">
+                            "Você pode saber todas as regras, mas se a palavra não vier à mente em milissegundos, você não consegue formar a frase."
+                        </p>
+                        <div className="mt-6 flex items-center gap-4">
+                            <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                                <motion.div
+                                    initial={{ width: "100%" }}
+                                    whileInView={{ width: "30%" }}
+                                    transition={{ duration: 2, delay: 0.5 }}
+                                    className="h-full bg-red-500"
+                                />
                             </div>
+                            <span className="text-xs text-red-400 font-bold whitespace-nowrap">BLOQUEIO MENTAL</span>
                         </div>
                     </motion.div>
                 </div>
+            </div>
+        </section>
+    );
+};
 
-                {/* Lado Direito - 3D Mockup / Carta Oculta */}
-                <div className="w-full lg:w-1/2 flex justify-center perspective-[2000px]">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8, rotateY: -15, rotateX: 10 }}
-                        animate={{ opacity: 1, scale: 1, rotateY: -5, rotateX: 5 }}
-                        transition={{ duration: 1, type: 'spring', bounce: 0.4 }}
-                        className="w-full max-w-lg relative group"
-                    >
-                        {/* Sombras Coloridas para Efeito "Premium" */}
-                        <div className="absolute -inset-1 bg-gradient-to-tr from-emerald-500 to-teal-600 rounded-[2.5rem] blur-2xl opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
+const SolutionSection = () => {
+    return (
+        <section className="py-24 px-6 bg-gradient-to-b from-[#030308] to-[#050510] relative overflow-hidden">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"></div>
 
-                        <TiltCard className="p-2 bg-slate-900/80 rounded-[2rem] border border-slate-700/50 shadow-2xl backdrop-blur-3xl">
-                            <div className="rounded-[1.5rem] bg-[#0A0A12] border border-slate-800 p-8 pt-10 h-[500px] flex flex-col relative overflow-hidden">
-                                <div className="absolute top-4 right-4 text-emerald-500/20"><Globe size={180} /></div>
+            <div className="max-w-4xl mx-auto text-center relative z-10">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                >
+                    <div className="inline-block px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-bold mb-6">
+                        A SOLUÇÃO LÓGICA
+                    </div>
+                    <h2 className="text-3xl md:text-5xl font-black text-white mb-8 tracking-tight">
+                        A fluência <span className="text-emerald-400">não começa</span> na gramática.
+                    </h2>
+                    <p className="text-xl text-slate-300 leading-relaxed mb-12">
+                        Ela começa na ativação inteligente do seu vocabulário. Cerca de 80% das conversas são sustentadas por um grupo pequeno de palavras.
+                    </p>
 
-                                <h3 className="text-2xl font-bold text-white mb-2 z-10 flex items-center gap-3">
-                                    <Brain className="text-emerald-400" /> Método ITR
-                                </h3>
-                                <p className="text-slate-400 mb-8 z-10">Pense sem traduzir.</p>
-
-                                <div className="space-y-4 z-10">
-                                    {[
-                                        "Pensar em inglês sem traduzir",
-                                        "Dominar a escuta com naturalidade",
-                                        "Memorizar palavras em tempo recorde"
-                                    ].map((text, i) => (
-                                        <motion.div
-                                            key={i}
-                                            initial={{ opacity: 0, x: 20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: 0.5 + (i * 0.1) }}
-                                            className="bg-slate-800/50 border border-slate-700 p-4 rounded-xl flex items-center gap-4"
-                                        >
-                                            <CheckCircle className="text-emerald-400 w-5 h-5 shrink-0" />
-                                            <span className="text-slate-200 text-sm font-medium">{text}</span>
-                                        </motion.div>
-                                    ))}
-                                </div>
-
-                                <div className="mt-auto z-10 pt-6">
-                                    <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-                                        <motion.div
-                                            initial={{ width: 0 }}
-                                            animate={{ width: "100%" }}
-                                            transition={{ duration: 1.5, delay: 1 }}
-                                            className="h-full bg-emerald-500"
-                                        />
-                                    </div>
-                                    <div className="flex justify-between text-xs text-slate-500 mt-2 font-medium">
-                                        <span>Progresso de Evolução</span>
-                                        <span className="text-emerald-400">Tempo Recorde</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </TiltCard>
-                    </motion.div>
-                </div>
-
+                    <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 p-8 md:p-12 rounded-[2.5rem] shadow-2xl shadow-emerald-500/5">
+                        <p className="text-2xl md:text-3xl text-white font-medium mb-4 leading-snug">
+                            O <span className="text-emerald-400 font-black">Método ITR</span> foi criado para inverter a lógica ultrapassada.
+                        </p>
+                        <p className="text-slate-400">Domine primeiro o que realmente importa e o resto virá naturalmente.</p>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );
@@ -725,7 +655,7 @@ const FloatingCTA = () => {
                         onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}
                         className="pointer-events-auto w-full max-w-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-extrabold text-lg py-4 rounded-full shadow-[0_10px_40px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 border border-emerald-400/50 active:scale-95 transition-transform"
                     >
-                        <span>QUERO APRIMORAR MEU INGLÊS</span>
+                        <span>QUERO ACELERAR MEU INGLÊS AGORA</span>
                         <ArrowRight className="w-5 h-5" />
                     </button>
                 </motion.div>
@@ -745,6 +675,8 @@ const LandingPageRonaldoDias = () => {
     return (
         <div className="min-h-screen bg-[#030308] font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
             <HeroSection />
+            <ProblemSection />
+            <SolutionSection />
             <BentoBento />
             <ParaVoceSection />
             <ProvasSociais />
