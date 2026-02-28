@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
 import {
     Brain, CheckCircle, Clock, BookOpen, MessageCircle,
-    Shield, Award, Globe, Play, Sparkles, ChevronDown, ChevronUp, Bot, Users, Gift, MonitorPlay, Plane
+    Shield, Award, Globe, Play, Sparkles, ChevronDown, ChevronUp, Bot, Users, Gift, MonitorPlay, Plane, Star, ArrowRight, Smartphone
 } from 'lucide-react';
 import './index.css';
 
@@ -303,6 +303,120 @@ const BentoBento = () => {
     );
 };
 
+const ProvasSociais = () => {
+    return (
+        <section className="py-24 px-6 bg-[#050510] relative overflow-hidden border-t border-slate-900">
+            {/* Background elements */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[300px] bg-emerald-900/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+            <div className="max-w-6xl mx-auto relative z-10">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                        O que dizem os <span className="text-emerald-400">Grandes Nomes</span>
+                    </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {/* Bill Gates */}
+                    <TiltCard className="p-8 bg-slate-900/60 border-slate-800 relative group">
+                        <div className="absolute -top-4 -left-4 w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span className="text-4xl text-emerald-400 font-serif leading-none mt-2">"</span>
+                        </div>
+                        <div className="flex flex-col h-full justify-between">
+                            <p className="text-lg text-slate-300 italic leading-relaxed mb-8 relative z-10">
+                                “Em um mundo que está cada vez mais conectado, quem domina o inglês sai na frente.”
+                            </p>
+                            <div>
+                                <h4 className="text-white font-bold text-lg">Bill Gates</h4>
+                                <p className="text-emerald-400 text-sm">Fundador da Microsoft</p>
+                            </div>
+                        </div>
+                    </TiltCard>
+
+                    {/* Warren Buffett */}
+                    <TiltCard className="p-8 bg-slate-900/60 border-slate-800 relative group">
+                        <div className="absolute -top-4 -left-4 w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span className="text-4xl text-emerald-400 font-serif leading-none mt-2">"</span>
+                        </div>
+                        <div className="flex flex-col h-full justify-between">
+                            <p className="text-lg text-slate-300 italic leading-relaxed mb-8 relative z-10">
+                                “O melhor investimento que você pode fazer é em si mesmo. Quanto mais você aprende, mais você ganha.”
+                            </p>
+                            <div>
+                                <h4 className="text-white font-bold text-lg">Warren Buffett</h4>
+                                <p className="text-emerald-400 text-sm text-balance">Considerado o mais bem sucedido investidor do século XX</p>
+                            </div>
+                        </div>
+                    </TiltCard>
+
+                    {/* Gustavo Kuerten */}
+                    <TiltCard className="p-8 bg-slate-900/60 border-slate-800 relative group">
+                        <div className="absolute -top-4 -left-4 w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span className="text-4xl text-emerald-400 font-serif leading-none mt-2">"</span>
+                        </div>
+                        <div className="flex flex-col h-full justify-between">
+                            <p className="text-lg text-slate-300 italic leading-relaxed mb-8 relative z-10">
+                                "O inglês abriu portas na minha carreira internacional. Se eu não falasse, ia perder metade das oportunidades."
+                            </p>
+                            <div>
+                                <h4 className="text-white font-bold text-lg">Gustavo Kuerten</h4>
+                                <p className="text-emerald-400 text-sm">Maior tenista do Brasil</p>
+                            </div>
+                        </div>
+                    </TiltCard>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+const FormationList = () => {
+    return (
+        <section className="py-24 px-6 bg-[#030308] border-t border-slate-900">
+            <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16">
+                <div className="w-full md:w-1/2">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                        Tudo que você precisa para <span className="text-teal-400">destravar</span>
+                    </h2>
+                    <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+                        O Método ITR não é apenas um punhado de aulas gravadas. É uma experiência imersiva com começo, meio e fluência.
+                    </p>
+                    <MagneticButton onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
+                        QUERO ACESSAR AGORA
+                    </MagneticButton>
+                </div>
+
+                <div className="w-full md:w-1/2">
+                    <div className="space-y-4">
+                        {[
+                            "Módulos direcionados para o seu nível",
+                            "Acesso imediato ao curso completo",
+                            "Aulas curtas e práticas",
+                            "Material de apoio exclusivo",
+                            "Suporte direto com o criador do método",
+                            "Diversos Bônus de aceleração"
+                        ].map((item, idx) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, x: 20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: idx * 0.1 }}
+                                className="flex items-center p-4 bg-slate-900/50 rounded-xl border border-slate-800/80 hover:border-teal-500/50 transition-colors"
+                            >
+                                <div className="w-8 h-8 rounded-full bg-teal-500/10 flex items-center justify-center mr-4 shrink-0">
+                                    <CheckCircle className="w-4 h-4 text-teal-400" />
+                                </div>
+                                <span className="text-slate-200 font-medium">{item}</span>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
 const ParaVoceSection = () => {
     return (
         <section className="py-24 px-6 bg-[#050510]">
@@ -316,7 +430,8 @@ const ParaVoceSection = () => {
                         { text: "Já fez curso de inglês e desistiu no meio do caminho", delay: 0 },
                         { text: "Está fazendo inglês e quer acelerar brutalmente seus resultados", delay: 0.1 },
                         { text: "Terminou um curso, mas sente que empacou na conversação", delay: 0.2 },
-                        { text: "Nunca aprendeu inglês até hoje por causa de métodos travados", delay: 0.3 }
+                        { text: "Nunca aprendeu inglês até hoje por causa de métodos travados", delay: 0.3 },
+                        { text: "Quer atingir a fluência em tempo recorde de uma vez por todas", delay: 0.4 }
                     ].map((item, idx) => (
                         <motion.div
                             key={idx}
@@ -489,10 +604,14 @@ const FaqItem = ({ q, a }) => {
 
 const Faq = () => {
     const faqs = [
-        { q: "Minha rotina é corrida, consigo acompanhar?", a: "O acesso é vitalício e as aulas são otimizadas. Perfeito pra quem tem pouco tempo." },
-        { q: "Tenho zero conhecimento, serve para mim?", a: "Sim! Começamos do absoluto zero até a fluência natural." },
-        { q: "Tem certificado aprovado pelo MEC?", a: "Seu certificado será o resultado ensurdecedor na hora que você abrir a boca pra falar com um nativo." },
-        { q: "Caso eu mude de ideia, tenho garantia?", a: "100% livre de risco. Você tem 7 dias para testar, se não curtir, devolvemos seu dinheiro." }
+        { q: "Minha rotina é corrida, consigo acompanhar?", a: "O acesso é vitalício e o conhecimento que passarei pode ser adaptado para diferentes rotinas. Perfeito pra quem tem pouco tempo." },
+        { q: "Tenho zero conhecimento, serve para mim?", a: "Sim, ele vai te ajudar muito! Esse curso foi projetado para pessoas que já tem certo contato com a língua, mas todas as técnicas de memorização garantem que iniciantes aprendam em tempo recorde." },
+        { q: "Tem certificado aprovado pelo MEC?", a: "Seu certificado será seu resultado assustador que você terá em pouco tempo quando abrir a boca para conversar." },
+        { q: "Quando vou receber o acesso ao meu curso?", a: "Logo após o pagamento você será redirecionado e receberá seu acesso imediato e garantido por e-mail." },
+        { q: "A compra é segura?", a: "Sim, o pagamento é feito de forma 100% segura, com todas as suas informações protegidas e criptografadas." },
+        { q: "Não tenho dinheiro, o que eu faço?", a: "Imagina que esse curso vai acelerar seu aprendizado em um nível absurdo. Você vai economizar MUITO dinheiro com anos de aulas tradicionais. Lembre-se: TEMPO não tem preço." },
+        { q: "E se eu não tiver resultado com o método?", a: "Eu garanto que você terá. Mas se você for a primeira pessoa a não ter, eu faço questão de sentar com você e conversar sobre o que aconteceu. Meu objetivo é que todos tenham sucesso, sem ninguém ficar para trás." },
+        { q: "Caso eu mude de ideia, posso realizar estorno?", a: "Sim! Você tem 7 dias para alinhar seus pensamentos e iniciar nesse novo mundo. Caso decida que não é para você, reembolsaremos o valor integral do seu investimento, sem burocracia." }
     ];
 
     return (
@@ -541,6 +660,44 @@ const Mentor = () => {
     )
 }
 
+const FloatingCTA = () => {
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const toggleVisibility = () => {
+            if (window.scrollY > 800) {
+                setIsVisible(true);
+            } else {
+                setIsVisible(false);
+            }
+        };
+
+        window.addEventListener("scroll", toggleVisibility);
+        return () => window.removeEventListener("scroll", toggleVisibility);
+    }, []);
+
+    return (
+        <AnimatePresence>
+            {isVisible && (
+                <motion.div
+                    initial={{ y: 100, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 100, opacity: 0 }}
+                    className="fixed bottom-6 left-0 right-0 z-50 flex justify-center px-4 md:hidden pointer-events-none"
+                >
+                    <button
+                        onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}
+                        className="pointer-events-auto w-full max-w-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-extrabold text-lg py-4 rounded-full shadow-[0_10px_40px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 border border-emerald-400/50 active:scale-95 transition-transform"
+                    >
+                        <span>QUERO APRIMORAR MEU INGLÊS</span>
+                        <ArrowRight className="w-5 h-5" />
+                    </button>
+                </motion.div>
+            )}
+        </AnimatePresence>
+    );
+};
+
 // =====================================
 // Montagem Principal
 // =====================================
@@ -554,13 +711,16 @@ const LandingPageRonaldoDias = () => {
             <HeroSection />
             <BentoBento />
             <ParaVoceSection />
+            <ProvasSociais />
+            <FormationList />
             <Modulos />
             <Exclusivo />
             <Oferta />
             <Faq />
             <Mentor />
+            <FloatingCTA />
 
-            <footer className="bg-[#030308] py-8 text-center border-t border-slate-900 border-b-8 border-b-emerald-600">
+            <footer className="bg-[#030308] py-8 text-center border-t border-slate-900 border-b-8 border-b-emerald-600 pb-28 md:pb-8">
                 <p className="text-slate-600 font-medium">© 2024 Ronaldo Dias | ITR. Todos os direitos reservados.</p>
             </footer>
         </div>
