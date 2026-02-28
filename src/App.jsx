@@ -138,9 +138,9 @@ const HeroSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-lg md:text-xl text-slate-300 mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed font-bold"
+                        className="text-lg md:text-xl text-emerald-400 mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed font-bold uppercase tracking-widest"
                     >
-                        O Fim da Tradução Mental: Destrave sua Fluência e Fale Inglês com Naturalidade.
+                        Destrave sua Fluência e Fale Inglês com Naturalidade.
                     </motion.p>
 
                     <motion.p
