@@ -38,10 +38,11 @@ Você tem liberdade total para tomar decisões arquiteturais, rodar builds, test
 **2. Agrupamento de Execução (O Comando Final):**
 Faça toda a magia no código de forma silenciosa. Escreva, refatore e teste. Apenas no milissegundo final da sua tarefa, junte todas as ações de deploy/push em um ÚNICO bloco de execução. O objetivo é que eu tenha que ir até a IDE e clicar no botão "Allow" **apenas uma vez** por tarefa concluída.
 
-**3. O Truque da Notificação Prévia (Essencial):**
-Como a IDE vai bloquear e exigir meu clique no momento do Push final, eu preciso ser avisado pelo celular *antes* do terminal travar. O fluxo tem 2 passos definidos no `package.json`:
-1) Rode `npm run notify -- -notification "Sua mensagem"` (Isso envia um push pro meu celular usando HTTP nativo, sem travar).
-2) Rode `npm run push -- -message "sua mensagem"` (Isso fará o commit, vai disparar a trava da IDE pedindo meu clique e depois fará o push).
+**3. Notificação e Deploy (Um Único Clique):**
+Como a IDE vai bloquear e exigir meu clique no momento do Push, eu compilei tudo em um único script para que você só precise aprovar UMA vez. O fluxo é:
+1) Eu rodo `node publish.js -message "sua mensagem" -notification "Mensagem pro celular"`.
+2) A IDE vai travar pedindo seu "Allow".
+3) Você clica e o script faz o commit, o push, e usa HTTP nativo para apitar no seu celular avisando que o trabalho subiu com sucesso.
 
 **4. Padronização Visual do ntfy.sh:**
 Toda notificação DEVE seguir este padrão exato para bater o olho e entender:

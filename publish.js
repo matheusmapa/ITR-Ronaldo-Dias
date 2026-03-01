@@ -1,23 +1,19 @@
 import { execSync } from 'child_process';
-import fs from 'fs';
+import https from 'https';
 
 const args = process.argv.slice(2);
 
 // Simple argument parser
-let message = 'chore: auto-update';
+let message = '';
 let notification = '';
 
 for (let i = 0; i < args.length; i++) {
     if (args[i] === '-message' && i + 1 < args.length) {
         message = args[i + 1];
-    } else if (args[i] === '-notification' && i + 1 < args.length) {
+    }
+    if (args[i] === '-notification' && i + 1 < args.length) {
         notification = args[i + 1];
     }
-}
-
-// Fallback to notify.txt just in case
-if (fs.existsSync('notify.txt')) {
-    fs.unlinkSync('notify.txt'); // Clean up after reading
 }
 
 try {
@@ -34,7 +30,30 @@ try {
     console.log('Pushing to GitHub...');
     execSync('git push origin main', { stdio: 'inherit' });
 
-    console.log('\nDeploy commands executed successfully. Waiting for any background IDE tasks...');
+    if (notification) {
+        console.log('Sending notification...');
+        const data = Buffer.from(notification);
+        const options = {
+            hostname: 'ntfy.sh',
+            port: 443,
+            path: '/Metodo_ITR',
+            method: 'POST',
+            headers: {
+                'Title': 'ITR Socio Tecnico',
+                'Content-Type': 'text/plain',
+                'Content-Length': data.length
+            }
+        };
+
+        const req = https.request(options, (res) => {
+            if (res.statusCode === 200) {
+                console.log('\nNotification sent successfully via native Node.js.');
+            }
+        });
+        req.on('error', (error) => console.error(error.message));
+        req.write(data);
+        req.end();
+    }
 } catch (error) {
     console.error(`Error during publish workflow: ${error.message}`);
     process.exit(1);
