@@ -104,7 +104,7 @@ const TiltCard = ({ children, className = '' }) => {
 
 const HeroSection = () => {
     return (
-        <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#050510] pt-12 pb-6">
+        <section className="relative min-h-screen lg:min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#050510] pt-20 pb-24 md:pb-32">
             {/* Background Gradients (Apple Style) */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/20 blur-[120px] rounded-full pointer-events-none"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/10 blur-[100px] rounded-full pointer-events-none"></div>
@@ -162,11 +162,11 @@ const HeroSection = () => {
                         transition={{ duration: 0.6, delay: 0.35 }}
                         className="flex flex-col items-start gap-5 w-full md:w-auto"
                     >
-                        <div className="flex flex-col items-center md:items-start gap-2 w-full md:w-auto">
+                        <div className="flex flex-col items-center gap-3 w-full md:w-auto">
                             <MagneticButton className="w-full md:w-auto text-center" onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
                                 QUERO ACELERAR MEU INGLÊS AGORA
                             </MagneticButton>
-                            <p className="text-[10px] text-slate-500 font-medium tracking-wide w-full text-center md:text-left">
+                            <p className="text-[10px] text-slate-500 font-medium tracking-widest w-full text-center uppercase">
                                 Acesso Imediato • 7 Dias de Garantia
                             </p>
                         </div>
