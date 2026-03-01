@@ -6,5 +6,5 @@ description: Commits all changes, pushes to the main branch, and sends a notific
 # Task: Publish changes and notify
 
 1. Execute the publish script (which will block until the user approves on their phone/PC):
-   `node publish.js -message "{{message}}" -notification "{{notification}}"`
+   `node publish.js -message "{{message}}"`
 

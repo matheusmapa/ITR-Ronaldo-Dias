@@ -6,7 +6,7 @@ import {
     Plane, ArrowUpRight, Clock, BookOpen, Globe, Play, ChevronUp, Bot, Gift,
     MonitorPlay, Smartphone, ArrowRightCircle
 } from 'lucide-react';
-import Brain3D from './components/Brain3D';
+import HeroVisuals from './components/HeroVisuals';
 import './index.css';
 
 // =====================================
@@ -191,14 +191,14 @@ const HeroSection = () => {
                     </motion.div>
                 </div>
 
-                {/* Right Column: Holographic Brain (Visível apenas em desktop) */}
+                {/* Right Column: Floating Visuals (Visível apenas em desktop) */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, delay: 0.4 }}
                     className="hidden lg:flex items-center justify-center"
                 >
-                    <Brain3D />
+                    <HeroVisuals />
                 </motion.div>
 
             </div>

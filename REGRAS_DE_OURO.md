@@ -38,20 +38,10 @@ Você tem liberdade total para tomar decisões arquiteturais, rodar builds, test
 **2. Agrupamento de Execução (O Comando Final):**
 Faça toda a magia no código de forma silenciosa. Escreva, refatore e teste. Apenas no milissegundo final da sua tarefa, junte todas as ações de deploy/push em um ÚNICO bloco de execução. O objetivo é que eu tenha que ir até a IDE e clicar no botão "Allow" **apenas uma vez** por tarefa concluída.
 
-**3. Notificação e Deploy (Um Único Clique):**
-Como a IDE vai bloquear e exigir meu clique no momento do Push, eu compilei tudo em um único script para que você só precise aprovar UMA vez. O fluxo é:
-1) Eu rodo `node publish.js -message "sua mensagem" -notification "Mensagem pro celular"`.
-2) A IDE vai travar pedindo seu "Allow".
-3) Você clica e o script faz o commit, o push, e usa HTTP nativo para apitar no seu celular avisando que o trabalho subiu com sucesso.
+**3. Push via Script (Um Único Clique):**
+Como a IDE vai bloquear comandos `git`, eu uso `node publish.js -message "sua mensagem"` para embutir tudo. A IDE trava pedindo o "Allow", você clica, e eu despacho tudo pro Github em um golpe só. Chega de apitos no celular.
 
-**4. Padronização Visual do ntfy.sh:**
-Toda notificação DEVE seguir este padrão exato para bater o olho e entender:
-- **Tópico ntfy:** `Metodo_ITR`
-- 👉 **Título (Header):** `[ITR] | Sócio Técnico`
-- 👉 **Mensagem:** `[STATUS] O que foi feito.` + `(Ação Imediata Necessária)`.
-- *Exemplo:* `✅ HeroSection Refatorada. (Volte para a IDE e clique em Allow no terminal para eu fazer o Push!)`
-
-**5. Preservação de Histórico:**
+**4. Preservação de Histórico:**
 Nunca use `git push --force`. O histórico é nossa rede de segurança. Se houver bugs complexos durante o processo, pare a autonomia, me apresente o erro mastigado e sugira a causa raiz antes de tentar adivinhar a correção.
  obrigatoriamente rodar o comando de notificação push via ntfy.sh no terminal para avisar o celular do Matheus de que o trabalho está pronto.
 Tópico ntfy: **Metodo_ITR** (verificar se o tópico no app está exatamente assim).
