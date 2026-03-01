@@ -88,7 +88,7 @@ export default function HeroVisuals() {
                             ease: "linear",
                             delay: i * 0.5
                         }}
-                        className="absolute text-emerald-400/50 font-bold text-xl md:text-2xl select-none pointer-events-none z-10 tracking-wider whitespace-nowrap drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]"
+                        className="absolute text-emerald-400/50 font-bold text-xl md:text-2xl select-none pointer-events-none z-0 tracking-wider whitespace-nowrap drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]"
                         style={{
                             top: `${15 + (i * 12)}%`,
                             left: `${(i * 30) % 80}%`,
