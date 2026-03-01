@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, MessageCircle, TrendingUp, Sparkles, Brain, Trophy, Star } from 'lucide-react';
+import { CheckCircle, MessageCircle, TrendingUp, Sparkles, Brain, Trophy, BookOpen } from 'lucide-react';
+
+const FLOATING_WORDS = ["Fluency", "Speaking", "Native", "Grammar", "Listening", "Confidence", "Vocabulary"];
 
 export default function HeroVisuals() {
     return (
@@ -71,14 +73,30 @@ export default function HeroVisuals() {
                     </div>
                 </motion.div>
 
-                {/* Floating Element: Glowing Star */}
-                <motion.div
-                    animate={{ y: [0, -10, 0], opacity: [0.5, 1, 0.5], scale: [1, 1.2, 1] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-                    className="absolute top-[20%] right-[15%] text-emerald-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.8)] z-0"
-                >
-                    <Star className="w-6 h-6 fill-current" />
-                </motion.div>
+                {/* Floating English Words Background */}
+                {FLOATING_WORDS.map((word, i) => (
+                    <motion.div
+                        key={word}
+                        animate={{
+                            y: [0, -30, 0],
+                            x: [0, (i % 2 === 0 ? 15 : -15), 0],
+                            opacity: [0.1, 0.4, 0.1]
+                        }}
+                        transition={{
+                            duration: 8 + (i * 1.5),
+                            repeat: Infinity,
+                            ease: "linear",
+                            delay: i * 0.5
+                        }}
+                        className="absolute text-emerald-500/30 font-bold text-xl md:text-2xl blur-[1px] select-none pointer-events-none z-0 tracking-wider whitespace-nowrap"
+                        style={{
+                            top: `${15 + (i * 12)}%`,
+                            left: `${(i * 30) % 80}%`,
+                        }}
+                    >
+                        {word}
+                    </motion.div>
+                ))}
 
                 {/* Floating Card 4: Trophy / Certificate */}
                 <motion.div
@@ -92,6 +110,21 @@ export default function HeroVisuals() {
                     <div className="flex flex-col text-left">
                         <p className="text-white text-xs font-bold text-left">Resultados</p>
                         <p className="text-slate-400 text-[10px] text-left">Comprovados</p>
+                    </div>
+                </motion.div>
+
+                {/* Floating Card 5: Vocabulary (New Left Card) */}
+                <motion.div
+                    animate={{ y: [0, -12, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    className="absolute top-[60%] left-[-15%] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 p-3.5 rounded-2xl shadow-2xl flex items-center gap-3 z-30"
+                >
+                    <div className="bg-emerald-500/20 p-2 rounded-xl text-emerald-400">
+                        <BookOpen className="w-5 h-5" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                        <p className="text-white text-xs font-bold text-left">Vocabulário Ativo</p>
+                        <p className="text-emerald-400 text-[10px] text-left font-semibold tracking-wide">+3.000 Palavras</p>
                     </div>
                 </motion.div>
 

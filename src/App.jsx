@@ -122,7 +122,6 @@ const HeroSection = () => {
                         transition={{ duration: 0.6 }}
                         className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-3 backdrop-blur-md"
                     >
-                        <Sparkles className="w-3.5 h-3.5" />
                         <span>ITR | Inglês em Tempo Recorde</span>
                     </motion.div>
 
