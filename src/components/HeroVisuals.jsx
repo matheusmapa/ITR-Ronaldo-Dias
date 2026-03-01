@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, MessageCircle, TrendingUp, Sparkles, Brain } from 'lucide-react';
+import { CheckCircle, MessageCircle, TrendingUp, Sparkles, Brain, Trophy, Star } from 'lucide-react';
 
 export default function HeroVisuals() {
     return (
@@ -71,14 +71,39 @@ export default function HeroVisuals() {
                     </div>
                 </motion.div>
 
-                {/* Central Focus Element */}
+                {/* Floating Element: Glowing Star */}
                 <motion.div
+                    animate={{ y: [0, -10, 0], opacity: [0.5, 1, 0.5], scale: [1, 1.2, 1] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+                    className="absolute top-[20%] right-[15%] text-emerald-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.8)] z-0"
+                >
+                    <Star className="w-6 h-6 fill-current" />
+                </motion.div>
+
+                {/* Floating Card 4: Trophy / Certificate */}
+                <motion.div
+                    animate={{ y: [0, 15, 0] }}
+                    transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                    className="absolute bottom-[25%] right-[-10%] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 p-3 rounded-2xl shadow-xl flex items-center gap-3 pr-5 z-20"
+                >
+                    <div className="bg-yellow-500/20 p-2 rounded-xl text-yellow-400">
+                        <Trophy className="w-5 h-5" />
+                    </div>
+                    <div className="flex flex-col text-left">
+                        <p className="text-white text-xs font-bold text-left">Resultados</p>
+                        <p className="text-slate-400 text-[10px] text-left">Comprovados</p>
+                    </div>
+                </motion.div>
+
+                {/* Central Focus Element (ITR Globe) perfectly centered */}
+                <motion.div
+                    initial={{ scale: 0.8 }}
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-br from-emerald-500/20 to-teal-500/5 rounded-full border border-emerald-500/20 flex items-center justify-center backdrop-blur-sm shadow-inner"
+                    className="absolute inset-0 m-auto w-56 h-56 bg-gradient-to-br from-emerald-500/10 to-teal-500/5 rounded-full border border-emerald-500/20 flex items-center justify-center backdrop-blur-sm shadow-[inset_0_0_50px_rgba(16,185,129,0.1)] z-10"
                 >
-                    <div className="w-32 h-32 bg-emerald-500/20 rounded-full flex items-center justify-center border border-emerald-400/40 shadow-[0_0_40px_rgba(16,185,129,0.3)]">
-                        <strong className="text-4xl text-white font-black tracking-tighter drop-shadow-lg">ITR</strong>
+                    <div className="w-36 h-36 bg-gradient-to-b from-emerald-500/30 to-teal-600/20 rounded-full flex items-center justify-center border border-emerald-400/50 shadow-[0_0_60px_rgba(16,185,129,0.4)] backdrop-blur-md">
+                        <strong className="text-5xl text-white font-black tracking-tighter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">ITR</strong>
                     </div>
                 </motion.div>
 

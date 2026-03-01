@@ -185,7 +185,7 @@ const HeroSection = () => {
                                     <Star className="w-3 h-3 fill-current" />
                                     <Star className="w-3 h-3 fill-current" />
                                 </div>
-                                <span className="text-[10px] text-slate-400 font-bold tracking-tight whitespace-nowrap">+1.200 alunos satisfeitos</span>
+                                <span className="text-[10px] text-slate-400 font-bold tracking-tight whitespace-nowrap">+600 alunos satisfeitos</span>
                             </div>
                         </div>
                     </motion.div>
