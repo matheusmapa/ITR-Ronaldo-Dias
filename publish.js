@@ -15,9 +15,8 @@ for (let i = 0; i < args.length; i++) {
     }
 }
 
-// Fallback to notify.txt if -notification argument isn't provided
-if (!notification && fs.existsSync('notify.txt')) {
-    notification = fs.readFileSync('notify.txt', 'utf8').trim();
+// Fallback to notify.txt just in case
+if (fs.existsSync('notify.txt')) {
     fs.unlinkSync('notify.txt'); // Clean up after reading
 }
 
@@ -35,13 +34,7 @@ try {
     console.log('Pushing to GitHub...');
     execSync('git push origin main', { stdio: 'inherit' });
 
-    if (notification) {
-        console.log('Sending notification...');
-        execSync(`curl.exe -d "${notification}" -H "Title: ITR Socio Tecnico" ntfy.sh/Metodo_ITR`, { stdio: 'inherit' });
-        console.log('\nNotification sent successfully.');
-    } else {
-        console.log('No notification payload found. Skipping ntfy.');
-    }
+    console.log('\nDeploy commands executed successfully. Waiting for any background IDE tasks...');
 } catch (error) {
     console.error(`Error during publish workflow: ${error.message}`);
     process.exit(1);

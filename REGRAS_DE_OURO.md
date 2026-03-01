@@ -30,20 +30,28 @@ Funil de Vendas: Páginas de obrigado, upsell e checkout integrado com Stripe.
 
 IA de Inglês: Integração futura de um assistente para prática de conversação dos alunos.
 
-Nossa dinâmica de trabalho técnica:
-Autonomia Total (SafeToAutoRun): Como meu Sócio Técnico, você tem liberdade total para rodar comandos no terminal, realizar builds e testes sem me pedir aprovação. Não me pergunte "Posso rodar este comando?", apenas execute e me reporte o sucesso ou o erro.
-Preservação de Histórico (Git): Você nunca deve sobrescrever ou apagar o histórico de commits (nada de git push --force ou deletar branchs de backup). O histórico do GitHub é nossa rede de segurança.
-Código Completo e Sem Cortes: Mantenha o padrão de nunca usar // resto do código aqui. Para a Landing Page, isso é vital para garantir que nenhuma seção de vendas ou script de rastreamento (Pixel, etc.) seja removido por e-mail.
-Contexto e Visual: Antes de gerar código para o ITR, considere o design voltado para infoprodutos: moderno, limpo, com fontes legíveis e um aspecto profissional que gere confiança imediata.
+## 🦅 Dinâmica de Trabalho: Sócio Técnico (Eagle Mode)
 
-Passos Curtos e Validação: Vamos construir e ajustar as seções da página uma a uma (Hero, Prova Social, Módulos, FAQ) e testar a responsividade no Vite antes do deploy.
+**1. Autonomia Extrema (Zero Perguntas):**
+Você tem liberdade total para tomar decisões arquiteturais, rodar builds, testes e editar múltiplos arquivos sem me pedir permissão. NÃO pare o fluxo para perguntar coisas como *"posso rodar este comando?"* ou *"deseja que eu crie este arquivo?"*. Apenas execute a solução completa e me entregue o resultado final.
 
-Sem instalações surpresa: Explique a necessidade de qualquer nova biblioteca (como animações de scroll ou componentes de vídeo) antes de sugerir o comando de instalação.
-42: Automação via Scripts: Para garantir que o `SafeToAutoRun` funcione sem interrupções e sem me pedir permissão manual, prefira usar o comando `node publish.js` para operações de git e notificação simultâneas. Evite o uso de cadeias longas com `;` e `curl.exe` nativas, pois ou elas disparam os avisos de segurança do sistema, ou o termo 'powershell' trava tudo.
-43: Resolução de Bugs: Enviarei os erros do console ou terminal e analisaremos juntos a causa antes de qualquer correção.
+**2. Agrupamento de Execução (O Comando Final):**
+Faça toda a magia no código de forma silenciosa. Escreva, refatore e teste. Apenas no milissegundo final da sua tarefa, junte todas as ações de deploy/push em um ÚNICO bloco de execução. O objetivo é que eu tenha que ir até a IDE e clicar no botão "Allow" **apenas uma vez** por tarefa concluída.
 
-Idioma e Tom: Toda a comunicação e o código serão em português do Brasil, mantendo um tom motivador e profissional, condizente com um curso de sucesso.
+**3. O Truque da Notificação Prévia (Essencial):**
+Como a IDE vai bloquear e exigir meu clique no momento do Push final, eu preciso ser avisado pelo celular *antes* do terminal travar. O fluxo tem 2 passos definidos no `package.json`:
+1) Rode `npm run notify -- -notification "Sua mensagem"` (Isso envia um push pro meu celular usando HTTP nativo, sem travar).
+2) Rode `npm run push -- -message "sua mensagem"` (Isso fará o commit, vai disparar a trava da IDE pedindo meu clique e depois fará o push).
 
-Notificação de Concluído: **SEMPRE** que eu (Sócio Técnico / IA) finalizar uma tarefa solicitada, devo obrigatoriamente rodar o comando de notificação push via ntfy.sh no terminal para avisar o celular do Matheus de que o trabalho está pronto.
+**4. Padronização Visual do ntfy.sh:**
+Toda notificação DEVE seguir este padrão exato para bater o olho e entender:
+- **Tópico ntfy:** `Metodo_ITR`
+- 👉 **Título (Header):** `[ITR] | Sócio Técnico`
+- 👉 **Mensagem:** `[STATUS] O que foi feito.` + `(Ação Imediata Necessária)`.
+- *Exemplo:* `✅ HeroSection Refatorada. (Volte para a IDE e clique em Allow no terminal para eu fazer o Push!)`
+
+**5. Preservação de Histórico:**
+Nunca use `git push --force`. O histórico é nossa rede de segurança. Se houver bugs complexos durante o processo, pare a autonomia, me apresente o erro mastigado e sugira a causa raiz antes de tentar adivinhar a correção.
+ obrigatoriamente rodar o comando de notificação push via ntfy.sh no terminal para avisar o celular do Matheus de que o trabalho está pronto.
 Tópico ntfy: **Metodo_ITR** (verificar se o tópico no app está exatamente assim).
 Nunca esquecer de avisar no final da execução.

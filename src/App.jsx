@@ -6,6 +6,7 @@ import {
     Plane, ArrowUpRight, Clock, BookOpen, Globe, Play, ChevronUp, Bot, Gift,
     MonitorPlay, Smartphone, ArrowRightCircle
 } from 'lucide-react';
+import Brain3D from './components/Brain3D';
 import './index.css';
 
 // =====================================
@@ -100,62 +101,6 @@ const TiltCard = ({ children, className = '' }) => {
     );
 };
 
-const HolographicBrain = () => {
-    return (
-        <div className="relative w-full aspect-square max-w-[500px] flex items-center justify-center">
-            {/* Glows and Auras */}
-            <div className="absolute w-[120%] h-[120%] bg-emerald-500/10 rounded-full blur-[80px] animate-pulse"></div>
-            <div className="absolute w-[80%] h-[80%] bg-teal-400/20 rounded-full blur-[60px]"></div>
-
-            {/* Rotating 3D Container */}
-            <motion.div
-                animate={{ rotateY: 360 }}
-                transition={{ duration: 25, ease: "linear", repeat: Infinity }}
-                className="relative w-full h-full flex items-center justify-center preserve-3d"
-                style={{ transformStyle: 'preserve-3d' }}
-            >
-                {/* Core Brain Icon (Front) */}
-                <div className="absolute flex items-center justify-center transform translate-z-12 drop-shadow-[0_0_25px_rgba(16,185,129,0.8)]">
-                    <Brain className="w-64 h-64 text-emerald-400 stroke-[1] -ml-4" />
-                </div>
-
-                {/* Wireframe Layer 1 (Back/Depth) */}
-                <div className="absolute flex items-center justify-center transform -translate-z-12 opacity-40 scale-90 blur-[1px]">
-                    <Brain className="w-64 h-64 text-teal-500 stroke-[1.5] -ml-4" />
-                </div>
-
-                {/* Vertical Scanning Plane */}
-                <motion.div
-                    animate={{ y: ["-100%", "100%", "-100%"] }}
-                    transition={{ duration: 4, ease: "linear", repeat: Infinity }}
-                    className="absolute w-[80%] h-2 bg-gradient-to-r from-transparent via-emerald-300 to-transparent blur-[2px] opacity-60 z-10"
-                />
-
-                {/* Data Points / Nodes */}
-                {[...Array(12)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-2 h-2 bg-emerald-300 rounded-full shadow-[0_0_10px_#34d399]"
-                        style={{
-                            top: `${Math.random() * 60 + 20}%`,
-                            left: `${Math.random() * 60 + 20}%`,
-                            transform: `translateZ(${Math.random() * 40 - 20}px)`,
-                        }}
-                        animate={{
-                            opacity: [0.2, 1, 0.2],
-                            scale: [0.8, 1.2, 0.8],
-                        }}
-                        transition={{
-                            duration: Math.random() * 2 + 1,
-                            repeat: Infinity,
-                            delay: Math.random() * 2,
-                        }}
-                    />
-                ))}
-            </motion.div>
-        </div>
-    );
-};
 
 const HeroSection = () => {
     return (
@@ -253,7 +198,7 @@ const HeroSection = () => {
                     transition={{ duration: 1, delay: 0.4 }}
                     className="hidden lg:flex items-center justify-center"
                 >
-                    <HolographicBrain />
+                    <Brain3D />
                 </motion.div>
 
             </div>
