@@ -65,7 +65,7 @@ export default function Hero() {
                         className="flex flex-col items-start gap-5 w-full md:w-auto"
                     >
                         <div className="flex flex-col items-center gap-3 w-full md:w-auto">
-                            <MagneticButton className="w-full md:w-auto text-center" onClick={() => document.getElementById('oferta').scrollIntoView({ behavior: 'smooth' })}>
+                            <MagneticButton className="w-full md:w-auto text-center" onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}>
                                 QUERO ACELERAR MEU INGLÊS AGORA
                             </MagneticButton>
                             <p className="text-[10px] text-slate-500 font-medium tracking-widest w-full text-center uppercase">

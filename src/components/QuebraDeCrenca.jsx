@@ -11,7 +11,7 @@ export default function QuebraDeCrenca() {
 
             <div className="max-w-3xl mx-auto relative z-10">
 
-                {/* ── Ícone de virada (diferente do badge anterior) */}
+                {/* ── Ícone de virada com float animation ──────── */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -19,9 +19,14 @@ export default function QuebraDeCrenca() {
                     transition={{ duration: 0.5 }}
                     className="flex justify-center mb-8"
                 >
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-emerald-500/30 flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.15)]">
+                    <motion.div
+                        animate={{ y: [0, -6, 0] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        whileHover={{ scale: 1.15, rotate: 10 }}
+                        className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-emerald-500/30 flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.15)] cursor-pointer transition-shadow hover:shadow-[0_0_40px_rgba(16,185,129,0.25)]"
+                    >
                         <Lightbulb className="w-6 h-6 text-emerald-400" />
-                    </div>
+                    </motion.div>
                 </motion.div>
 
                 {/* ── Headline ────────────────────────────────── */}
@@ -47,17 +52,29 @@ export default function QuebraDeCrenca() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="bg-[#0a0e18]/80 backdrop-blur-md border border-white/[0.06] rounded-[2rem] p-8 md:p-10 relative overflow-hidden mb-10"
+                    whileHover={{ scale: 1.01 }}
+                    className="bg-[#0a0e18]/80 backdrop-blur-md border border-white/[0.06] rounded-[2rem] p-8 md:p-10 relative overflow-hidden mb-10 hover:border-emerald-500/15 transition-colors duration-500"
                 >
                     {/* Linha superior decorativa */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[50%] h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent"></div>
 
                     <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
-                        {/* Número de impacto */}
-                        <div className="shrink-0 text-center md:text-left">
-                            <span className="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-400 to-teal-500 leading-none">80%</span>
+                        {/* Número de impacto com animação de contagem */}
+                        <motion.div
+                            className="shrink-0 text-center md:text-left"
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            whileInView={{ scale: 1, opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.3, type: "spring", stiffness: 150 }}
+                        >
+                            <motion.span
+                                whileHover={{ scale: 1.1 }}
+                                className="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-400 to-teal-500 leading-none inline-block cursor-default"
+                            >
+                                80%
+                            </motion.span>
                             <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">das conversas</p>
-                        </div>
+                        </motion.div>
 
                         {/* Texto explicativo */}
                         <div className="space-y-3">
@@ -87,7 +104,7 @@ export default function QuebraDeCrenca() {
                     </p>
                 </motion.div>
 
-                {/* ── Transição visual pro BentoGrid ──────────── */}
+                {/* ── Transição visual pro ComoFunciona ───────── */}
                 <motion.div
                     initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -95,11 +112,9 @@ export default function QuebraDeCrenca() {
                     transition={{ duration: 0.5 }}
                     className="flex flex-col items-center gap-3"
                 >
-                    {/* Linha divisória com glow */}
                     <div className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent"></div>
-
                     <motion.p
-                        animate={{ opacity: [0.5, 1, 0.5] }}
+                        animate={{ opacity: [0.4, 1, 0.4] }}
                         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                         className="text-slate-500 text-xs font-bold uppercase tracking-[0.3em] mt-4"
                     >
