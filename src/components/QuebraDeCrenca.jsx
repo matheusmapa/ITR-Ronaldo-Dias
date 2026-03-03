@@ -7,7 +7,7 @@ export default function QuebraDeCrenca() {
         <section className="relative pt-8 pb-12 md:pt-10 md:pb-16 px-6 bg-[#030308] overflow-hidden">
 
             {/* ── Glows ──────────────────────────────────────── */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-emerald-900/10 blur-[130px] rounded-full pointer-events-none"></div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-emerald-900/10 blur-3xl rounded-full pointer-events-none"></div>
 
             <div className="max-w-3xl mx-auto relative z-10">
 

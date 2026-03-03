@@ -1,15 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, MessageCircle, TrendingUp, Sparkles, Brain, Trophy, BookOpen } from 'lucide-react';
-
-const FLOATING_WORDS = ["Fluency", "Speaking", "Native", "Grammar", "Listening", "Confidence", "Vocabulary"];
+import { CheckCircle, TrendingUp, Brain, Trophy, BookOpen } from 'lucide-react';
 
 export default function HeroVisuals() {
     return (
         <div className="relative w-full aspect-square max-w-[500px] flex items-center justify-center">
-            {/* Glows */}
-            <div className="absolute w-[120%] h-[120%] bg-emerald-500/10 rounded-full blur-[80px] animate-pulse"></div>
-            <div className="absolute w-[80%] h-[80%] bg-teal-400/20 rounded-full blur-[60px]"></div>
+            {/* Glows — reduced blur values */}
+            <div className="absolute w-[120%] h-[120%] bg-emerald-500/10 rounded-full blur-3xl"></div>
+            <div className="absolute w-[80%] h-[80%] bg-teal-400/15 rounded-full blur-2xl"></div>
 
             <div className="relative w-full h-full">
 
@@ -17,7 +15,7 @@ export default function HeroVisuals() {
                 <motion.div
                     animate={{ y: [0, -15, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-[10%] left-[5%] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 p-4 rounded-2xl shadow-2xl w-64 z-20"
+                    className="absolute top-[10%] left-[5%] bg-slate-900/90 border border-slate-700/50 p-4 rounded-2xl shadow-2xl w-64 z-20"
                 >
                     <div className="flex items-center gap-3 mb-3">
                         <div className="bg-emerald-500/20 p-2 rounded-lg text-emerald-400">
@@ -38,29 +36,11 @@ export default function HeroVisuals() {
                     </div>
                 </motion.div>
 
-                {/* Floating Card 2: Chat Bubble */}
-                <motion.div
-                    animate={{ y: [0, 20, 0] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute top-[45%] right-[-5%] bg-slate-900/80 backdrop-blur-md border border-emerald-500/30 p-4 rounded-xl shadow-[0_0_30px_rgba(16,185,129,0.15)] w-56 z-30 flex items-start gap-3"
-                >
-                    <img src="https://i.pravatar.cc/100?img=5" className="w-10 h-10 rounded-full border border-slate-700 shadow-md" alt="Native Speaker" />
-                    <div>
-                        <div className="flex items-center gap-1 text-emerald-400 mb-1">
-                            <Sparkles className="w-3 h-3" />
-                            <span className="text-xs font-bold uppercase tracking-wider text-left">Nativo</span>
-                        </div>
-                        <p className="text-slate-300 text-sm leading-tight italic text-left">
-                            "Wow, you speak English very naturally!"
-                        </p>
-                    </div>
-                </motion.div>
-
-                {/* Floating Card 3: Memory / Brain */}
+                {/* Floating Card 2: Memory / Brain */}
                 <motion.div
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                    className="absolute bottom-[10%] left-[15%] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 p-3 rounded-2xl shadow-xl flex items-center gap-3 pr-6 z-10"
+                    className="absolute bottom-[10%] left-[15%] bg-slate-900/90 border border-slate-700/50 p-3 rounded-2xl shadow-xl flex items-center gap-3 pr-6 z-10"
                 >
                     <div className="bg-teal-500/20 p-2.5 rounded-xl text-teal-400">
                         <Brain className="w-5 h-5" />
@@ -73,36 +53,11 @@ export default function HeroVisuals() {
                     </div>
                 </motion.div>
 
-                {/* Floating English Words Background */}
-                {FLOATING_WORDS.map((word, i) => (
-                    <motion.div
-                        key={word}
-                        animate={{
-                            y: [0, -30, 0],
-                            x: [0, (i % 2 === 0 ? 15 : -15), 0],
-                            opacity: [0.2, 0.6, 0.2]
-                        }}
-                        transition={{
-                            duration: 8 + (i * 1.5),
-                            repeat: Infinity,
-                            ease: "linear",
-                            delay: i * 0.5
-                        }}
-                        className="absolute text-emerald-400/50 font-bold text-xl md:text-2xl select-none pointer-events-none z-0 tracking-wider whitespace-nowrap drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]"
-                        style={{
-                            top: `${15 + (i * 12)}%`,
-                            left: `${(i * 30) % 80}%`,
-                        }}
-                    >
-                        {word}
-                    </motion.div>
-                ))}
-
-                {/* Floating Card 4: Trophy / Certificate */}
+                {/* Floating Card 3: Trophy */}
                 <motion.div
                     animate={{ y: [0, 15, 0] }}
                     transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                    className="absolute bottom-[25%] right-[-10%] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 p-3 rounded-2xl shadow-xl flex items-center gap-3 pr-5 z-20"
+                    className="absolute bottom-[25%] right-[-10%] bg-slate-900/90 border border-slate-700/50 p-3 rounded-2xl shadow-xl flex items-center gap-3 pr-5 z-20"
                 >
                     <div className="bg-yellow-500/20 p-2 rounded-xl text-yellow-400">
                         <Trophy className="w-5 h-5" />
@@ -113,11 +68,11 @@ export default function HeroVisuals() {
                     </div>
                 </motion.div>
 
-                {/* Floating Card 5: Vocabulary (New Left Card) */}
+                {/* Floating Card 4: Vocabulary */}
                 <motion.div
                     animate={{ y: [0, -12, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute top-[60%] left-[-15%] bg-slate-900/80 backdrop-blur-md border border-slate-700/50 p-3.5 rounded-2xl shadow-2xl flex items-center gap-3 z-30"
+                    className="absolute top-[55%] left-[-15%] bg-slate-900/90 border border-slate-700/50 p-3.5 rounded-2xl shadow-2xl flex items-center gap-3 z-30"
                 >
                     <div className="bg-emerald-500/20 p-2 rounded-xl text-emerald-400">
                         <BookOpen className="w-5 h-5" />
@@ -128,14 +83,14 @@ export default function HeroVisuals() {
                     </div>
                 </motion.div>
 
-                {/* Central Focus Element (ITR Globe) perfectly centered */}
+                {/* Central Focus Element (ITR Globe) */}
                 <motion.div
                     initial={{ scale: 0.8 }}
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 m-auto w-56 h-56 bg-gradient-to-br from-emerald-500/10 to-teal-500/5 rounded-full border border-emerald-500/20 flex items-center justify-center backdrop-blur-sm shadow-[inset_0_0_50px_rgba(16,185,129,0.1)] z-10"
+                    className="absolute inset-0 m-auto w-56 h-56 bg-gradient-to-br from-emerald-500/10 to-teal-500/5 rounded-full border border-emerald-500/20 flex items-center justify-center shadow-[inset_0_0_50px_rgba(16,185,129,0.1)] z-10"
                 >
-                    <div className="w-36 h-36 bg-gradient-to-b from-emerald-500/30 to-teal-600/20 rounded-full flex items-center justify-center border border-emerald-400/50 shadow-[0_0_60px_rgba(16,185,129,0.4)] backdrop-blur-md">
+                    <div className="w-36 h-36 bg-gradient-to-b from-emerald-500/30 to-teal-600/20 rounded-full flex items-center justify-center border border-emerald-400/50 shadow-[0_0_60px_rgba(16,185,129,0.4)]">
                         <strong className="text-5xl text-white font-black tracking-tighter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">ITR</strong>
                     </div>
                 </motion.div>

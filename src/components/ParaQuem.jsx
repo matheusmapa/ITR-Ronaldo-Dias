@@ -25,8 +25,8 @@ export default function ParaQuem() {
     return (
         <section className="relative py-16 md:py-24 px-6 bg-[#030308] overflow-hidden">
 
-            <div className="absolute bottom-0 left-0 w-[500px] h-[400px] bg-emerald-900/6 blur-[120px] rounded-full pointer-events-none"></div>
-            <div className="absolute top-1/3 right-0 w-[300px] h-[300px] bg-teal-900/4 blur-[100px] rounded-full pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[400px] bg-emerald-900/6 blur-3xl rounded-full pointer-events-none"></div>
+            <div className="absolute top-1/3 right-0 w-[300px] h-[300px] bg-teal-900/4 blur-3xl rounded-full pointer-events-none"></div>
 
             <div className="max-w-3xl mx-auto relative z-10">
 

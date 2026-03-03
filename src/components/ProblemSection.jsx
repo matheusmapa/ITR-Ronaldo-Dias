@@ -10,8 +10,8 @@ export default function ProblemSection() {
             <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#050510] to-transparent pointer-events-none z-10"></div>
 
             {/* ── Glows de fundo ──────────────────────────────── */}
-            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-rose-900/8 blur-[150px] rounded-full pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-900/5 blur-[120px] rounded-full pointer-events-none"></div>
+            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-rose-900/8 blur-3xl rounded-full pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-900/5 blur-3xl rounded-full pointer-events-none"></div>
 
             {/* ── Seta animada de transição ───────────────────── */}
             <motion.div
