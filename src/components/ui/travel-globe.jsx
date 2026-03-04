@@ -2,51 +2,57 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import * as d3 from 'd3-geo';
 import * as topojson from 'topojson-client';
 import { cn } from '../../lib/utils';
-
-const TOPO_JSON_URL = 'https://unpkg.com/world-atlas@2.0.2/countries-110m.json';
+// Importação direta do mapa baixado (não depende de fetch da internet)
+import worldAtlas from './world-110m.json';
 
 // Cidades da rota para simular a expansão (Inglês)
 const ROUTE = [
-    { lat: -23.5505, lng: -46.6333, label: "Você", id: "br" }, // São Paulo, Brasil
-    { lat: 40.7128, lng: -74.0060, label: "You", id: "ny" },   // New York, US
-    { lat: 51.5074, lng: -0.1278, label: "You", id: "lon" },   // London, UK
-    { lat: -33.8688, lng: 151.2093, label: "You", id: "syd" }, // Sydney, AU
-    { lat: 43.6532, lng: -79.3832, label: "You", id: "tor" },  // Toronto, CA
+    { lat: -23.55, lng: -46.63, label: "Você", id: "br" }, // Sąo Paulo
+    { lat: 40.71, lng: -74.00, label: "You", id: "ny" },   // New York
+    { lat: 51.50, lng: -0.12, label: "You", id: "lon" },   // London
+    { lat: 28.61, lng: 77.21, label: "You", id: "delhi" }, // Delhi
+    { lat: 35.68, lng: 139.69, label: "You", id: "tokyo" },// Tokyo
+    { lat: -33.87, lng: 151.21, label: "You", id: "syd" }  // Sydney
 ];
 
 export function TravelGlobe({
     className,
     size = 600,
-    globeColor = "rgba(5, 150, 105, 0.05)", // Emerald 600 muito transparente
+    globeColor = "rgba(4, 47, 46, 0.4)", // Teal 950 com opacidade pro fundo
     countryStroke = "rgba(16, 185, 129, 0.4)", // Emerald 500
-    trailColor = "rgba(52, 211, 153, 0.6)", // Teal 400
+    trailColor = "rgba(52, 211, 153, 0.5)", // Teal 400
     activeColor = "#34d399",
     autoRotateSpeed = 0.003
 }) {
     const canvasRef = useRef(null);
     const worldRef = useRef(null);
-    const rotationRef = useRef([0, -15, 0]); // Começa focando um pouco pra Cima/Brasil
+    const rotationRef = useRef([0, -15, 0]); // Começa focando Brasil
+    const timeRef = useRef(0);
 
-    // Simple linear interpolation
-    const lerp = useCallback((a, b, t) => a + (b - a) * t, []);
-
-    // Controle de Animação da Viagem
-    const stateRef = useRef({
-        currentIndex: 0,
-        progress: 0, // 0 a 1 (andando no trajeto atual)
-        pauseFrames: 60, // frames para pausar na cidade
-        currentPause: 0,
-        pulses: [] // ondas geradas nos pousos
+    // Drag handling
+    const dragRef = useRef({
+        active: false,
+        startX: 0,
+        startY: 0,
+        startRotX: 0,
+        startRotY: 0
     });
 
-    // Carrega o mapa
+    // Controle de Animação 
+    const stateRef = useRef({
+        currentIndex: 0,
+        progress: 0, // 0 a 1 (andando no trajeto)
+        currentPause: 60, // frames pausados na origem
+        pulses: []
+    });
+
+    const lerp = useCallback((a, b, t) => a + (b - a) * t, []);
+    // Easing function natively
+    const easeCubicInOut = useCallback((t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2, []);
+
     useEffect(() => {
-        fetch(TOPO_JSON_URL)
-            .then((res) => res.json())
-            .then((topology) => {
-                worldRef.current = topojson.feature(topology, topology.objects.countries);
-            })
-            .catch((err) => console.error("Erro ao carregar mapa", err));
+        // Processa o mapa estático já na montagem
+        worldRef.current = topojson.feature(worldAtlas, worldAtlas.objects.countries);
     }, []);
 
     const draw = useCallback(() => {
@@ -69,7 +75,6 @@ export function TravelGlobe({
         const cx = w / 2;
         const cy = h / 2;
 
-        // Projeção Ortográfica do D3
         const projection = d3.geoOrthographic()
             .translate([cx, cy])
             .scale(radius)
@@ -77,57 +82,60 @@ export function TravelGlobe({
 
         const pathGenerator = d3.geoPath().projection(projection).context(ctx);
 
-        // Auto Rotação base (um pouco para dar vida)
-        rotationRef.current[0] += autoRotateSpeed * 60; // D3 rotação em graus
+        timeRef.current += 1; // frame counter geral
 
         // Limpa canvas
         ctx.clearRect(0, 0, w, h);
 
-        // Fundo do Mar (Oceano/Glow)
-        const glowGrad = ctx.createRadialGradient(cx, cy, radius * 0.7, cx, cy, radius * 1.3);
+        // Glow e Fundo do Mapa (Vibe dark apple)
+        const glowGrad = ctx.createRadialGradient(cx, cy, radius * 0.7, cx, cy, radius * 1.4);
         glowGrad.addColorStop(0, "rgba(5, 150, 105, 0.08)");
         glowGrad.addColorStop(1, "rgba(5, 150, 105, 0)");
         ctx.fillStyle = glowGrad;
         ctx.fillRect(0, 0, w, h);
 
-        // Borda do Globo
+        // Esfera (Oceano)
         ctx.beginPath();
         ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
         ctx.fillStyle = globeColor;
         ctx.fill();
-        ctx.strokeStyle = "rgba(16, 185, 129, 0.15)";
+        ctx.strokeStyle = "rgba(16, 185, 129, 0.2)";
         ctx.lineWidth = 1;
         ctx.stroke();
 
-        // Desenha Países se carregado
+        // Desenha Países
         if (worldRef.current) {
             ctx.beginPath();
             pathGenerator(worldRef.current);
-            ctx.fillStyle = "rgba(4, 47, 46, 0.3)"; // Preenchimento bem escuro (teal-950)
+            ctx.fillStyle = "rgba(2, 44, 34, 0.6)"; // Teal-950/Teal-900 misturado
             ctx.fill();
             ctx.strokeStyle = countryStroke;
             ctx.lineWidth = 0.8;
             ctx.stroke();
         }
 
-        // --- LÓGICA DA VIAGEM ---
         const s = stateRef.current;
 
-        // Atualiza lógica
+        // Auto rotation base (quando não tá arrastando)
+        if (!dragRef.current.active) {
+            rotationRef.current[0] += autoRotateSpeed * 30;
+        }
+
+        // Lógica da Viagem 
         if (s.currentPause > 0) {
             s.currentPause--;
         } else {
-            s.progress += 0.008; // velocidade do voo
+            s.progress += 0.006;
             if (s.progress >= 1) {
                 s.progress = 0;
                 s.currentIndex = (s.currentIndex + 1) % ROUTE.length;
-                s.currentPause = 60; // Pausa 1 seg quando chega (assumindo 60fps)
+                s.currentPause = 60; // Pausa no destino
 
-                // Adiciona "onda" (pulse)
+                // Pouso! Pulse ring
                 const city = ROUTE[s.currentIndex];
                 s.pulses.push({
                     lng: city.lng, lat: city.lat,
-                    radius: 0, maxRadius: 40, alpha: 1
+                    radius: 0, alpha: 1
                 });
             }
         }
@@ -135,110 +143,189 @@ export function TravelGlobe({
         const cityA = ROUTE[s.currentIndex];
         const cityB = ROUTE[(s.currentIndex + 1) % ROUTE.length];
 
-        // Força a rotação do globo para seguir o ponto atual para não perdermos de vista!
-        // Interpola a rotação ideal (centro = longitude/latitude ativa invertida)
-        const t = s.currentPause > 0 ? 0 : s.progress;
-        const activeLng = lerp(cityA.lng, cityB.lng, t);
-        const activeLat = lerp(cityA.lat, cityB.lat, t);
+        // Força a câmera do D3 ir acompanhando a viagem (easing pra suavizar)
+        const tCamera = s.currentPause > 0 ? 0 : easeCubicInOut(s.progress);
+        const cameraTarget = d3.geoInterpolate([cityA.lng, cityA.lat], [cityB.lng, cityB.lat])(tCamera);
 
-        // Suaviza a rotação do globo em direção ao pontinho ativo
-        const targetRotX = -activeLng;
-        const targetRotY = -activeLat;
-        rotationRef.current[0] += (targetRotX - rotationRef.current[0]) * 0.02;
-        rotationRef.current[1] += (targetRotY - rotationRef.current[1]) * 0.02;
+        // Apenas segue o avião se não estiver arrastando com o mouse
+        if (!dragRef.current.active) {
+            rotationRef.current[0] += (-cameraTarget[0] - rotationRef.current[0]) * 0.04;
+            rotationRef.current[1] += (-cameraTarget[1] - rotationRef.current[1]) * 0.04;
+        }
 
-        // Renderiza trilhas passadas e o voo atual usando GeoStream
-        ctx.beginPath();
-        ctx.strokeStyle = trailColor;
-        ctx.lineWidth = 2;
-        ctx.setLineDash([4, 4]); // Linha pontilhada (rastro de avião)
+        // --- Lógica da Rota 2D Lateralizada Especial ---
+        const mathProj = d3.geoOrthographic()
+            .translate([cx, cy])
+            .scale(radius)
+            .rotate(rotationRef.current)
+            .clipAngle(null); // pega posições visíveis ou não
 
-        // Desenha linha curvada (geodesic curve) entre as duas cidades
-        const routeFeature = {
-            type: "LineString",
-            coordinates: [[cityA.lng, cityA.lat], [cityB.lng, cityB.lat]]
+        const camLng = -rotationRef.current[0];
+        const camLat = -rotationRef.current[1];
+
+        const isVisible = (lng, lat) => {
+            const dist = d3.geoDistance([lng, lat], [camLng, camLat]);
+            return dist <= Math.PI / 2 + 0.1; // 0.1 de tolerância para o horizonte
         };
-        pathGenerator(routeFeature);
-        ctx.stroke();
-        ctx.setLineDash([]); // volta ao normal
 
-        // --- Renderiza Pulses (Ondinhas) ---
+        const ptA = mathProj([cityA.lng, cityA.lat]);
+        const ptB = mathProj([cityB.lng, cityB.lat]);
+        let cpX = cx, cpY = cy;
+
+        if (ptA && ptB) {
+            // Ponto Central do Segmento em 2D
+            const midX = (ptA[0] + ptB[0]) / 2;
+            const midY = (ptA[1] + ptB[1]) / 2;
+
+            // Distância no Canvas
+            const dx = ptB[0] - ptA[0];
+            const dy = ptB[1] - ptA[1];
+            const dist2D = Math.sqrt(dx * dx + dy * dy);
+
+            // Vetor do Centro do Globo pro Meio da Reta removido!
+            // Vamos usar apenas a normal geométrica da reta bidimensional.
+            // Ao girar a terra, a reta gira, e o vetor normal gira rigidamente junto.
+            let nx = -dy / dist2D;
+            let ny = dx / dist2D;
+
+            // Elevação do Arco
+            const arcHeight = dist2D * 0.35;
+            cpX = midX + nx * arcHeight;
+            cpY = midY + ny * arcHeight;
+
+            // Desenha Linha Interativa
+            // Checa se pelo menos um dos pontos tá visível (ou desenhar mesmo assim se quiser deixar ir pro fundo)
+            // Apenas desenhamos a pontilhada inteira se pelo menos o midpoint tá quase visível
+            const midLngLat = d3.geoInterpolate([cityA.lng, cityA.lat], [cityB.lng, cityB.lat])(0.5);
+
+            if (isVisible(midLngLat[0], midLngLat[1]) || isVisible(cityA.lng, cityA.lat) || isVisible(cityB.lng, cityB.lat)) {
+                ctx.beginPath();
+                ctx.strokeStyle = trailColor;
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([4, 4]);
+                ctx.lineDashOffset = -(timeRef.current * 0.5);
+                ctx.moveTo(ptA[0], ptA[1]);
+                ctx.quadraticCurveTo(cpX, cpY, ptB[0], ptB[1]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+        }
+
+        // --- Renderiza Pulses do destino (Ondinhas) ---
         for (let i = s.pulses.length - 1; i >= 0; i--) {
             const p = s.pulses[i];
-            p.radius += 0.5;
+            p.radius += 0.8;
             p.alpha -= 0.02;
 
-            // Projeta e checa se tá visível de frente
             if (p.alpha <= 0) {
                 s.pulses.splice(i, 1);
                 continue;
             }
 
-            const pt = projection([p.lng, p.lat]);
-            if (pt) {
-                ctx.beginPath(); // Consertado: sempre precisa de beginPath na hora de desenhar uma shape. Senão linka com a ultima.
-                ctx.arc(pt[0], pt[1], p.radius, 0, 2 * Math.PI);
-                ctx.strokeStyle = `rgba(52, 211, 153, ${Math.max(0, p.alpha)})`; // Teal-400
-                ctx.lineWidth = 2;
-                ctx.stroke();
+            if (isVisible(p.lng, p.lat)) {
+                const ptPulse = mathProj([p.lng, p.lat]);
+                if (ptPulse) {
+                    ctx.beginPath();
+                    ctx.arc(ptPulse[0], ptPulse[1], p.radius, 0, 2 * Math.PI);
+                    ctx.strokeStyle = `rgba(52, 211, 153, ${Math.max(0, p.alpha)})`;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
             }
         }
 
         // --- Renderiza o "Avião"/Ponteiro Atual ---
-        const currentT = s.currentPause > 0 ? 0 : s.progress;
-        const currentPosLng = lerp(cityA.lng, cityB.lng, currentT);
-        const currentPosLat = lerp(cityA.lat, cityB.lat, currentT);
+        const pct = s.currentPause > 0 ? 0 : s.progress;
 
-        // Para desenhar a bolinha atual de forma correta (respeitando clipping do horizonte):
-        const pt = projection([currentPosLng, currentPosLat]);
-        if (pt) {
-            // Glow atrás do ponto atual
-            ctx.beginPath();
-            ctx.arc(pt[0], pt[1], 8, 0, 2 * Math.PI);
-            ctx.fillStyle = "rgba(52, 211, 153, 0.4)";
-            ctx.fill();
+        // Calcula Posição Atual baseada na Curva Bezier Real
+        if (ptA && ptB) {
+            const currentX = (1 - pct) ** 2 * ptA[0] + 2 * (1 - pct) * pct * cpX + pct ** 2 * ptB[0];
+            const currentY = (1 - pct) ** 2 * ptA[1] + 2 * (1 - pct) * pct * cpY + pct ** 2 * ptB[1];
 
-            // Ponto Base
-            ctx.beginPath();
-            ctx.arc(pt[0], pt[1], 4, 0, 2 * Math.PI);
-            ctx.fillStyle = activeColor;
-            ctx.fill();
+            const currentLngLat = d3.geoInterpolate([cityA.lng, cityA.lat], [cityB.lng, cityB.lat])(pct);
 
-            // Desenha a Label flutuando junto com o ponto
-            const text = ROUTE[s.currentIndex].label; // Label do destino
+            // Só renderiza o Avião e a Tag se ele estiver na parte da Frente do Globo
+            if (isVisible(currentLngLat[0], currentLngLat[1])) {
+                // Glow atrás do ponto atual
+                ctx.beginPath();
+                ctx.arc(currentX, currentY, 8, 0, 2 * Math.PI);
+                ctx.fillStyle = "rgba(52, 211, 153, 0.4)";
+                ctx.fill();
 
-            // Label Background
-            ctx.font = "bold 13px system-ui, sans-serif";
-            const textMetrics = ctx.measureText(text);
-            const padX = 8, padY = 4;
+                // Ponto Base
+                ctx.beginPath();
+                ctx.arc(currentX, currentY, 4, 0, 2 * Math.PI);
+                ctx.fillStyle = activeColor;
+                ctx.fill();
 
-            ctx.fillStyle = "rgba(4, 47, 46, 0.9)"; // Fundo ultra escuro (teal-950) com opacidade
-            ctx.beginPath();
-            ctx.roundRect(pt[0] + 12, pt[1] - 12 - 14, textMetrics.width + padX * 2, 14 + padY * 2, 6);
-            ctx.fill();
-            ctx.strokeStyle = "rgba(52, 211, 153, 0.5)"; // Borda
-            ctx.lineWidth = 1;
-            ctx.stroke();
+                // Desenha a Label flutuando junto com o ponto
+                const text = ROUTE[s.currentIndex].label; // Label do destino (Você / You)
 
-            // Label Text
-            ctx.fillStyle = activeColor;
-            ctx.fillText(text, pt[0] + 12 + padX, pt[1] - 12 - 14 + padY + 11);
+                // Label Background
+                ctx.font = "bold 13px system-ui, sans-serif";
+                const textMetrics = ctx.measureText(text);
+                const padX = 8, padY = 4;
+
+                ctx.fillStyle = "rgba(4, 47, 46, 0.9)"; // Fundo ultra escuro
+                ctx.beginPath();
+                ctx.roundRect(currentX + 12, currentY - 12 - 14, textMetrics.width + padX * 2, 14 + padY * 2, 6);
+                ctx.fill();
+                ctx.strokeStyle = "rgba(52, 211, 153, 0.5)"; // Borda
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // Label Text
+                ctx.fillStyle = activeColor;
+                ctx.fillText(text, currentX + 12 + padX, currentY - 12 - 14 + padY + 11);
+            }
         }
 
-        // eslint-disable-next-line
-        animRef.current = requestAnimationFrame(draw);
-    }, [globeColor, countryStroke, trailColor, activeColor, autoRotateSpeed]);
+        // loop infinito
+        requestAnimationFrame(draw);
+    }, [globeColor, countryStroke, trailColor, activeColor, autoRotateSpeed, lerp, easeCubicInOut]);
 
     useEffect(() => {
         let animId = requestAnimationFrame(draw);
         return () => cancelAnimationFrame(animId);
     }, [draw]);
 
+    const onPointerDown = useCallback((e) => {
+        dragRef.current = {
+            active: true,
+            startX: e.clientX,
+            startY: e.clientY,
+            startRotX: rotationRef.current[0],
+            startRotY: rotationRef.current[1]
+        };
+        e.target.setPointerCapture(e.pointerId);
+    }, []);
+
+    const onPointerMove = useCallback((e) => {
+        if (!dragRef.current.active) return;
+        const dx = e.clientX - dragRef.current.startX;
+        const dy = e.clientY - dragRef.current.startY;
+
+        // Rotação: X e Y precisam mover de acordo com o arraste
+        rotationRef.current[0] = dragRef.current.startRotX + dx * 0.4;
+        rotationRef.current[1] = dragRef.current.startRotY - dy * 0.4;
+
+        // Limita o pitch pra não virar o mundo de cabeça pra baixo demais
+        rotationRef.current[1] = Math.max(-80, Math.min(80, rotationRef.current[1]));
+    }, []);
+
+    const onPointerUp = useCallback(() => {
+        dragRef.current.active = false;
+    }, []);
+
     return (
-        <div className={cn("w-full h-full relative cursor-crosshair", className)} style={{ minHeight: size }}>
+        <div className={cn("w-full h-full relative cursor-grab active:cursor-grabbing", className)} style={{ minHeight: size }}>
             <canvas
                 ref={canvasRef}
-                className="w-full h-full absolute inset-0"
+                onPointerDown={onPointerDown}
+                onPointerMove={onPointerMove}
+                onPointerUp={onPointerUp}
+                onPointerCancel={onPointerUp}
+                className="w-full h-full absolute inset-0 touch-none"
             />
         </div>
     );
