@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import './index.css';
 
 // ── Componentes críticos (above-the-fold, carregam imediato) ──
-import Hero from './components/Hero';
+import HeroPlus from './components/HeroPlus';
 import { PromoBanner } from './components/CountdownTimer';
 
 // ── Componentes lazy (carregam sob demanda quando ficam perto da viewport) ──
@@ -53,7 +53,7 @@ const LandingPagePlus = () => {
             <PromoBanner visible={showBanner && !ofertaInView} />
 
             {/* 1. A Primeira Impressão */}
-            <Hero />
+            <HeroPlus />
 
             <Suspense fallback={null}>
                 {/* 2. Agitação da Dor */}
