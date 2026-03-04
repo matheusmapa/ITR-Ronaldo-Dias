@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Star } from 'lucide-react';
 import { MagneticButton } from './Common';
-import { InteractiveGlobe } from './ui/interactive-globe';
+import { TravelGlobe } from './ui/travel-globe';
 
 export default function HeroPlus() {
     return (
@@ -102,7 +102,7 @@ export default function HeroPlus() {
                 >
                     {/* Add a subtle glow behind the globe to make it pop like the demo */}
                     <div className="absolute w-[80%] h-[80%] rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
-                    <InteractiveGlobe size={500} autoRotateSpeed={0.003} />
+                    <TravelGlobe size={600} autoRotateSpeed={0.002} />
                 </motion.div>
 
             </div>
