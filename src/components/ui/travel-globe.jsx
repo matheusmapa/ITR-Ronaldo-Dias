@@ -5,14 +5,18 @@ import { cn } from '../../lib/utils';
 // Importação direta do mapa baixado (não depende de fetch da internet)
 import worldAtlas from './world-110m.json';
 
-// Cidades da rota para simular a expansão (Inglês)
+// Cidades da rota para simular a expansão (Inglês) dando a volta ao mundo com hops curtos
 const ROUTE = [
-    { lat: -23.55, lng: -46.63, label: "Você", id: "br" }, // Sąo Paulo
-    { lat: 40.71, lng: -74.00, label: "You", id: "ny" },   // New York
-    { lat: 51.50, lng: -0.12, label: "You", id: "lon" },   // London
-    { lat: 28.61, lng: 77.21, label: "You", id: "delhi" }, // Delhi
-    { lat: 35.68, lng: 139.69, label: "You", id: "tokyo" },// Tokyo
-    { lat: -33.87, lng: 151.21, label: "You", id: "syd" }  // Sydney
+    { label: "Você", id: "sp", lat: -23.55, lng: -46.63 }, // São Paulo, BR
+    { label: "You", id: "ny", lat: 40.71, lng: -74.00 },   // New York, US
+    { label: "You", id: "tor", lat: 43.65, lng: -79.38 },  // Toronto, CA
+    { label: "You", id: "lon", lat: 51.50, lng: -0.12 },   // London, UK
+    { label: "You", id: "cpt", lat: -33.92, lng: 18.42 },  // Cape Town, ZA
+    { label: "You", id: "del", lat: 28.61, lng: 77.21 },   // Delhi, IN
+    { label: "You", id: "syd", lat: -33.87, lng: 151.21 }, // Sydney, AU
+    { label: "You", id: "akl", lat: -36.84, lng: 174.76 }, // Auckland, NZ
+    { label: "You", id: "la", lat: 34.05, lng: -118.24 },  // Los Angeles, US
+    { label: "You", id: "mex", lat: 19.43, lng: -99.13 }   // Mexico City, MX (e volta pro BR)
 ];
 
 export function TravelGlobe({
@@ -28,15 +32,6 @@ export function TravelGlobe({
     const worldRef = useRef(null);
     const rotationRef = useRef([0, -15, 0]); // Começa focando Brasil
     const timeRef = useRef(0);
-
-    // Drag handling
-    const dragRef = useRef({
-        active: false,
-        startX: 0,
-        startY: 0,
-        startRotX: 0,
-        startRotY: 0
-    });
 
     // Controle de Animação 
     const stateRef = useRef({
@@ -87,13 +82,6 @@ export function TravelGlobe({
         // Limpa canvas
         ctx.clearRect(0, 0, w, h);
 
-        // Glow e Fundo do Mapa (Vibe dark apple)
-        const glowGrad = ctx.createRadialGradient(cx, cy, radius * 0.7, cx, cy, radius * 1.4);
-        glowGrad.addColorStop(0, "rgba(5, 150, 105, 0.08)");
-        glowGrad.addColorStop(1, "rgba(5, 150, 105, 0)");
-        ctx.fillStyle = glowGrad;
-        ctx.fillRect(0, 0, w, h);
-
         // Esfera (Oceano)
         ctx.beginPath();
         ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
@@ -116,10 +104,8 @@ export function TravelGlobe({
 
         const s = stateRef.current;
 
-        // Auto rotation base (quando não tá arrastando)
-        if (!dragRef.current.active) {
-            rotationRef.current[0] += autoRotateSpeed * 30;
-        }
+        // Auto rotation base
+        rotationRef.current[0] += autoRotateSpeed * 30;
 
         // Lógica da Viagem 
         if (s.currentPause > 0) {
@@ -147,11 +133,9 @@ export function TravelGlobe({
         const tCamera = s.currentPause > 0 ? 0 : easeCubicInOut(s.progress);
         const cameraTarget = d3.geoInterpolate([cityA.lng, cityA.lat], [cityB.lng, cityB.lat])(tCamera);
 
-        // Apenas segue o avião se não estiver arrastando com o mouse
-        if (!dragRef.current.active) {
-            rotationRef.current[0] += (-cameraTarget[0] - rotationRef.current[0]) * 0.04;
-            rotationRef.current[1] += (-cameraTarget[1] - rotationRef.current[1]) * 0.04;
-        }
+        // Força a câmera do D3 ir acompanhando a viagem
+        rotationRef.current[0] += (-cameraTarget[0] - rotationRef.current[0]) * 0.04;
+        rotationRef.current[1] += (-cameraTarget[1] - rotationRef.current[1]) * 0.04;
 
         // --- Lógica da Rota 2D Lateralizada Especial ---
         const mathProj = d3.geoOrthographic()
@@ -259,24 +243,45 @@ export function TravelGlobe({
                 ctx.fill();
 
                 // Desenha a Label flutuando junto com o ponto
-                const text = ROUTE[s.currentIndex].label; // Label do destino (Você / You)
+                const labelA = cityA.label;
+                const labelB = cityB.label;
 
-                // Label Background
                 ctx.font = "bold 13px system-ui, sans-serif";
-                const textMetrics = ctx.measureText(text);
+                const wA = ctx.measureText(labelA).width;
+                const wB = ctx.measureText(labelB).width;
+
+                let activeLabel = labelA;
+                let activeW = wA;
+                let textAlpha = 1;
+
+                if (labelA !== labelB) {
+                    if (pct < 0.5) {
+                        activeLabel = labelA;
+                        activeW = wA;
+                        textAlpha = 1 - (pct * 2); // Fade out 1 -> 0
+                    } else {
+                        activeLabel = labelB;
+                        activeW = wB;
+                        textAlpha = (pct - 0.5) * 2; // Fade in 0 -> 1
+                    }
+                }
+
                 const padX = 8, padY = 4;
 
                 ctx.fillStyle = "rgba(4, 47, 46, 0.9)"; // Fundo ultra escuro
                 ctx.beginPath();
-                ctx.roundRect(currentX + 12, currentY - 12 - 14, textMetrics.width + padX * 2, 14 + padY * 2, 6);
+                ctx.roundRect(currentX + 12, currentY - 12 - 14, activeW + padX * 2, 14 + padY * 2, 6);
                 ctx.fill();
                 ctx.strokeStyle = "rgba(52, 211, 153, 0.5)"; // Borda
                 ctx.lineWidth = 1;
                 ctx.stroke();
 
                 // Label Text
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, Math.min(1, textAlpha));
                 ctx.fillStyle = activeColor;
-                ctx.fillText(text, currentX + 12 + padX, currentY - 12 - 14 + padY + 11);
+                ctx.fillText(activeLabel, currentX + 12 + padX, currentY - 12 - 14 + padY + 11);
+                ctx.restore();
             }
         }
 
@@ -289,43 +294,11 @@ export function TravelGlobe({
         return () => cancelAnimationFrame(animId);
     }, [draw]);
 
-    const onPointerDown = useCallback((e) => {
-        dragRef.current = {
-            active: true,
-            startX: e.clientX,
-            startY: e.clientY,
-            startRotX: rotationRef.current[0],
-            startRotY: rotationRef.current[1]
-        };
-        e.target.setPointerCapture(e.pointerId);
-    }, []);
-
-    const onPointerMove = useCallback((e) => {
-        if (!dragRef.current.active) return;
-        const dx = e.clientX - dragRef.current.startX;
-        const dy = e.clientY - dragRef.current.startY;
-
-        // Rotação: X e Y precisam mover de acordo com o arraste
-        rotationRef.current[0] = dragRef.current.startRotX + dx * 0.4;
-        rotationRef.current[1] = dragRef.current.startRotY - dy * 0.4;
-
-        // Limita o pitch pra não virar o mundo de cabeça pra baixo demais
-        rotationRef.current[1] = Math.max(-80, Math.min(80, rotationRef.current[1]));
-    }, []);
-
-    const onPointerUp = useCallback(() => {
-        dragRef.current.active = false;
-    }, []);
-
     return (
-        <div className={cn("w-full h-full relative cursor-grab active:cursor-grabbing", className)} style={{ minHeight: size }}>
+        <div className={cn("w-full h-full relative pointer-events-none select-none", className)} style={{ minHeight: size }}>
             <canvas
                 ref={canvasRef}
-                onPointerDown={onPointerDown}
-                onPointerMove={onPointerMove}
-                onPointerUp={onPointerUp}
-                onPointerCancel={onPointerUp}
-                className="w-full h-full absolute inset-0 touch-none"
+                className="w-full h-full absolute inset-0"
             />
         </div>
     );
