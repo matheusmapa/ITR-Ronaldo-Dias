@@ -7,7 +7,7 @@ export default function TestimonialsWhatsApp() {
     const feedbackCards = [
         {
             icon: <MessageCircle className="size-4 text-emerald-300" />,
-            title: "Marcos Lima",
+            title: "Felipe Andrade",
             description: "\"Cara, o ITR foi um divisor de águas! Em 2 meses eu aprendi mais inglês do que em 3 anos de Wiz**. Tô conseguindo formar frases com naturalidade já!\"",
             date: "Ontem às 19:43",
             iconClassName: "text-[#25D366]",
@@ -31,7 +31,7 @@ export default function TestimonialsWhatsApp() {
         },
         {
             icon: <MessageCircle className="size-4 text-emerald-300" />,
-            title: "Felipe Andrade",
+            title: "Marcos Lima",
             description: "\"O curso é um absurdo! Achei que eu não aprendia inglês porque eu era ruim ou velho, mas era a didática dos cursinhos. Tô aprendendo rápido demais! 😎\"",
             date: "Hoje às 14:30",
             iconClassName: "text-[#25D366]",
