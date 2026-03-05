@@ -1,6 +1,5 @@
-"use client";
-
 import React from "react";
+import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
 import { Sparkles } from "lucide-react";
 
@@ -12,9 +11,21 @@ export function DisplayCard({
     date = "Just now",
     iconClassName = "text-blue-500",
     titleClassName = "text-blue-500",
+    index = 0,
+    stackX = 0,
+    stackY = 0,
 }) {
     return (
-        <div
+        <motion.div
+            initial={{ scale: 0, opacity: 0, x: stackX, y: stackY + 20 }}
+            whileInView={{ scale: 1, opacity: 1, x: stackX, y: stackY }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{
+                delay: index * 0.5,
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+            }}
             className={cn(
                 "relative flex h-auto min-h-[7rem] w-[22rem] sm:w-[26rem] select-none flex-col justify-start rounded-2xl border border-emerald-900/50 bg-[#0b141a]/90 shadow-2xl backdrop-blur-md px-5 py-4 transition-all duration-700 hover:border-emerald-500/30 hover:bg-[#111b21]/95",
                 className
@@ -32,29 +43,17 @@ export function DisplayCard({
             <p className="whitespace-normal text-[15px] leading-relaxed mt-1 text-slate-200 break-words pl-[52px]">
                 {description}
             </p>
-        </div>
+        </motion.div>
     );
 }
 
 export default function DisplayCards({ cards }) {
-    const defaultCards = [
-        {
-            className: "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
-        },
-        {
-            className: "[grid-area:stack] translate-x-16 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration:700 hover:grayscale-0 before:left-0 before:top-0",
-        },
-        {
-            className: "[grid-area:stack] translate-x-32 translate-y-20 hover:translate-y-10",
-        },
-    ];
-
-    const displayCards = cards || defaultCards;
+    const displayCards = cards || [];
 
     return (
-        <div className="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in fade-in-0 duration-700">
+        <div className="grid [grid-template-areas:'stack'] place-items-center">
             {displayCards.map((cardProps, index) => (
-                <DisplayCard key={index} {...cardProps} />
+                <DisplayCard key={index} index={index} {...cardProps} />
             ))}
         </div>
     );

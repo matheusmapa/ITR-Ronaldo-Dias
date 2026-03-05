@@ -12,8 +12,10 @@ export default function TestimonialsWhatsApp() {
             date: "Ontem às 19:43",
             iconClassName: "text-[#25D366]",
             titleClassName: "text-slate-100",
+            stackX: -32,
+            stackY: -32,
             className:
-                "[grid-area:stack] transition-all duration-300 ease-out -translate-x-4 -translate-y-4 md:-translate-x-8 md:-translate-y-8 opacity-70 hover:!opacity-100 hover:!z-50 z-10 hover:duration-150 shadow-lg",
+                "[grid-area:stack] transition-all duration-300 ease-out opacity-70 hover:!opacity-100 hover:!z-50 z-10 hover:duration-150 shadow-lg",
         },
         {
             icon: <MessageCircle className="size-4 text-emerald-300" />,
@@ -22,8 +24,10 @@ export default function TestimonialsWhatsApp() {
             date: "Hoje às 10:12",
             iconClassName: "text-[#25D366]",
             titleClassName: "text-slate-100",
+            stackX: 0,
+            stackY: 0,
             className:
-                "[grid-area:stack] transition-all duration-300 ease-out translate-x-0 translate-y-0 opacity-80 hover:!opacity-100 hover:!z-50 z-20 hover:duration-150 shadow-xl",
+                "[grid-area:stack] transition-all duration-300 ease-out opacity-80 hover:!opacity-100 hover:!z-50 z-20 hover:duration-150 shadow-xl",
         },
         {
             icon: <MessageCircle className="size-4 text-emerald-300" />,
@@ -32,8 +36,10 @@ export default function TestimonialsWhatsApp() {
             date: "Hoje às 14:30",
             iconClassName: "text-[#25D366]",
             titleClassName: "text-slate-100",
+            stackX: 32,
+            stackY: 32,
             className:
-                "[grid-area:stack] transition-all duration-300 ease-out translate-x-4 translate-y-4 md:translate-x-8 md:translate-y-8 opacity-100 hover:!z-50 z-30 shadow-2xl",
+                "[grid-area:stack] transition-all duration-300 ease-out opacity-100 hover:!z-50 z-30 shadow-2xl",
         },
     ];
 
