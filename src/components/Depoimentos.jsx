@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote, MessageSquareQuote } from 'lucide-react';
+import TestimonialsWhatsApp from './TestimonialsWhatsApp';
 
 const depoimentos = [
     {
@@ -39,7 +40,7 @@ export default function Depoimentos() {
             <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-emerald-900/5 blur-3xl rounded-full pointer-events-none"></div>
             <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-teal-900/4 blur-3xl rounded-full pointer-events-none"></div>
 
-            <div className="max-w-4xl mx-auto relative z-10">
+            <div className="max-w-4xl mx-auto relative z-10 mt-10">
 
                 {/* Header */}
                 <motion.div
@@ -128,6 +129,12 @@ export default function Depoimentos() {
                             </motion.div>
                         );
                     })}
+                </div>
+
+                {/* Feedbacks Extras WhatsApp */}
+                <div className="mt-20 md:mt-28 mb-8 flex flex-col items-center justify-center w-full">
+                    <p className="text-emerald-500/70 text-[11px] md:text-xs font-bold tracking-widest uppercase mb-10 text-center max-w-md">Mensagens que nossa equipe recebe diariamente</p>
+                    <TestimonialsWhatsApp />
                 </div>
 
             </div>

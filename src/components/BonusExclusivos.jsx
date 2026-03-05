@@ -40,7 +40,7 @@ const bonus = [
 
 export default function BonusExclusivos() {
     return (
-        <section className="relative py-16 md:py-24 px-6 bg-[#030308] overflow-hidden">
+        <section className="relative py-16 md:py-24 px-6 bg-[#030308] overflow-hidden min-h-[700px] sm:min-h-[500px]">
 
             <div className="absolute top-1/2 right-0 w-[500px] h-[400px] bg-violet-900/5 blur-3xl rounded-full pointer-events-none"></div>
 
@@ -48,9 +48,9 @@ export default function BonusExclusivos() {
 
                 {/* Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: 25 }}
+                    initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.6 }}
                     className="text-center mb-12"
                 >
@@ -75,9 +75,10 @@ export default function BonusExclusivos() {
                     {bonus.map((item, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, y: 25 }}
+                            layout
+                            initial={{ opacity: 0.1, y: 10 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 0.5, delay: i * 0.1 }}
                             whileHover={{ y: -6, transition: { duration: 0.25 } }}
                             className={`relative group bg-[#080c15] border ${item.border} ${item.hoverBorder} ${item.hoverShadow} rounded-2xl p-7 md:p-8 transition-all duration-300 overflow-hidden cursor-default`}

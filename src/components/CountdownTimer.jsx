@@ -67,31 +67,33 @@ export function PromoBanner({ visible }) {
     return (
         <AnimatePresence>
             {visible && (
-                <motion.div
-                    initial={{ y: -60, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -60, opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-[#0a0e18] via-[#071210] to-[#0a0e18] border-b border-emerald-500/20 backdrop-blur-md"
-                >
-                    <div className="max-w-5xl mx-auto flex items-center justify-center gap-3 md:gap-5 px-4 py-2.5">
-                        <div className="flex items-center gap-2">
-                            <motion.div
-                                animate={{ scale: [1, 1.15, 1] }}
-                                transition={{ duration: 1.5, repeat: Infinity }}
-                            >
-                                <Flame className="w-4 h-4 text-amber-400" />
-                            </motion.div>
-                            <span className="text-white text-xs md:text-sm font-bold uppercase tracking-wider hidden sm:inline">
-                                Promoção encerra em:
-                            </span>
-                            <span className="text-white text-xs font-bold uppercase tracking-wider sm:hidden">
-                                Encerra em:
-                            </span>
+                <div className="h-[60px] md:h-[64px] w-full" aria-hidden="true">
+                    <motion.div
+                        initial={{ y: -60, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -60, opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-[#0a0e18] via-[#071210] to-[#0a0e18] border-b border-emerald-500/20 backdrop-blur-md"
+                    >
+                        <div className="max-w-5xl mx-auto flex items-center justify-center gap-3 md:gap-5 px-4 py-2.5">
+                            <div className="flex items-center gap-2">
+                                <motion.div
+                                    animate={{ scale: [1, 1.15, 1] }}
+                                    transition={{ duration: 1.5, repeat: Infinity }}
+                                >
+                                    <Flame className="w-4 h-4 text-amber-400" />
+                                </motion.div>
+                                <span className="text-white text-xs md:text-sm font-bold uppercase tracking-wider hidden sm:inline">
+                                    Promoção encerra em:
+                                </span>
+                                <span className="text-white text-xs font-bold uppercase tracking-wider sm:hidden">
+                                    Encerra em:
+                                </span>
+                            </div>
+                            <TimerDigits time={time} size="sm" />
                         </div>
-                        <TimerDigits time={time} size="sm" />
-                    </div>
-                </motion.div>
+                    </motion.div>
+                </div>
             )}
         </AnimatePresence>
     );
