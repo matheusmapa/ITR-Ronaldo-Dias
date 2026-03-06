@@ -63,7 +63,7 @@ export default function ProblemSection() {
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-[#E2E2E2] text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed"
+                        className="text-[#E2E2E2] text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
                     >
                         A maioria passa <strong className="text-white font-semibold">anos</strong> pagando mensalidades em escolas de inglês. Mesmo assim, na hora H, a voz some.
                     </motion.p>
@@ -83,10 +83,10 @@ export default function ProblemSection() {
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-px bg-gradient-to-r from-transparent via-rose-500/30 to-transparent"></div>
 
                         <div className="space-y-5 text-lg md:text-xl leading-relaxed">
-                            <p className="text-slate-300 font-light">
+                            <p className="text-slate-300">
                                 O coração acelera. O suor frio bate. A frase que você <em className="text-white font-medium not-italic">ensaiou mentalmente</em> em português simplesmente não sai em inglês.
                             </p>
-                            <p className="text-[#E2E2E2] font-light">
+                            <p className="text-[#E2E2E2]">
                                 Não é falta de inteligência. Não é falta de esforço.
                             </p>
                             <motion.p
@@ -127,7 +127,7 @@ export default function ProblemSection() {
                             </div>
                             <span className="text-rose-400 text-xs font-bold uppercase tracking-widest">O que não funciona</span>
                         </div>
-                        <p className="text-slate-300 leading-relaxed font-light">
+                        <p className="text-slate-300 leading-relaxed">
                             Escolas tradicionais forçam você a decorar <strong className="text-white font-medium">regras gramaticais complexas</strong> antes de te dar o bloco de construção mais básico de qualquer idioma:
                         </p>
                         <p className="text-rose-400 font-bold text-xl mt-3 tracking-tight">
@@ -157,7 +157,7 @@ export default function ProblemSection() {
                             </div>
                             <span className="text-[#E2E2E2] text-xs font-bold uppercase tracking-widest">A consequência</span>
                         </div>
-                        <p className="text-slate-300 leading-relaxed font-light">
+                        <p className="text-slate-300 leading-relaxed">
                             Sem um <span className="text-white font-semibold underline decoration-emerald-500/40 underline-offset-4">vocabulário ativo</span> instalado na sua memória de longo prazo, não existe fluência. Você sabe a regra do <em>Present Perfect</em>...
                         </p>
                         <p className="text-[#CCCCCC] font-medium text-lg mt-3 tracking-tight">

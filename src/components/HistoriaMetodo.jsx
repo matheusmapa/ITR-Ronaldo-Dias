@@ -42,7 +42,7 @@ export default function HistoriaMetodo() {
                 >
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[50%] h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent"></div>
 
-                    <div className="space-y-5 text-slate-300 text-base md:text-lg leading-relaxed font-light">
+                    <div className="space-y-5 text-slate-300 text-base md:text-lg leading-relaxed">
                         <motion.p
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}

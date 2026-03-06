@@ -83,7 +83,7 @@ export default function JornadaEvolucao() {
                         Sua jornada de{' '}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400">evolução</span>
                     </h2>
-                    <p className="text-[#E2E2E2] text-base md:text-lg font-light max-w-xl mx-auto leading-relaxed">
+                    <p className="text-[#E2E2E2] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
                         Nada de aulas soltas. É um <strong className="text-white font-semibold">plano cirúrgico</strong> — cada fase constrói em cima da anterior.
                     </p>
                 </motion.div>
@@ -133,7 +133,7 @@ export default function JornadaEvolucao() {
                                             <h3 className="text-base md:text-lg font-bold text-white">{fase.title}</h3>
                                         </div>
                                         <div className="hidden md:block w-px h-5 bg-white/10"></div>
-                                        <p className="text-[#E2E2E2] text-sm leading-relaxed font-light flex-1">{fase.desc}</p>
+                                        <p className="text-slate-300 text-base leading-relaxed flex-1">{fase.desc}</p>
                                     </div>
                                 </div>
                             </motion.div>
@@ -149,7 +149,7 @@ export default function JornadaEvolucao() {
                     transition={{ duration: 0.5, delay: 0.5 }}
                     className="text-center mt-10"
                 >
-                    <p className="text-[#CCCCCC] text-sm font-light">
+                    <p className="text-[#CCCCCC] text-sm">
                         Cada fase foi pensada para levar você do <span className="text-white font-medium">zero ao automático</span> — no menor tempo possível.
                     </p>
                 </motion.div>

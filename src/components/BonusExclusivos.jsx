@@ -68,7 +68,7 @@ export default function BonusExclusivos() {
                         Bônus{' '}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400">exclusivos</span>
                     </h2>
-                    <p className="text-[#E2E2E2] text-base md:text-lg font-light max-w-xl mx-auto leading-relaxed">
+                    <p className="text-[#E2E2E2] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
                         Ao garantir sua vaga hoje, você recebe <strong className="text-white font-semibold">gratuitamente:</strong>
                     </p>
                 </motion.div>
@@ -106,7 +106,7 @@ export default function BonusExclusivos() {
                                 <span className="text-emerald-400 font-bold ml-1">por R$ 0,00 (INCLUSO)</span>
                             </div>
 
-                            <p className="text-[#E2E2E2] text-sm leading-relaxed font-light">{item.desc}</p>
+                            <p className="text-slate-300 text-base leading-relaxed">{item.desc}</p>
 
                             {/* Bottom accent */}
                             <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r ${item.gradient} opacity-0 group-hover:opacity-60 transition-opacity duration-500`}></div>
@@ -151,9 +151,9 @@ export default function BonusExclusivos() {
                         <div className="absolute inset-0 bg-emerald-400/5 animate-pulse"></div>
 
                         {/* Huge Strikethrough Anchor */}
-                        <div className="flex flex-col items-center justify-center mb-8 relative z-10">
+                        <div className="flex flex-col items-center justify-center mb-8 relative z-10 w-full">
                             <span className="text-xl text-[#CCCCCC] mb-2 font-medium">Soma de tudo:</span>
-                            <span className="text-5xl md:text-7xl font-black text-red-500 line-through decoration-red-500/70 decoration-4 md:decoration-8 drop-shadow-xl">
+                            <span className="text-4xl sm:text-5xl md:text-7xl font-black text-red-500 line-through decoration-red-500/70 decoration-4 md:decoration-8 drop-shadow-xl whitespace-nowrap">
                                 R$ 698,90
                             </span>
                         </div>
@@ -162,10 +162,10 @@ export default function BonusExclusivos() {
                             Mas essa não é a sua oferta hoje.
                         </p>
 
-                        <div className="mt-4 flex justify-center relative z-10">
-                            <button className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-10 py-4 text-xl rounded-full transition-colors w-full md:w-auto shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-3">
-                                VER OFERTA ESPECIAL
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+                        <div className="mt-4 flex justify-center relative z-10 w-full px-2">
+                            <button className="bg-emerald-500 hover:bg-emerald-400 text-white font-black px-6 md:px-10 py-4 text-base md:text-xl rounded-full transition-colors w-full sm:w-auto shadow-lg shadow-emerald-500/20 flex flex-nowrap items-center justify-center gap-2 md:gap-3">
+                                <span className="whitespace-nowrap">VER OFERTA ESPECIAL</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" className="md:w-6 md:h-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
                             </button>
                         </div>
                     </div>
