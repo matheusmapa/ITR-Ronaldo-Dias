@@ -5,17 +5,17 @@ import './index.css';
 import Hero from './components/Hero';
 import { PromoBanner } from './components/CountdownTimer';
 
-import ProblemSection from './components/ProblemSection';
-import QuebraDeCrenca from './components/QuebraDeCrenca';
-import ComoFunciona from './components/ComoFunciona';
-import JornadaEvolucao from './components/JornadaEvolucao';
-import ParaQuem from './components/ParaQuem';
-import Depoimentos from './components/Depoimentos';
-import HistoriaMetodo from './components/HistoriaMetodo';
-import BonusExclusivos from './components/BonusExclusivos';
-import OfertaFinal from './components/OfertaFinal';
-import FaqNovo from './components/FaqNovo';
-import DecisaoFinal from './components/DecisaoFinal';
+const ProblemSection = lazy(() => import('./components/ProblemSection'));
+const QuebraDeCrenca = lazy(() => import('./components/QuebraDeCrenca'));
+const ComoFunciona = lazy(() => import('./components/ComoFunciona'));
+const JornadaEvolucao = lazy(() => import('./components/JornadaEvolucao'));
+const ParaQuem = lazy(() => import('./components/ParaQuem'));
+const Depoimentos = lazy(() => import('./components/Depoimentos'));
+const HistoriaMetodo = lazy(() => import('./components/HistoriaMetodo'));
+const BonusExclusivos = lazy(() => import('./components/BonusExclusivos'));
+const OfertaFinal = lazy(() => import('./components/OfertaFinal'));
+const FaqNovo = lazy(() => import('./components/FaqNovo'));
+const DecisaoFinal = lazy(() => import('./components/DecisaoFinal'));
 
 // =====================================
 // Montagem Principal
@@ -53,38 +53,40 @@ const LandingPageRonaldoDias = () => {
             {/* 1. A Primeira Impressão */}
             <Hero />
 
-            {/* 2. Agitação da Dor */}
-            <ProblemSection />
+            <Suspense fallback={<div className="min-h-screen bg-[#030308] flex items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin"></div></div>}>
+                {/* 2. Agitação da Dor */}
+                <ProblemSection />
 
-            {/* 3. A Solução Lógica */}
-            <QuebraDeCrenca />
+                {/* 3. A Solução Lógica */}
+                <QuebraDeCrenca />
 
-            {/* 4. Como o Método Funciona */}
-            <ComoFunciona />
+                {/* 4. Como o Método Funciona */}
+                <ComoFunciona />
 
-            {/* 5. Jornada de Evolução */}
-            <JornadaEvolucao />
+                {/* 5. Jornada de Evolução */}
+                <JornadaEvolucao />
 
-            {/* 6. Para Quem É */}
-            <ParaQuem />
+                {/* 6. Para Quem É */}
+                <ParaQuem />
 
-            {/* 7. Feedbacks dos alunos */}
-            <Depoimentos />
+                {/* 7. Feedbacks dos alunos */}
+                <Depoimentos />
 
-            {/* 8. A História do Método */}
-            <HistoriaMetodo />
+                {/* 8. A História do Método */}
+                <HistoriaMetodo />
 
-            {/* 9. Bônus Exclusivos */}
-            <BonusExclusivos />
+                {/* 9. Bônus Exclusivos */}
+                <BonusExclusivos />
 
-            {/* 10. A Oferta + Garantia */}
-            <OfertaFinal onInView={handleOfertaInView} />
+                {/* 10. A Oferta + Garantia */}
+                <OfertaFinal onInView={handleOfertaInView} />
 
-            {/* 11. FAQ */}
-            <FaqNovo />
+                {/* 11. FAQ */}
+                <FaqNovo />
 
-            {/* 12. Decisão Final */}
-            <DecisaoFinal />
+                {/* 12. Decisão Final */}
+                <DecisaoFinal />
+            </Suspense>
 
             <footer className="bg-[#030308] py-8 text-center border-t border-slate-900 border-b-8 border-b-emerald-600 pb-8">
                 <p className="text-slate-600 font-medium">© 2026 Ronaldo Durães | ITR. Todos os direitos reservados.</p>
