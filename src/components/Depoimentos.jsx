@@ -40,20 +40,11 @@ export default function Depoimentos() {
             <div className="max-w-4xl mx-auto relative z-10 mt-10">
 
                 {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 25 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.05 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-12"
-                >
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default"
-                    >
+                <div className="text-center mb-12">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default transition-transform hover:scale-105">
                         <MessageSquareQuote className="w-3.5 h-3.5 text-emerald-400" />
                         <span className="text-[#E2E2E2] text-xs font-bold uppercase tracking-widest">Quem já testou</span>
-                    </motion.div>
+                    </div>
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight mb-5">
                         O que dizem os{' '}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">alunos ITR</span>
@@ -61,33 +52,24 @@ export default function Depoimentos() {
                     <p className="text-[#E2E2E2] text-base md:text-lg font-light max-w-lg mx-auto">
                         Resultados reais de quem aplicou o método na prática.
                     </p>
-                </motion.div>
+                </div>
 
                 {/* Depoimentos grid */}
                 <div className="grid md:grid-cols-3 gap-4">
                     {depoimentos.map((dep, i) => {
                         const c = colorMap[dep.color];
                         return (
-                            <motion.div
+                            <div
                                 key={i}
-                                initial={{ opacity: 0, y: 25 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, amount: 0.05 }}
-                                transition={{ duration: 0.5, delay: i * 0.1 }}
-                                whileHover={{ y: -5, transition: { duration: 0.25 } }}
-                                className={`bg-[#080c15] border border-white/[0.05] ${c.hoverBorder} rounded-2xl p-6 md:p-7 relative overflow-hidden group hover:shadow-[0_10px_40px_rgba(0,0,0,0.3)] transition-all duration-300 cursor-default flex flex-col`}
+                                className={`bg-[#080c15] border border-white/[0.05] ${c.hoverBorder} rounded-2xl p-6 md:p-7 relative overflow-hidden group hover:shadow-[0_10px_40px_rgba(0,0,0,0.3)] transition-all duration-300 cursor-default flex flex-col hover:-translate-y-1`}
                             >
                                 {/* Top glow line */}
                                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
                                 {/* Quote watermark */}
-                                <motion.div
-                                    className="absolute -top-2 -right-2"
-                                    animate={{ rotate: [0, 3, -3, 0] }}
-                                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                                >
+                                <div className="absolute -top-2 -right-2 transition-transform duration-[8000ms] lg:group-hover:rotate-[3deg]">
                                     <Quote className="w-20 h-20 text-white opacity-[0.02] group-hover:opacity-[0.05] transition-opacity" />
-                                </motion.div>
+                                </div>
 
                                 {/* Stars */}
                                 <div className="flex gap-0.5 mb-4">
@@ -111,18 +93,14 @@ export default function Depoimentos() {
 
                                 {/* Author */}
                                 <div className="flex items-center gap-3 pt-4 border-t border-white/[0.05]">
-                                    <motion.div
-                                        whileHover={{ scale: 1.1, rotate: 5 }}
-                                        transition={{ type: "spring", stiffness: 300 }}
-                                        className={`w-10 h-10 rounded-full border-2 ${c.avatarBorder} overflow-hidden`}
-                                    >
+                                    <div className={`w-10 h-10 rounded-full border-2 ${c.avatarBorder} overflow-hidden transition-transform hover:scale-110 hover:rotate-6`}>
                                         <img src={dep.avatar} alt={dep.name} className="w-full h-full object-cover" />
-                                    </motion.div>
+                                    </div>
                                     <div>
                                         <p className="text-white text-sm font-semibold">{dep.name}</p>
                                     </div>
                                 </div>
-                            </motion.div>
+                            </div>
                         );
                     })}
                 </div>

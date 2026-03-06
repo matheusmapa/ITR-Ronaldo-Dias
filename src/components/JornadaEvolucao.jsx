@@ -65,20 +65,11 @@ export default function JornadaEvolucao() {
             <div className="max-w-5xl mx-auto relative z-10">
 
                 {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 25 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.05 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-14"
-                >
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default"
-                    >
+                <div className="text-center mb-14">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default transition-transform hover:scale-105">
                         <Rocket className="w-3.5 h-3.5 text-teal-400" />
                         <span className="text-[#E2E2E2] text-xs font-bold uppercase tracking-widest">Plano de ação</span>
-                    </motion.div>
+                    </div>
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight mb-5">
                         Sua jornada de{' '}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400">evolução</span>
@@ -86,7 +77,7 @@ export default function JornadaEvolucao() {
                     <p className="text-[#E2E2E2] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
                         Nada de aulas soltas. É um <strong className="text-white font-semibold">plano cirúrgico</strong> — cada fase constrói em cima da anterior.
                     </p>
-                </motion.div>
+                </div>
 
                 {/* Fases */}
                 <div className="relative">
@@ -96,24 +87,15 @@ export default function JornadaEvolucao() {
 
                     <div className="space-y-3">
                         {fases.map((fase, i) => (
-                            <motion.div
+                            <div
                                 key={i}
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true, amount: 0.05 }}
-                                transition={{ duration: 0.4, delay: i * 0.08 }}
-                                whileHover={{ x: 4, transition: { duration: 0.2 } }}
-                                className="flex gap-5 md:gap-6 items-stretch group cursor-default"
+                                className="flex gap-5 md:gap-6 items-stretch group cursor-default transition-transform hover:translate-x-1"
                             >
                                 {/* Timeline dot — solid background to cover the line */}
                                 <div className="relative shrink-0 z-10 flex flex-col items-center">
-                                    <motion.div
-                                        whileHover={{ scale: 1.15, rotate: 5 }}
-                                        transition={{ type: "spring", stiffness: 300 }}
-                                        className={`w-[46px] h-[46px] rounded-xl ${fase.bg} border ${fase.border} flex items-center justify-center ${fase.dotBg} shadow-[0_0_0_4px_#030308]`}
-                                    >
+                                    <div className={`w-[46px] h-[46px] rounded-xl ${fase.bg} border ${fase.border} flex items-center justify-center ${fase.dotBg} shadow-[0_0_0_4px_#030308] transition-transform hover:scale-110 hover:rotate-6`}>
                                         <span className={`${fase.color} group-hover:scale-110 transition-transform`}>{fase.icon}</span>
-                                    </motion.div>
+                                    </div>
                                     {/* Mobile connector */}
                                     {i < fases.length - 1 && (
                                         <div className="md:hidden w-px flex-1 bg-gradient-to-b from-white/10 to-transparent mt-1"></div>
@@ -136,23 +118,17 @@ export default function JornadaEvolucao() {
                                         <p className="text-slate-300 text-base leading-relaxed flex-1">{fase.desc}</p>
                                     </div>
                                 </div>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
                 </div>
 
                 {/* Bottom connector */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, amount: 0.05 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    className="text-center mt-10"
-                >
+                <div className="text-center mt-10">
                     <p className="text-[#CCCCCC] text-sm">
                         Cada fase foi pensada para levar você do <span className="text-white font-medium">zero ao automático</span> — no menor tempo possível.
                     </p>
-                </motion.div>
+                </div>
 
             </div>
         </section>

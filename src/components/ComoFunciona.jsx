@@ -56,51 +56,33 @@ export default function ComoFunciona() {
             <div className="max-w-5xl mx-auto relative z-10">
 
                 {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 25 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.05 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-14"
-                >
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default"
-                    >
+                <div className="text-center mb-14">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default">
                         <Zap className="w-3.5 h-3.5 text-emerald-400" />
                         <span className="text-[#E2E2E2] text-xs font-bold uppercase tracking-widest">Os 3 Pilares</span>
-                    </motion.div>
+                    </div>
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight mb-5">
                         Como o <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">ITR</span> funciona
                     </h2>
                     <p className="text-[#E2E2E2] text-base md:text-lg font-light max-w-xl mx-auto leading-relaxed">
                         Nada de conteúdo solto. São <strong className="text-white font-semibold">3 pilares</strong> que trabalham juntos para gravar o inglês na sua mente.
                     </p>
-                </motion.div>
+                </div>
 
                 {/* Pilares — card grid com interações */}
                 <div className="grid md:grid-cols-3 gap-5">
                     {pilares.map((pilar, i) => (
-                        <motion.div
+                        <div
                             key={i}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.05 }}
-                            transition={{ duration: 0.5, delay: i * 0.12 }}
-                            whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
-                            className={`relative group bg-[#080c15] border ${pilar.borderColor} ${pilar.hoverBorder} ${pilar.hoverShadow} rounded-2xl p-7 md:p-8 transition-all duration-300 overflow-hidden cursor-default`}
+                            className={`relative group bg-[#080c15] border ${pilar.borderColor} hover:border-emerald-500/40 hover:shadow-[0_0_35px_rgba(16,185,129,0.08)] rounded-2xl p-7 md:p-8 transition-all duration-300 overflow-hidden cursor-default`}
                         >
                             {/* Top accent line */}
                             <div className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r ${pilar.gradient} opacity-0 group-hover:opacity-70 transition-opacity duration-500`}></div>
 
                             {/* Ghost number */}
-                            <motion.span
-                                className={`text-5xl font-black bg-gradient-to-b ${pilar.gradient} text-transparent bg-clip-text opacity-10 absolute top-4 right-5 leading-none`}
-                                initial={{ opacity: 0.1 }}
-                                whileHover={{ opacity: 0.2 }}
-                            >
+                            <span className={`text-5xl font-black bg-gradient-to-b ${pilar.gradient} text-transparent bg-clip-text opacity-10 group-hover:opacity-20 transition-opacity absolute top-4 right-5 leading-none`}>
                                 {pilar.num}
-                            </motion.span>
+                            </span>
 
                             {/* Icon with hover effect */}
                             <motion.div
@@ -118,22 +100,16 @@ export default function ComoFunciona() {
 
                             {/* Bottom accent bar */}
                             <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r ${pilar.gradient} opacity-0 group-hover:opacity-60 transition-opacity duration-500`}></div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
 
                 {/* Connector */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, amount: 0.05 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    className="text-center mt-10"
-                >
+                <div className="text-center mt-10">
                     <p className="text-[#CCCCCC] text-sm font-light">
                         Os 3 pilares se conectam em um <span className="text-white font-medium">sistema único</span> — e o resultado é fluência construída do jeito certo.
                     </p>
-                </motion.div>
+                </div>
 
             </div>
         </section>

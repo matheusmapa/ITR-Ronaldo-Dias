@@ -29,45 +29,20 @@ export default function ProblemSection() {
 
             <div className="max-w-5xl mx-auto relative z-20">
 
-                {/* ── Headline com stagger ────────────────────── */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.05 }}
-                    transition={{ duration: 0.7 }}
-                    className="text-center mb-14"
-                >
-                    <motion.p
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.05 }}
-                        transition={{ duration: 0.5 }}
-                        className="text-rose-400/80 text-xs font-bold uppercase tracking-[0.3em] mb-4"
-                    >
+                <div className="text-center mb-14">
+                    <p className="text-rose-400/80 text-xs font-bold uppercase tracking-[0.3em] mb-4">
                         Antes de continuar, você precisa saber disso
-                    </motion.p>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.05 }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-4xl md:text-6xl font-black text-white leading-[1.1] mb-6 tracking-tight"
-                    >
+                    </p>
+                    <h2 className="text-4xl md:text-6xl font-black text-white leading-[1.1] mb-6 tracking-tight">
                         Por que você ainda <br className="hidden md:block" />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-orange-400">
                             trava na hora de falar?
                         </span>
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true, amount: 0.05 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-[#E2E2E2] text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
-                    >
+                    </h2>
+                    <p className="text-[#E2E2E2] text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
                         A maioria passa <strong className="text-white font-semibold">anos</strong> pagando mensalidades em escolas de inglês. Mesmo assim, na hora H, a voz some.
-                    </motion.p>
-                </motion.div>
+                    </p>
+                </div>
 
                 {/* ── Bloco Central: A Dor Visceral (com tilt) ──── */}
                 <motion.div
@@ -89,15 +64,9 @@ export default function ProblemSection() {
                             <p className="text-[#E2E2E2]">
                                 Não é falta de inteligência. Não é falta de esforço.
                             </p>
-                            <motion.p
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true, amount: 0.05 }}
-                                transition={{ duration: 0.5, delay: 0.4 }}
-                                className="text-white text-2xl md:text-3xl font-black tracking-tight"
-                            >
+                            <p className="text-white text-2xl md:text-3xl font-black tracking-tight mt-2">
                                 É porque você começou pelo lugar errado.
-                            </motion.p>
+                            </p>
                         </div>
                     </div>
                 </motion.div>
@@ -106,21 +75,10 @@ export default function ProblemSection() {
                 <div className="grid md:grid-cols-2 gap-5 max-w-4xl mx-auto mb-12">
 
                     {/* Card: O Método Errado */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.05 }}
-                        transition={{ duration: 0.5 }}
-                        whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                        className="bg-rose-500/[0.04] border border-rose-500/10 rounded-2xl p-7 relative overflow-hidden group hover:border-rose-500/30 hover:shadow-[0_0_30px_rgba(244,63,94,0.06)] transition-all duration-300 cursor-default"
-                    >
-                        <motion.div
-                            className="absolute top-4 right-4"
-                            animate={{ rotate: [0, 5, -5, 0] }}
-                            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                        >
+                    <div className="bg-rose-500/[0.04] border border-rose-500/10 rounded-2xl p-7 relative overflow-hidden group hover:border-rose-500/30 hover:shadow-[0_0_30px_rgba(244,63,94,0.06)] transition-all duration-300 cursor-default">
+                        <div className="absolute top-4 right-4">
                             <XCircle className="w-24 h-24 text-rose-500 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity" />
-                        </motion.div>
+                        </div>
                         <div className="flex items-center gap-3 mb-4">
                             <div className="w-8 h-8 rounded-lg bg-rose-500/15 flex items-center justify-center border border-rose-500/20 group-hover:bg-rose-500/25 transition-colors">
                                 <XCircle className="w-4 h-4 text-rose-400" />
@@ -133,24 +91,13 @@ export default function ProblemSection() {
                         <p className="text-rose-400 font-bold text-xl mt-3 tracking-tight">
                             As palavras.
                         </p>
-                    </motion.div>
+                    </div>
 
                     {/* Card: A Consequência */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.05 }}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                        whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                        className="bg-slate-900/40 border border-slate-800 rounded-2xl p-7 relative overflow-hidden group hover:border-slate-600 hover:shadow-[0_0_30px_rgba(100,116,139,0.06)] transition-all duration-300 cursor-default"
-                    >
-                        <motion.div
-                            className="absolute top-4 right-4"
-                            animate={{ scale: [1, 1.05, 1] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        >
+                    <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-7 relative overflow-hidden group hover:border-slate-600 hover:shadow-[0_0_30px_rgba(100,116,139,0.06)] transition-all duration-300 cursor-default">
+                        <div className="absolute top-4 right-4">
                             <Brain className="w-24 h-24 text-[#CCCCCC] opacity-[0.04] group-hover:opacity-[0.08] transition-opacity" />
-                        </motion.div>
+                        </div>
                         <div className="flex items-center gap-3 mb-4">
                             <div className="w-8 h-8 rounded-lg bg-slate-700/50 flex items-center justify-center border border-slate-600/30 group-hover:bg-slate-700/70 transition-colors">
                                 <Brain className="w-4 h-4 text-[#E2E2E2]" />
@@ -163,7 +110,7 @@ export default function ProblemSection() {
                         <p className="text-[#CCCCCC] font-medium text-lg mt-3 tracking-tight">
                             ...mas a palavra não vem em milissegundos.
                         </p>
-                    </motion.div>
+                    </div>
                 </div>
 
                 {/* ── Transição para a Solução (pulsante) ────── */}
