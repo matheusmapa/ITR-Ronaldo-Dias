@@ -1,7 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Star, Quote, MessageSquareQuote } from 'lucide-react';
-import TestimonialsWhatsApp from './TestimonialsWhatsApp';
+import VideoTestimonials from './VideoTestimonials';
 
 const depoimentos = [
     {
@@ -25,9 +24,9 @@ const depoimentos = [
 ];
 
 const colorMap = {
-    emerald: { avatarBg: "bg-emerald-500/15", avatarBorder: "border-emerald-500/25", avatarText: "text-emerald-400", hoverBorder: "hover:border-emerald-500/25" },
-    teal: { avatarBg: "bg-teal-500/15", avatarBorder: "border-teal-500/25", avatarText: "text-teal-400", hoverBorder: "hover:border-teal-500/25" },
-    cyan: { avatarBg: "bg-cyan-500/15", avatarBorder: "border-cyan-500/25", avatarText: "text-cyan-400", hoverBorder: "hover:border-cyan-500/25" },
+    emerald: { avatarBorder: "border-emerald-500/25", hoverBorder: "hover:border-emerald-500/25" },
+    teal: { avatarBorder: "border-teal-500/25", hoverBorder: "hover:border-teal-500/25" },
+    cyan: { avatarBorder: "border-cyan-500/25", hoverBorder: "hover:border-cyan-500/25" },
 };
 
 export default function Depoimentos() {
@@ -54,7 +53,7 @@ export default function Depoimentos() {
                     </p>
                 </div>
 
-                {/* Depoimentos grid */}
+                {/* Depoimentos grid (text cards) */}
                 <div className="grid md:grid-cols-3 gap-4">
                     {depoimentos.map((dep, i) => {
                         const c = colorMap[dep.color];
@@ -67,22 +66,16 @@ export default function Depoimentos() {
                                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
                                 {/* Quote watermark */}
-                                <div className="absolute -top-2 -right-2 transition-transform duration-[8000ms] lg:group-hover:rotate-[3deg]">
+                                <div className="absolute -top-2 -right-2">
                                     <Quote className="w-20 h-20 text-white opacity-[0.02] group-hover:opacity-[0.05] transition-opacity" />
                                 </div>
 
                                 {/* Stars */}
                                 <div className="flex gap-0.5 mb-4">
                                     {[...Array(5)].map((_, j) => (
-                                        <motion.div
-                                            key={j}
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            whileInView={{ opacity: 1, scale: 1 }}
-                                            viewport={{ once: true, amount: 0.05 }}
-                                            transition={{ duration: 0.2, delay: i * 0.1 + j * 0.05 }}
-                                        >
+                                        <div key={j}>
                                             <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                                        </motion.div>
+                                        </div>
                                     ))}
                                 </div>
 
@@ -93,7 +86,7 @@ export default function Depoimentos() {
 
                                 {/* Author */}
                                 <div className="flex items-center gap-3 pt-4 border-t border-white/[0.05]">
-                                    <div className={`w-10 h-10 rounded-full border-2 ${c.avatarBorder} overflow-hidden transition-transform hover:scale-110 hover:rotate-6`}>
+                                    <div className={`w-10 h-10 rounded-full border-2 ${c.avatarBorder} overflow-hidden`}>
                                         <img src={dep.avatar} alt={dep.name} className="w-full h-full object-cover" />
                                     </div>
                                     <div>
@@ -105,10 +98,10 @@ export default function Depoimentos() {
                     })}
                 </div>
 
-                {/* Feedbacks Extras WhatsApp */}
+                {/* Video Testimonials Carousel (replaces WhatsApp cards) */}
                 <div className="mt-20 md:mt-28 mb-8 flex flex-col items-center justify-center w-full">
-                    <p className="text-emerald-500/70 text-[11px] md:text-xs font-bold tracking-widest uppercase mb-10 text-center max-w-md">Mensagens que nossa equipe recebe diariamente</p>
-                    <TestimonialsWhatsApp />
+                    <p className="text-emerald-500/70 text-[11px] md:text-xs font-bold tracking-widest uppercase mb-10 text-center max-w-md">Depoimentos em vídeo dos nossos alunos</p>
+                    <VideoTestimonials />
                 </div>
 
             </div>
