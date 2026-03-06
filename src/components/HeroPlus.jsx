@@ -65,7 +65,7 @@ export default function HeroPlus() {
     };
 
     return (
-        <section className="relative flex items-center justify-center overflow-hidden bg-[#050510] pt-10 pb-10 md:pt-12 md:pb-16 lg:min-h-[92vh]">
+        <section className="relative flex items-center justify-center overflow-hidden bg-[#050510] pt-5 pb-10 md:pt-6 md:pb-16 lg:min-h-[92vh]">
             {/* Background Gradients (Apple Style) */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/20 blur-3xl rounded-full pointer-events-none"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/10 blur-3xl rounded-full pointer-events-none"></div>
@@ -225,7 +225,7 @@ export default function HeroPlus() {
                             </p>
                         </div>
 
-                        <div className="flex items-center gap-4 bg-slate-900/40 p-2.5 rounded-xl border border-slate-800/50 w-full md:w-auto justify-center md:justify-start">
+                        <div className="flex items-center gap-4 bg-slate-900/40 p-2.5 rounded-xl border border-slate-800/50 w-auto self-center md:self-start justify-center">
                             <div className="flex -space-x-3">
                                 <img src="https://randomuser.me/api/portraits/women/30.jpg" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
                                 <img src="https://randomuser.me/api/portraits/women/38.jpg" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
