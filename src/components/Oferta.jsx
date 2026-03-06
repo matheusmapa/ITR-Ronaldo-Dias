@@ -21,7 +21,7 @@ export default function Oferta() {
                         </p>
 
                         <div className="mb-10 flex flex-col items-center">
-                            <span className="text-[#CCCCCC] font-medium line-through mb-2 text-xl">De R$ 399,00</span>
+                            <span className="text-[#CCCCCC] font-medium line-through mb-2 text-xl">De R$ 698,90</span>
                             <div className="flex items-start justify-center gap-3">
                                 <span className="text-2xl font-bold text-[#E2E2E2] mt-2">por</span>
                                 <span className="text-7xl md:text-8xl font-black text-emerald-400 tracking-tighter drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">R$ 200</span>

@@ -90,7 +90,7 @@ export default function OfertaFinal({ onInView }) {
                         <div className="mb-5">
                             {/* 1. Âncora com strikethrough animado — colada no preço */}
                             <div className="relative inline-block mb-0">
-                                <span className="text-red-400/80 text-2xl md:text-3xl font-bold">R$ 399,00</span>
+                                <span className="text-red-400/80 text-2xl md:text-3xl font-bold">R$ 698,90</span>
                                 <motion.div
                                     className="absolute top-1/2 left-[-4%] h-[4px] bg-gradient-to-r from-red-500 via-red-400 to-red-500 rounded-full shadow-[0_0_12px_rgba(239,68,68,0.5)]"
                                     initial={{ width: '0%' }}

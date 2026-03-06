@@ -13,6 +13,7 @@ const bonus = [
         border: "border-violet-500/20",
         hoverBorder: "hover:border-violet-500/40",
         hoverShadow: "hover:shadow-[0_0_35px_rgba(139,92,246,0.08)]",
+        originalPrice: "R$ 97,00"
     },
     {
         icon: <BookOpen className="w-6 h-6" />,
@@ -24,6 +25,7 @@ const bonus = [
         border: "border-emerald-500/20",
         hoverBorder: "hover:border-emerald-500/40",
         hoverShadow: "hover:shadow-[0_0_35px_rgba(16,185,129,0.08)]",
+        originalPrice: "R$ 47,00"
     },
     {
         icon: <Users className="w-6 h-6" />,
@@ -35,6 +37,7 @@ const bonus = [
         border: "border-cyan-500/20",
         hoverBorder: "hover:border-cyan-500/40",
         hoverShadow: "hover:shadow-[0_0_35px_rgba(6,182,212,0.08)]",
+        originalPrice: "R$ 155,90"
     }
 ];
 
@@ -90,12 +93,19 @@ export default function BonusExclusivos() {
                             <motion.div
                                 whileHover={{ scale: 1.1, rotate: 5 }}
                                 transition={{ type: "spring", stiffness: 300 }}
-                                className={`w-12 h-12 rounded-xl ${item.bg} border ${item.border} flex items-center justify-center mb-5`}
+                                className={`w-14 h-14 rounded-2xl ${item.bg} border ${item.border} flex items-center justify-center mb-5 shadow-lg shadow-${item.color.split('-')[1]}-500/20`}
                             >
                                 <span className={item.color}>{item.icon}</span>
                             </motion.div>
 
-                            <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
+                            <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
+
+                            {/* Price Anchoring */}
+                            <div className="mb-4 inline-block bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-1.5 xl:px-4 xl:py-2 text-xs xl:text-sm whitespace-nowrap">
+                                <span className="text-[#CCCCCC] line-through">De {item.originalPrice}</span>
+                                <span className="text-emerald-400 font-bold ml-1">por R$ 0,00 (INCLUSO)</span>
+                            </div>
+
                             <p className="text-[#E2E2E2] text-sm leading-relaxed font-light">{item.desc}</p>
 
                             {/* Bottom accent */}
@@ -103,6 +113,63 @@ export default function BonusExclusivos() {
                         </motion.div>
                     ))}
                 </div>
+
+                {/* Final Stacking Card */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="max-w-3xl mx-auto mt-20 bg-gradient-to-br from-slate-900 to-slate-800 border-2 border-slate-700/50 rounded-2xl p-6 md:p-10 shadow-[0_0_40px_rgba(0,0,0,0.5)] relative overflow-hidden"
+                >
+                    {/* Glow effect */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
+                        Resumo de tudo que você está levando <span className="text-emerald-400 font-black">hoje</span>:
+                    </h3>
+
+                    <ul className="space-y-4 text-slate-300 mb-8 text-sm md:text-base font-medium">
+                        <li className="flex justify-between items-end border-b border-slate-700/50 pb-3">
+                            <span>Acesso Completo ao Método ITR</span>
+                            <span className="text-white whitespace-nowrap">R$ 399,00</span>
+                        </li>
+                        <li className="flex justify-between items-end border-b border-slate-700/50 pb-3">
+                            <span>Bônus 1: Treinador com IA</span>
+                            <span className="text-white whitespace-nowrap">R$ 97,00</span>
+                        </li>
+                        <li className="flex justify-between items-end border-b border-slate-700/50 pb-3">
+                            <span>Bônus 2: Dicionário Estratégico</span>
+                            <span className="text-white whitespace-nowrap">R$ 47,00</span>
+                        </li>
+                        <li className="flex justify-between items-end border-b border-slate-700/50 pb-3">
+                            <span>Bônus 3: Comunidade VIP + Plano</span>
+                            <span className="text-white whitespace-nowrap">R$ 155,90</span>
+                        </li>
+                    </ul>
+
+                    <div className="bg-gradient-to-r from-emerald-900/40 to-teal-900/40 border border-emerald-500/30 rounded-xl p-8 text-center transform hover:scale-[1.02] transition-transform duration-300 shadow-[0_0_30px_rgba(16,185,129,0.15)] relative overflow-hidden cursor-pointer" onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}>
+                        <div className="absolute inset-0 bg-emerald-400/5 animate-pulse"></div>
+
+                        {/* Huge Strikethrough Anchor */}
+                        <div className="flex flex-col items-center justify-center mb-8 relative z-10">
+                            <span className="text-xl text-[#CCCCCC] mb-2 font-medium">Soma de tudo:</span>
+                            <span className="text-5xl md:text-7xl font-black text-red-500 line-through decoration-red-500/70 decoration-4 md:decoration-8 drop-shadow-xl">
+                                R$ 698,90
+                            </span>
+                        </div>
+
+                        <p className="text-emerald-300 font-bold mb-6 text-lg md:text-xl uppercase tracking-wider relative z-10">
+                            Mas essa não é a sua oferta hoje.
+                        </p>
+
+                        <div className="mt-4 flex justify-center relative z-10">
+                            <button className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-10 py-4 text-xl rounded-full transition-colors w-full md:w-auto shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-3">
+                                VER OFERTA ESPECIAL
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                </motion.div>
 
             </div>
         </section>
