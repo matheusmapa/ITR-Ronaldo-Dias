@@ -6,24 +6,50 @@ import { MagneticButton } from './Common';
 import { TravelGlobe } from './ui/travel-globe';
 
 export default function HeroPlus() {
-    const [isPlaying, setIsPlaying] = useState(true);
-    const [isMuted, setIsMuted] = useState(true);
     const [hasInteracted, setHasInteracted] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(true);
+    const [played, setPlayed] = useState(0);
     const playerRef = useRef(null);
 
     const handleInteract = () => {
-        setIsMuted(false);
         setHasInteracted(true);
         setIsPlaying(true);
+        // Restart the video from the beginning when the user unmutes
+        // ReactPlayer v3 uses youtube-video-element which has HTMLMediaElement API
+        const el = playerRef.current;
+        if (el) {
+            el.currentTime = 0;
+            el.muted = false;
+            el.play();
+        }
     };
 
-    const togglePlay = () => {
-        setIsPlaying(!isPlaying);
+    const handlePlayPause = (e) => {
+        e.stopPropagation();
+        const el = playerRef.current;
+        if (el) {
+            if (el.paused) {
+                el.play();
+                setIsPlaying(true);
+            } else {
+                el.pause();
+                setIsPlaying(false);
+            }
+        }
     };
 
-    const toggleMute = () => {
-        setIsMuted(!isMuted);
+    // Track progress using native HTMLMediaElement timeupdate event
+    const handleTimeUpdate = () => {
+        const el = playerRef.current;
+        if (el && el.duration) {
+            setPlayed(el.currentTime / el.duration);
+        }
     };
+
+    // Calculate non-linear progress for the visual bar.
+    // Math.pow(x, 0.4) creates a curve where:
+    // 10% real = 40% visual, 30% real = 62% visual, 80% real = 91% visual
+    const visualProgress = Math.min(Math.pow(played, 0.4), 1);
 
     const handleFullscreen = () => {
         const rect = document.getElementById('hero-video-container');
@@ -96,20 +122,21 @@ export default function HeroPlus() {
                         transition={{ duration: 0.6, delay: 0.35 }}
                         className="flex flex-col items-start gap-6 w-full md:w-auto"
                     >
-                        {/* Custom Video Player Area */}
+                        {/* Video Player Area */}
                         <div id="hero-video-container" className="w-full max-w-xl aspect-video relative rounded-2xl overflow-hidden shadow-2xl shadow-emerald-900/20 border border-slate-800/50 bg-black group z-20">
 
-                            {/* Player Wrapper to scale up and hide YT UI */}
-                            <div className="absolute inset-0 pointer-events-none" style={{ transform: 'scale(1.3)' }}>
+                            {/* Video wrapper: No zoom to keep the whole video visible. Clicks blocked by overlays. */}
+                            <div className="absolute inset-0 z-0 bg-black">
                                 <ReactPlayer
                                     ref={playerRef}
-                                    url="https://www.youtube.com/watch?v=b0l5aMp5fHc"
+                                    src="https://www.youtube.com/watch?v=b0l5aMp5fHc"
                                     width="100%"
                                     height="100%"
-                                    playing={isPlaying}
-                                    muted={isMuted}
+                                    autoPlay={true}
+                                    muted={true}
                                     controls={false}
-                                    playsinline={true}
+                                    playsInline={true}
+                                    onTimeUpdate={handleTimeUpdate}
                                     config={{
                                         youtube: {
                                             playerVars: {
@@ -121,20 +148,24 @@ export default function HeroPlus() {
                                                 controls: 0,
                                                 disablekb: 1,
                                                 fs: 0,
-                                                playsinline: 1
+                                                playsinline: 1,
+                                                cc_load_policy: 0,
+                                                iv_load_policy: 3
                                             }
                                         }
                                     }}
                                 />
                             </div>
 
-                            {/* Transparent overlay to catch clicks when active so YouTube doesn't pause/play unexpectedly */}
-                            <div
-                                className={`absolute inset-0 z-10 ${hasInteracted ? 'cursor-pointer' : 'pointer-events-none'}`}
-                                onClick={() => hasInteracted && togglePlay()}
-                            />
+                            {/* Protective Invisible Overlay to block interactions after start */}
+                            {hasInteracted && (
+                                <div
+                                    className="absolute inset-0 z-10 w-full h-full cursor-pointer"
+                                    onClick={handlePlayPause}
+                                />
+                            )}
 
-                            {/* Initial Sound overlay (Click to listen) */}
+                            {/* Initial Sound overlay (Click to hear) */}
                             <AnimatePresence>
                                 {!hasInteracted && (
                                     <motion.div
@@ -155,44 +186,33 @@ export default function HeroPlus() {
                                 )}
                             </AnimatePresence>
 
-                            {/* Custom Controls when interacting */}
-                            <AnimatePresence>
-                                {hasInteracted && (
-                                    <motion.div
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        className="absolute inset-x-0 bottom-0 p-4 pt-16 bg-gradient-to-t from-black/90 to-transparent z-40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col gap-2"
+                            {/* Custom Controls Bar */}
+                            {hasInteracted && (
+                                <div className="absolute inset-x-0 bottom-0 max-h-20 pt-10 pb-4 px-5 bg-gradient-to-t from-black via-black/80 to-transparent z-40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-4">
+                                    <button
+                                        onClick={handlePlayPause}
+                                        className="text-white hover:text-emerald-400 transition-colors"
                                     >
-                                        {/* Progress Bar placeholder - Native iframe can't easily sync state, so we remove the scrubber to prevent timeline desync. */}
+                                        {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current" />}
+                                    </button>
 
-                                        {/* Controls Row */}
-                                        <div className="flex items-center justify-between mt-1">
-                                            <div className="flex items-center gap-4">
-                                                <button
-                                                    onClick={(e) => { e.stopPropagation(); togglePlay(); }}
-                                                    className="text-white hover:text-emerald-400 transition-colors"
-                                                >
-                                                    {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current" />}
-                                                </button>
+                                    {/* Fake Progress Bar (Read-only, Non-linear) */}
+                                    <div className="flex-1 flex items-center relative h-1.5 bg-white/20 rounded-full overflow-hidden">
+                                        <motion.div
+                                            className="absolute top-0 left-0 h-full bg-emerald-500 rounded-full"
+                                            style={{ width: `${visualProgress * 100}%` }}
+                                            transition={{ type: "tween", ease: "linear", duration: 0.5 }}
+                                        />
+                                    </div>
 
-                                                <button
-                                                    onClick={(e) => { e.stopPropagation(); toggleMute(); }}
-                                                    className="text-white hover:text-emerald-400 transition-colors"
-                                                >
-                                                    {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-                                                </button>
-                                            </div>
-
-                                            <button
-                                                onClick={(e) => { e.stopPropagation(); handleFullscreen(); }}
-                                                className="text-white hover:text-emerald-400 transition-colors"
-                                            >
-                                                <Maximize2 className="w-4 h-4" />
-                                            </button>
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); handleFullscreen(); }}
+                                        className="text-white/80 hover:text-white transition-opacity p-1"
+                                    >
+                                        <Maximize2 className="w-5 h-5" />
+                                    </button>
+                                </div>
+                            )}
                         </div>
 
                         <div className="flex flex-col items-center md:items-start gap-3 w-full">

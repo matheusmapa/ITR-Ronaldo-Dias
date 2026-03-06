@@ -86,26 +86,36 @@ export default function OfertaFinal({ onInView }) {
                             <span className="text-emerald-400 text-xs font-bold uppercase tracking-widest">Acesso Vitalício</span>
                         </motion.div>
 
-                        {/* Price */}
-                        <div className="mb-4">
-                            <p className="text-slate-500 text-base line-through mb-1">De R$ 399,00</p>
+                        {/* Price — Hierarquia: Âncora → Parcelado GIGANTE → À vista pequeno */}
+                        <div className="mb-5">
+                            {/* 1. Âncora riscada */}
+                            <p className="text-red-400/70 text-sm md:text-base line-through decoration-red-500/50 decoration-2 mb-3 font-medium">De R$ 399,00</p>
+
+                            {/* 2. Preço parcelado — HERO PRICE */}
                             <motion.div
-                                className="flex items-baseline justify-center gap-1"
+                                className="flex flex-col items-center gap-1"
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 whileInView={{ scale: 1, opacity: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: 0.2, type: "spring", stiffness: 150 }}
                             >
-                                <span className="text-emerald-400 text-xl font-bold">R$</span>
-                                <motion.span
-                                    whileHover={{ scale: 1.05 }}
-                                    className="text-6xl md:text-7xl font-black text-white leading-none cursor-default"
+                                <span className="text-emerald-400/80 text-sm md:text-base font-bold uppercase tracking-widest">12x de</span>
+                                <motion.div
+                                    whileHover={{ scale: 1.03 }}
+                                    className="flex items-baseline gap-1 cursor-default"
                                 >
-                                    179
-                                </motion.span>
-                                <span className="text-slate-400 text-lg font-medium">,99</span>
+                                    <span className="text-emerald-400 text-2xl md:text-3xl font-black">R$</span>
+                                    <span className="text-7xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-300 via-emerald-400 to-teal-500 leading-none drop-shadow-[0_0_30px_rgba(16,185,129,0.4)]">
+                                        20
+                                    </span>
+                                    <span className="text-emerald-300 text-3xl md:text-4xl font-black">,81</span>
+                                </motion.div>
                             </motion.div>
-                            <p className="text-slate-500 text-xs mt-1.5">Ou parcele em até 12x no cartão</p>
+
+                            {/* 3. Preço à vista — secundário */}
+                            <p className="text-slate-500 text-sm mt-3 font-light">
+                                ou <span className="text-slate-400 font-semibold">R$ 179,99</span> à vista
+                            </p>
                         </div>
 
                         {/* O que está incluído */}

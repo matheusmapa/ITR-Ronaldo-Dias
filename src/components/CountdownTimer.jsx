@@ -1,21 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, Flame } from 'lucide-react';
 
-const PROMO_DURATION_MS = 30 * 60 * 1000; // 30 minutos
+// ─── Calcula ms restantes até meia-noite de Brasília (UTC-3) ─────
+function getMsUntilMidnightBrasilia() {
+    const now = new Date();
+    // Horário atual em Brasília (UTC-3 = offset -180 min)
+    const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+    const brasiliaMs = utcMs - 3 * 3600000;
+    const brasilia = new Date(brasiliaMs);
 
-function getStoredDeadline() {
-    try {
-        const stored = localStorage.getItem('itr_promo_deadline_v2');
-        if (stored) {
-            const deadline = parseInt(stored, 10);
-            if (deadline > Date.now()) return deadline;
-        }
-    } catch (e) { /* ignore */ }
+    // Meia-noite do próximo dia em Brasília
+    const midnightBrasilia = new Date(brasilia);
+    midnightBrasilia.setHours(24, 0, 0, 0);
 
-    const deadline = Date.now() + PROMO_DURATION_MS;
-    try { localStorage.setItem('itr_promo_deadline_v2', String(deadline)); } catch (e) { /* ignore */ }
-    return deadline;
+    return midnightBrasilia.getTime() - brasilia.getTime();
 }
 
 function formatTime(ms) {
@@ -37,6 +36,7 @@ function TimerDigits({ time, size = 'sm' }) {
     return (
         <div className={`flex items-center ${s.gap}`}>
             {[
+                { val: time.h, label: 'HRS' },
                 { val: time.m, label: 'MIN' },
                 { val: time.s, label: 'SEG' },
             ].map((unit, i) => (
@@ -52,17 +52,21 @@ function TimerDigits({ time, size = 'sm' }) {
     );
 }
 
-// ─── Top Banner (fixed) ──────────────────────────────────────────
-export function PromoBanner({ visible }) {
-    const [deadline] = useState(getStoredDeadline);
-    const [remaining, setRemaining] = useState(deadline - Date.now());
+// ─── Hook compartilhado: tempo restante até meia-noite BRT ───────
+function useMidnightCountdown() {
+    const [remaining, setRemaining] = useState(getMsUntilMidnightBrasilia);
 
     useEffect(() => {
-        const id = setInterval(() => setRemaining(deadline - Date.now()), 1000);
+        const id = setInterval(() => setRemaining(getMsUntilMidnightBrasilia()), 1000);
         return () => clearInterval(id);
-    }, [deadline]);
+    }, []);
 
-    const time = formatTime(remaining);
+    return formatTime(remaining);
+}
+
+// ─── Top Banner (fixed) ──────────────────────────────────────────
+export function PromoBanner({ visible }) {
+    const time = useMidnightCountdown();
 
     return (
         <AnimatePresence>
@@ -84,10 +88,10 @@ export function PromoBanner({ visible }) {
                                     <Flame className="w-4 h-4 text-amber-400" />
                                 </motion.div>
                                 <span className="text-white text-xs md:text-sm font-bold uppercase tracking-wider hidden sm:inline">
-                                    Promoção encerra em:
+                                    Oferta do dia encerra em:
                                 </span>
                                 <span className="text-white text-xs font-bold uppercase tracking-wider sm:hidden">
-                                    Encerra em:
+                                    Oferta encerra em:
                                 </span>
                             </div>
                             <TimerDigits time={time} size="sm" />
@@ -101,15 +105,7 @@ export function PromoBanner({ visible }) {
 
 // ─── Inline Timer (dentro do card de preço) ──────────────────────
 export function InlineTimer() {
-    const [deadline] = useState(getStoredDeadline);
-    const [remaining, setRemaining] = useState(deadline - Date.now());
-
-    useEffect(() => {
-        const id = setInterval(() => setRemaining(deadline - Date.now()), 1000);
-        return () => clearInterval(id);
-    }, [deadline]);
-
-    const time = formatTime(remaining);
+    const time = useMidnightCountdown();
 
     return (
         <motion.div
@@ -126,7 +122,7 @@ export function InlineTimer() {
                     <Clock className="w-4 h-4 text-amber-400" />
                 </motion.div>
                 <span className="text-amber-400 text-xs font-bold uppercase tracking-widest">
-                    Este valor expira em:
+                    Oferta do dia expira em:
                 </span>
             </div>
             <TimerDigits time={time} size="md" />
