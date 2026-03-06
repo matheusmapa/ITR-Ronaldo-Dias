@@ -15,8 +15,22 @@ const videos = [
     { id: 'XmFx6DuvEIc' },
 ];
 
-const VIDEOS_PER_PAGE = 3;
 const AUTO_ADVANCE_MS = 10000;
+
+/* ── Hook para detectar breakpoint ── */
+function useIsMobile(breakpoint = 768) {
+    const [isMobile, setIsMobile] = useState(
+        typeof window !== 'undefined' ? window.innerWidth < breakpoint : false
+    );
+    useEffect(() => {
+        const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+        const handler = (e) => setIsMobile(e.matches);
+        mql.addEventListener('change', handler);
+        setIsMobile(mql.matches);
+        return () => mql.removeEventListener('change', handler);
+    }, [breakpoint]);
+    return isMobile;
+}
 
 /* ── Player individual para cada vídeo ── */
 function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex }) {
@@ -211,15 +225,23 @@ function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex }
 
 /* ── Carrossel principal ── */
 export default function VideoTestimonials() {
-    const totalPages = Math.ceil(videos.length / VIDEOS_PER_PAGE);
+    const isMobile = useIsMobile();
+    const perPage = isMobile ? 1 : 3;
+    const totalPages = Math.ceil(videos.length / perPage);
     const [page, setPage] = useState(0);
     const [anyPlaying, setAnyPlaying] = useState(false);
     const [activePlayingIndex, setActivePlayingIndex] = useState(null);
     const timerRef = useRef(null);
 
+    // Reset page if perPage changes and current page is out of bounds
+    useEffect(() => {
+        const maxPage = Math.ceil(videos.length / perPage) - 1;
+        if (page > maxPage) setPage(maxPage);
+    }, [perPage]);
+
     const currentVideos = videos.slice(
-        page * VIDEOS_PER_PAGE,
-        page * VIDEOS_PER_PAGE + VIDEOS_PER_PAGE
+        page * perPage,
+        page * perPage + perPage
     );
 
     /* ── Auto-advance (desativado enquanto algum vídeo toca) ── */
@@ -255,10 +277,10 @@ export default function VideoTestimonials() {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
         >
-            {/* Grid 3 colunas */}
-            <div className="grid grid-cols-3 gap-3 md:gap-4">
+            {/* Grid: 1 coluna mobile, 3 desktop */}
+            <div className={`grid gap-3 md:gap-4 ${isMobile ? 'grid-cols-1 max-w-xs mx-auto' : 'grid-cols-3'}`}>
                 {currentVideos.map((video, i) => {
-                    const globalIndex = page * VIDEOS_PER_PAGE + i;
+                    const globalIndex = page * perPage + i;
                     return (
                         <VideoCard
                             key={`${page}-${i}`}
