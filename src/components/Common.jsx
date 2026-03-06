@@ -33,7 +33,7 @@ export const MagneticButton = ({ children, onClick, className = '' }) => {
             <div className="absolute inset-[-4px] bg-gradient-to-r from-emerald-400 via-teal-500 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl rounded-full"></div>
 
             {/* Corpo do botão */}
-            <div className="relative z-10 flex items-center justify-center bg-emerald-500 text-slate-950 px-5 py-3 md:px-8 md:py-4 rounded-full font-extrabold text-sm md:text-lg shadow-[0_4px_20px_rgba(16,185,129,0.4)] group-hover:shadow-[0_8px_30px_rgba(16,185,129,0.6)] transition-shadow">
+            <div className="relative z-10 flex items-center justify-center bg-emerald-500 text-white px-5 py-3 md:px-8 md:py-4 rounded-full font-extrabold text-sm md:text-lg shadow-[0_4px_20px_rgba(16,185,129,0.4)] group-hover:shadow-[0_8px_30px_rgba(16,185,129,0.6)] transition-shadow">
                 {children}
             </div>
         </motion.button>
