@@ -133,7 +133,7 @@ export default function HeroPlus() {
                                     width="100%"
                                     height="100%"
                                     autoPlay={true}
-                                    muted={true}
+                                    muted={!hasInteracted}
                                     controls={false}
                                     playsInline={true}
                                     onTimeUpdate={handleTimeUpdate}
