@@ -5,24 +5,21 @@ import TestimonialsWhatsApp from './TestimonialsWhatsApp';
 
 const depoimentos = [
     {
-        text: "No começo achei estranho, mas depois de uns dias comecei a lembrar das palavras sem precisar traduzir. Ainda erro bastante, mas já consigo conversar bem melhor.",
-        name: "Aluno ITR",
-        detail: "Resultado em poucas semanas",
-        initials: "A",
+        text: <>No começo achei estranho, mas depois de uns dias <strong className="text-white font-semibold">comecei a lembrar das palavras sem precisar traduzir</strong>. Ainda erro bastante, mas <strong className="text-white font-semibold">já consigo conversar bem melhor</strong>.</>,
+        name: "Marcos Silva",
+        avatar: "https://randomuser.me/api/portraits/men/32.jpg",
         color: "emerald"
     },
     {
-        text: "Sinceramente, comprei sem muita expectativa porque já tinha tentado outras vezes e sempre travava. No começo achei estranho focar tanto em vocabulário, mas depois de alguns dias comecei a lembrar das palavras muito mais rápido. Excelente curso, me ajudou muito.",
-        name: "Aluno ITR",
-        detail: "De cético a fã do método",
-        initials: "A",
+        text: <>Sinceramente, comprei sem muita expectativa porque <strong className="text-white font-semibold">já tinha tentado outras vezes e sempre travava</strong>. No começo achei estranho focar tanto em vocabulário, mas depois de alguns dias <strong className="text-white font-semibold">comecei a lembrar das palavras muito mais rápido</strong>. Excelente curso, me ajudou muito.</>,
+        name: "Ricardo Mendes",
+        avatar: "https://randomuser.me/api/portraits/men/72.jpg",
         color: "teal"
     },
     {
-        text: "O que mais mudou pra mim foi que eu parei de traduzir tudo. Antes eu montava frase em português e tentava converter. Agora já vem direto algumas palavras na cabeça. Não é automático 100% ainda, mas já é MUITO mais natural do que antes. Sou muito grata por ter encontrado um método que realmente funciona.",
-        name: "Aluna ITR",
-        detail: "Fim da tradução mental",
-        initials: "A",
+        text: <>O que mais mudou pra mim foi que eu <strong className="text-white font-semibold">parei de traduzir tudo</strong>. Antes eu montava frase em português e tentava converter. Agora <strong className="text-white font-semibold">já vem direto algumas palavras na cabeça</strong>. Não é automático 100% ainda, mas <strong className="text-white font-semibold">já é MUITO mais natural do que antes</strong>. Sou muito grata por ter encontrado um método que realmente funciona.</>,
+        name: "Juliana Costa",
+        avatar: "https://randomuser.me/api/portraits/women/84.jpg",
         color: "cyan"
     }
 ];
@@ -108,7 +105,7 @@ export default function Depoimentos() {
                                 </div>
 
                                 {/* Text */}
-                                <p className="text-slate-300 leading-relaxed font-light text-sm md:text-base mb-5 italic flex-1">
+                                <p className="text-slate-300 leading-relaxed font-light text-sm md:text-base mb-5 flex-1">
                                     "{dep.text}"
                                 </p>
 
@@ -117,13 +114,12 @@ export default function Depoimentos() {
                                     <motion.div
                                         whileHover={{ scale: 1.1, rotate: 5 }}
                                         transition={{ type: "spring", stiffness: 300 }}
-                                        className={`w-9 h-9 rounded-full ${c.avatarBg} border ${c.avatarBorder} flex items-center justify-center`}
+                                        className={`w-10 h-10 rounded-full border-2 ${c.avatarBorder} overflow-hidden`}
                                     >
-                                        <span className={`${c.avatarText} text-sm font-bold`}>{dep.initials}</span>
+                                        <img src={dep.avatar} alt={dep.name} className="w-full h-full object-cover" />
                                     </motion.div>
                                     <div>
                                         <p className="text-white text-sm font-semibold">{dep.name}</p>
-                                        <p className="text-slate-500 text-xs">{dep.detail}</p>
                                     </div>
                                 </div>
                             </motion.div>
