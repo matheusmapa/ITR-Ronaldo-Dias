@@ -68,7 +68,7 @@ export default function OfertaFinal({ onInView }) {
                             </div>
                             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.06]">
                                 <Users className="w-3 h-3 text-slate-400" />
-                                <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider">+1.200 alunos</span>
+                                <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider">+200 alunos</span>
                             </div>
                         </motion.div>
 
@@ -86,34 +86,42 @@ export default function OfertaFinal({ onInView }) {
                             <span className="text-emerald-400 text-xs font-bold uppercase tracking-widest">Acesso Vitalício</span>
                         </motion.div>
 
-                        {/* Price — Hierarquia: Âncora → Parcelado GIGANTE → À vista pequeno */}
+                        {/* Price — Hierarquia: Âncora animada → Parcelado GIGANTE → Café anchor → À vista */}
                         <div className="mb-5">
-                            {/* 1. Âncora riscada */}
-                            <p className="text-red-400/70 text-sm md:text-base line-through decoration-red-500/50 decoration-2 mb-3 font-medium">De R$ 399,00</p>
+                            {/* 1. Âncora com strikethrough animado — grande e dramática */}
+                            <div className="relative inline-block mb-5">
+                                <span className="text-red-400/80 text-2xl md:text-3xl font-bold">R$ 399,00</span>
+                                <motion.div
+                                    className="absolute top-1/2 left-[-4%] h-[4px] bg-gradient-to-r from-red-500 via-red-400 to-red-500 rounded-full shadow-[0_0_12px_rgba(239,68,68,0.5)]"
+                                    initial={{ width: '0%' }}
+                                    whileInView={{ width: '108%' }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
+                                />
+                            </div>
 
-                            {/* 2. Preço parcelado — HERO PRICE */}
+                            {/* 2. Preço parcelado — HERO PRICE (12x inline com o valor) */}
                             <motion.div
-                                className="flex flex-col items-center gap-1"
+                                className="flex items-end justify-center gap-1 cursor-default"
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 whileInView={{ scale: 1, opacity: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: 0.2, type: "spring", stiffness: 150 }}
+                                whileHover={{ scale: 1.03 }}
                             >
-                                <span className="text-emerald-400/80 text-sm md:text-base font-bold uppercase tracking-widest">12x de</span>
-                                <motion.div
-                                    whileHover={{ scale: 1.03 }}
-                                    className="flex items-baseline gap-1 cursor-default"
-                                >
-                                    <span className="text-emerald-400 text-2xl md:text-3xl font-black">R$</span>
-                                    <span className="text-7xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-300 via-emerald-400 to-teal-500 leading-none drop-shadow-[0_0_30px_rgba(16,185,129,0.4)]">
-                                        20
-                                    </span>
-                                    <span className="text-emerald-300 text-3xl md:text-4xl font-black">,81</span>
-                                </motion.div>
+                                <span className="text-emerald-400/70 text-xl md:text-2xl font-bold mb-3 md:mb-4">12x</span>
+                                <span className="text-emerald-400 text-xl md:text-2xl font-bold mb-1 md:mb-2">R$</span>
+                                <span className="text-7xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-300 via-emerald-400 to-teal-500 leading-none drop-shadow-[0_0_30px_rgba(16,185,129,0.4)]">
+                                    20
+                                </span>
+                                <span className="text-emerald-300 text-2xl md:text-3xl font-bold mb-1 md:mb-2">,81</span>
                             </motion.div>
 
-                            {/* 3. Preço à vista — secundário */}
-                            <p className="text-slate-500 text-sm mt-3 font-light">
+                            {/* 3. Âncora do "café" + à vista — juntos, sem espaçamento excessivo */}
+                            <p className="text-sm text-slate-400 italic mt-2">
+                                (Isso dá menos de R$ 0,70 por dia)
+                            </p>
+                            <p className="text-sm text-slate-500 mt-1">
                                 ou <span className="text-slate-400 font-semibold">R$ 179,99</span> à vista
                             </p>
                         </div>

@@ -65,7 +65,7 @@ export default function HeroPlus() {
     };
 
     return (
-        <section className="relative flex items-center justify-center overflow-hidden bg-[#050510] pt-10 pb-12 md:pt-14 md:pb-24 lg:min-h-[92vh]">
+        <section className="relative flex items-center justify-center overflow-hidden bg-[#050510] pt-10 pb-10 md:pt-12 md:pb-16 lg:min-h-[92vh]">
             {/* Background Gradients (Apple Style) */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/20 blur-3xl rounded-full pointer-events-none"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/10 blur-3xl rounded-full pointer-events-none"></div>
@@ -90,7 +90,7 @@ export default function HeroPlus() {
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-2 md:mb-4 tracking-tight"
+                        className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1.1] mb-2 md:mb-3 tracking-tight"
                     >
                         O Fim da <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 text-glow">
