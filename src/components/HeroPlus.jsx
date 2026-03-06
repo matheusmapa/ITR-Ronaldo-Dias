@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Star, Play, Pause, VolumeX, Volume2, Maximize2 } from 'lucide-react';
+import { Sparkles, Star, Play, Pause, VolumeX, Volume2, Maximize2, Minimize2 } from 'lucide-react';
 import ReactPlayer from 'react-player';
 import { MagneticButton } from './Common';
 import { TravelGlobe } from './ui/travel-globe';
@@ -12,6 +12,18 @@ export default function HeroPlus() {
     const [played, setPlayed] = useState(0);
     const [videoReady, setVideoReady] = useState(false);
     const playerRef = useRef(null);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+
+    // Sync fullscreen state when user exits via Esc or browser controls
+    useEffect(() => {
+        const handler = () => setIsFullscreen(!!document.fullscreenElement);
+        document.addEventListener('fullscreenchange', handler);
+        document.addEventListener('webkitfullscreenchange', handler);
+        return () => {
+            document.removeEventListener('fullscreenchange', handler);
+            document.removeEventListener('webkitfullscreenchange', handler);
+        };
+    }, []);
 
     const handleInteract = () => {
         setHasInteracted(true);
@@ -56,7 +68,16 @@ export default function HeroPlus() {
 
     const handleFullscreen = () => {
         const rect = document.getElementById('hero-video-container');
-        if (rect) {
+        if (!rect) return;
+        if (document.fullscreenElement || document.webkitFullscreenElement) {
+            // Exit fullscreen
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        } else {
+            // Enter fullscreen
             if (rect.requestFullscreen) {
                 rect.requestFullscreen();
             } else if (rect.webkitRequestFullscreen) {
@@ -227,7 +248,10 @@ export default function HeroPlus() {
                                         onClick={(e) => { e.stopPropagation(); handleFullscreen(); }}
                                         className="text-white/80 hover:text-white transition-opacity p-1"
                                     >
-                                        <Maximize2 className="w-5 h-5" />
+                                        {isFullscreen
+                                            ? <Minimize2 className="w-5 h-5" />
+                                            : <Maximize2 className="w-5 h-5" />
+                                        }
                                     </button>
                                 </div>
                             )}
