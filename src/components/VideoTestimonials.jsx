@@ -280,8 +280,8 @@ export default function VideoTestimonials() {
         return () => clearTimeout(timerRef.current);
     }, [pos, resetTimer]);
 
-    const next = () => setPos((p) => p + 1);
-    const prev = () => setPos((p) => p - 1);
+    const next = () => { setActivePlayingIndex(null); setAnyPlaying(false); setPos((p) => p + 1); };
+    const prev = () => { setActivePlayingIndex(null); setAnyPlaying(false); setPos((p) => p - 1); };
 
     /* ── Swipe ── */
     const touchStart = useRef(0);
@@ -361,8 +361,8 @@ export default function VideoTestimonials() {
                             key={i}
                             onClick={() => setPos(i + visible)}
                             className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${i === realIndex
-                                    ? 'w-8 bg-emerald-400'
-                                    : 'w-1.5 bg-white/20 hover:bg-white/40'
+                                ? 'w-8 bg-emerald-400'
+                                : 'w-1.5 bg-white/20 hover:bg-white/40'
                                 }`}
                             aria-label={`Vídeo ${i + 1}`}
                         />
