@@ -65,7 +65,7 @@ export default function HeroPlus() {
     };
 
     return (
-        <section className="relative min-h-screen lg:min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#050510] pt-20 pb-24 md:pb-32">
+        <section className="relative flex items-center justify-center overflow-hidden bg-[#050510] pt-16 pb-12 md:pt-20 md:pb-24 lg:min-h-[92vh]">
             {/* Background Gradients (Apple Style) */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/20 blur-3xl rounded-full pointer-events-none"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/10 blur-3xl rounded-full pointer-events-none"></div>
@@ -73,15 +73,15 @@ export default function HeroPlus() {
             {/* Grid pattern */}
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUscDAuMDUpIi8+PC9zdmc+')] opacity-20"></div>
 
-            <div className="relative z-10 max-w-7xl w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            <div className="relative z-10 max-w-7xl w-full mx-auto px-4 md:px-6 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-8 items-center">
 
                 {/* Left Column: Copy & CTA */}
-                <div className="text-left flex flex-col items-start pt-8 md:pt-0">
+                <div className="text-left flex flex-col items-start pt-2 md:pt-0">
                     <motion.div
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-3 backdrop-blur-md"
+                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-2 backdrop-blur-md"
                     >
                         <span>ITR | Inglês em Tempo Recorde</span>
                     </motion.div>
@@ -90,7 +90,7 @@ export default function HeroPlus() {
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-4 tracking-tight"
+                        className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-2 md:mb-4 tracking-tight"
                     >
                         O Fim da <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 text-glow">
@@ -102,7 +102,7 @@ export default function HeroPlus() {
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-base md:text-lg text-emerald-400 mb-3 max-w-xl leading-relaxed font-bold uppercase tracking-widest"
+                        className="text-sm md:text-lg text-emerald-400 mb-2 md:mb-3 max-w-xl leading-relaxed font-bold uppercase tracking-widest"
                     >
                         Destrave sua Fluência e Fale Inglês com Naturalidade.
                     </motion.p>
@@ -111,7 +111,7 @@ export default function HeroPlus() {
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.25 }}
-                        className="text-sm md:text-base text-[#E2E2E2] mb-6 max-w-xl leading-relaxed font-light"
+                        className="text-xs md:text-base text-[#E2E2E2] mb-4 md:mb-6 max-w-xl leading-relaxed font-light"
                     >
                         Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar — mesmo que você já tenha tentado de tudo.
                     </motion.p>
@@ -120,7 +120,7 @@ export default function HeroPlus() {
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.35 }}
-                        className="flex flex-col items-start gap-6 w-full md:w-auto"
+                        className="flex flex-col items-start gap-4 md:gap-6 w-full md:w-auto"
                     >
                         {/* Video Player Area */}
                         <div id="hero-video-container" className="w-full max-w-xl aspect-video relative rounded-2xl overflow-hidden shadow-2xl shadow-emerald-900/20 border border-slate-800/50 bg-black group z-20">
@@ -217,7 +217,8 @@ export default function HeroPlus() {
 
                         <div className="flex flex-col items-center md:items-start gap-3 w-full">
                             <MagneticButton className="w-full md:w-auto text-center" onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}>
-                                QUERO ACELERAR MEU INGLÊS AGORA
+                                <span className="hidden sm:inline">QUERO ACELERAR MEU INGLÊS AGORA</span>
+                                <span className="sm:hidden">ACELERAR MEU INGLÊS</span>
                             </MagneticButton>
                             <p className="text-[10px] text-slate-500 font-medium tracking-widest w-full text-center uppercase">
                                 Acesso Imediato • 7 Dias de Garantia
