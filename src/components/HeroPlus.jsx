@@ -65,7 +65,7 @@ export default function HeroPlus() {
     };
 
     return (
-        <section className="relative flex items-center justify-center overflow-hidden bg-[#050510] pt-16 pb-12 md:pt-20 md:pb-24 lg:min-h-[92vh]">
+        <section className="relative flex items-center justify-center overflow-hidden bg-[#050510] pt-10 pb-12 md:pt-14 md:pb-24 lg:min-h-[92vh]">
             {/* Background Gradients (Apple Style) */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/20 blur-3xl rounded-full pointer-events-none"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/10 blur-3xl rounded-full pointer-events-none"></div>
