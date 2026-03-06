@@ -39,21 +39,31 @@ function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex, 
     const [showThumbnail, setShowThumbnail] = useState(true);
     const [ready, setReady] = useState(false);
 
-    // Pausa este vídeo se outro começou a tocar
+    // Reinicia este vídeo se outro começou a tocar
     useEffect(() => {
-        if (activePlayingIndex !== null && activePlayingIndex !== globalIndex && isPlaying) {
+        if (activePlayingIndex !== null && activePlayingIndex !== globalIndex && !showThumbnail) {
             const el = playerRef.current;
-            if (el) { el.pause(); }
+            if (el) {
+                el.pause();
+                el.currentTime = 0;
+            }
             setIsPlaying(false);
+            setPlayed(0);
+            setShowThumbnail(true);
         }
     }, [activePlayingIndex]);
 
-    // Pausa quando o carrossel navega
+    // Reinicia quando o carrossel navega (volta thumbnail)
     useEffect(() => {
-        if (pauseAll > 0 && isPlaying) {
+        if (pauseAll > 0 && !showThumbnail) {
             const el = playerRef.current;
-            if (el) { el.pause(); }
+            if (el) {
+                el.pause();
+                el.currentTime = 0;
+            }
             setIsPlaying(false);
+            setPlayed(0);
+            setShowThumbnail(true);
             onPlayingChange?.(false);
         }
     }, [pauseAll]);
