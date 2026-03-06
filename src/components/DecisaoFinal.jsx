@@ -47,7 +47,7 @@ export default function DecisaoFinal() {
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="text-slate-400"
+                            className="text-[#E2E2E2]"
                         >
                             Isso não acontece por mágica. Acontece por <strong className="text-white font-medium">estrutura e método.</strong>
                         </motion.p>
@@ -56,7 +56,7 @@ export default function DecisaoFinal() {
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.3 }}
-                            className="text-slate-500"
+                            className="text-[#CCCCCC]"
                         >
                             Você pode continuar do jeito tradicional... <br className="hidden md:block" />
                             Ou pode finalmente organizar o seu aprendizado e <span className="text-emerald-400 font-bold">destravar.</span>

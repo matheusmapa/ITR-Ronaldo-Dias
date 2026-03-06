@@ -53,7 +53,7 @@ export default function Hero() {
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.25 }}
-                        className="text-sm md:text-base text-slate-400 mb-10 max-w-xl leading-relaxed font-light"
+                        className="text-sm md:text-base text-[#E2E2E2] mb-10 max-w-xl leading-relaxed font-light"
                     >
                         Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar — mesmo que você já tenha tentado de tudo.
                     </motion.p>
@@ -68,7 +68,7 @@ export default function Hero() {
                             <MagneticButton className="w-full md:w-auto text-center" onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}>
                                 QUERO ACELERAR MEU INGLÊS AGORA
                             </MagneticButton>
-                            <p className="text-[10px] text-slate-500 font-medium tracking-widest w-full text-center uppercase">
+                            <p className="text-[10px] text-[#CCCCCC] font-medium tracking-widest w-full text-center uppercase">
                                 Acesso Imediato • 7 Dias de Garantia
                             </p>
                         </div>
@@ -87,7 +87,7 @@ export default function Hero() {
                                     <Star className="w-3 h-3 fill-current" />
                                     <Star className="w-3 h-3 fill-current" />
                                 </div>
-                                <span className="text-[10px] text-slate-400 font-bold tracking-tight whitespace-nowrap">+1.200 alunos satisfeitos</span>
+                                <span className="text-[10px] text-[#E2E2E2] font-bold tracking-tight whitespace-nowrap">+1.200 alunos satisfeitos</span>
                             </div>
                         </div>
                     </motion.div>

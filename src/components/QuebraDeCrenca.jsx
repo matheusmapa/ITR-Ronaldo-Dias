@@ -74,7 +74,7 @@ export default function QuebraDeCrenca() {
                             >
                                 80%
                             </motion.span>
-                            <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">das conversas</p>
+                            <p className="text-[#CCCCCC] text-xs font-bold uppercase tracking-widest mt-2">das conversas</p>
                         </motion.div>
 
                         {/* Texto explicativo */}
@@ -82,7 +82,7 @@ export default function QuebraDeCrenca() {
                             <p className="text-slate-300 text-lg leading-relaxed font-light">
                                 Cerca de <strong className="text-white font-semibold">80% das conversas do dia a dia</strong> em inglês são sustentadas por um grupo relativamente pequeno de palavras.
                             </p>
-                            <p className="text-slate-400 text-lg leading-relaxed font-light">
+                            <p className="text-[#E2E2E2] text-lg leading-relaxed font-light">
                                 O problema é que ninguém te ensinou a dominar <span className="text-white font-medium">primeiro o que realmente importa.</span>
                             </p>
                         </div>
@@ -100,7 +100,7 @@ export default function QuebraDeCrenca() {
                     <p className="text-xl md:text-2xl text-slate-300 font-light leading-relaxed mb-2">
                         O <strong className="text-white font-black">Método ITR</strong> <span className="text-emerald-400 font-bold">(Inglês em Tempo Recorde)</span>
                     </p>
-                    <p className="text-lg md:text-xl text-slate-400 font-light">
+                    <p className="text-lg md:text-xl text-[#E2E2E2] font-light">
                         foi criado exatamente para <span className="text-white font-semibold">inverter essa lógica ultrapassada.</span>
                     </p>
                 </motion.div>

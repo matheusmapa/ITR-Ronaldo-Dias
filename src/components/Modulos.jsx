@@ -26,7 +26,7 @@ export default function Modulos() {
                                 Módulo {mod.num} <br />
                                 <span className="text-teal-400">{mod.title}</span>
                             </h3>
-                            <p className="text-slate-400 font-light relative z-10">{mod.desc}</p>
+                            <p className="text-[#E2E2E2] font-light relative z-10">{mod.desc}</p>
                         </TiltCard>
                     ))}
                 </div>

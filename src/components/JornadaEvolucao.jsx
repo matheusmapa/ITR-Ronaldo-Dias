@@ -8,7 +8,7 @@ const fases = [
         fase: "Fase 0",
         title: "Preparação Mental",
         desc: "Entenda como seu cérebro realmente aprende idiomas — e use isso a seu favor desde o primeiro dia.",
-        color: "text-slate-400",
+        color: "text-[#E2E2E2]",
         bg: "bg-slate-500/10",
         border: "border-slate-500/20",
         dotBg: "bg-[#0a0e18]",
@@ -77,13 +77,13 @@ export default function JornadaEvolucao() {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default"
                     >
                         <Rocket className="w-3.5 h-3.5 text-teal-400" />
-                        <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">Plano de ação</span>
+                        <span className="text-[#E2E2E2] text-xs font-bold uppercase tracking-widest">Plano de ação</span>
                     </motion.div>
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight mb-5">
                         Sua jornada de{' '}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400">evolução</span>
                     </h2>
-                    <p className="text-slate-400 text-base md:text-lg font-light max-w-xl mx-auto leading-relaxed">
+                    <p className="text-[#E2E2E2] text-base md:text-lg font-light max-w-xl mx-auto leading-relaxed">
                         Nada de aulas soltas. É um <strong className="text-white font-semibold">plano cirúrgico</strong> — cada fase constrói em cima da anterior.
                     </p>
                 </motion.div>
@@ -133,7 +133,7 @@ export default function JornadaEvolucao() {
                                             <h3 className="text-base md:text-lg font-bold text-white">{fase.title}</h3>
                                         </div>
                                         <div className="hidden md:block w-px h-5 bg-white/10"></div>
-                                        <p className="text-slate-400 text-sm leading-relaxed font-light flex-1">{fase.desc}</p>
+                                        <p className="text-[#E2E2E2] text-sm leading-relaxed font-light flex-1">{fase.desc}</p>
                                     </div>
                                 </div>
                             </motion.div>
@@ -149,7 +149,7 @@ export default function JornadaEvolucao() {
                     transition={{ duration: 0.5, delay: 0.5 }}
                     className="text-center mt-10"
                 >
-                    <p className="text-slate-500 text-sm font-light">
+                    <p className="text-[#CCCCCC] text-sm font-light">
                         Cada fase foi pensada para levar você do <span className="text-white font-medium">zero ao automático</span> — no menor tempo possível.
                     </p>
                 </motion.div>

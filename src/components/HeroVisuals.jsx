@@ -23,7 +23,7 @@ export default function HeroVisuals() {
                         </div>
                         <div>
                             <p className="text-white text-sm font-bold text-left">Fluência Acelerada</p>
-                            <p className="text-slate-400 text-xs text-left">Progresso do Método</p>
+                            <p className="text-[#E2E2E2] text-xs text-left">Progresso do Método</p>
                         </div>
                     </div>
                     <div className="w-full bg-slate-800 rounded-full h-2 mb-1 overflow-hidden">
@@ -64,7 +64,7 @@ export default function HeroVisuals() {
                     </div>
                     <div className="flex flex-col text-left">
                         <p className="text-white text-xs font-bold text-left">Resultados</p>
-                        <p className="text-slate-400 text-[10px] text-left">Comprovados</p>
+                        <p className="text-[#E2E2E2] text-[10px] text-left">Comprovados</p>
                     </div>
                 </motion.div>
 

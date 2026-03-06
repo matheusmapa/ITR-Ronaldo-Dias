@@ -10,7 +10,7 @@ export default function BentoGrid() {
                     <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
                         O que você vai <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">conquistar</span>
                     </h2>
-                    <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+                    <p className="text-[#E2E2E2] text-lg max-w-2xl mx-auto">
                         Abandone os métodos antigos. O ITR é desenhado para acelerar o seu cérebro, construir vocabulário e destravar a sua língua.
                     </p>
                 </div>
@@ -24,7 +24,7 @@ export default function BentoGrid() {
                             <MessageCircle className="text-emerald-400 w-6 h-6" />
                         </div>
                         <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">Confiança na Conversação</h3>
-                        <p className="text-slate-400 leading-relaxed font-light text-lg">
+                        <p className="text-[#E2E2E2] leading-relaxed font-light text-lg">
                             Domine a conversação e a escuta com extrema naturalidade. Sem travar na hora de responder, apenas a fala fluindo.
                         </p>
                     </TiltCard>
@@ -35,7 +35,7 @@ export default function BentoGrid() {
                             <Clock className="text-blue-400 w-6 h-6" />
                         </div>
                         <h3 className="text-xl font-bold text-white mb-3">Tempo Recorde</h3>
-                        <p className="text-slate-400 leading-relaxed font-light">
+                        <p className="text-[#E2E2E2] leading-relaxed font-light">
                             Memorize centenas de palavras novas de forma permanente, otimizando o seu tempo de estudos.
                         </p>
                     </TiltCard>
@@ -46,7 +46,7 @@ export default function BentoGrid() {
                             <Shield className="text-purple-400 w-6 h-6" />
                         </div>
                         <h3 className="text-xl font-bold text-white mb-3">Método Validado</h3>
-                        <p className="text-slate-400 leading-relaxed font-light">
+                        <p className="text-[#E2E2E2] leading-relaxed font-light">
                             Testado e aprovado por pessoas reais que saíram do zero à fluência sem complicações.
                         </p>
                     </TiltCard>
@@ -60,7 +60,7 @@ export default function BentoGrid() {
                             <Sparkles className="text-teal-400 w-6 h-6" />
                         </div>
                         <h3 className="text-3xl font-bold text-white mb-3 tracking-tight">O Fim da Tradução Mental</h3>
-                        <p className="text-slate-400 leading-relaxed font-light text-lg max-w-md relative z-10">
+                        <p className="text-[#E2E2E2] leading-relaxed font-light text-lg max-w-md relative z-10">
                             Desenvolva o mecanismo interno para <strong className="text-white">pensar diretamente em inglês</strong>, como um nativo faria.
                         </p>
                     </TiltCard>

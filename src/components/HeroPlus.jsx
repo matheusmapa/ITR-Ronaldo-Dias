@@ -241,7 +241,7 @@ export default function HeroPlus() {
                                 <span className="hidden sm:inline">QUERO ACELERAR MEU INGLÊS AGORA</span>
                                 <span className="sm:hidden">ACELERAR MEU INGLÊS</span>
                             </MagneticButton>
-                            <p className="text-[10px] text-slate-500 font-medium tracking-widest w-full text-center uppercase">
+                            <p className="text-[10px] text-[#CCCCCC] font-medium tracking-widest w-full text-center uppercase">
                                 Acesso Imediato • 7 Dias de Garantia
                             </p>
                         </div>
@@ -260,7 +260,7 @@ export default function HeroPlus() {
                                     <Star className="w-3 h-3 fill-current" />
                                     <Star className="w-3 h-3 fill-current" />
                                 </div>
-                                <span className="text-[10px] text-slate-400 font-bold tracking-tight whitespace-nowrap">+200 alunos satisfeitos</span>
+                                <span className="text-[10px] text-[#E2E2E2] font-bold tracking-tight whitespace-nowrap">+200 alunos satisfeitos</span>
                             </div>
                         </div>
                     </motion.div>

@@ -23,7 +23,7 @@ export default function HistoriaMetodo() {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default"
                     >
                         <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">A origem de tudo</span>
+                        <span className="text-[#E2E2E2] text-xs font-bold uppercase tracking-widest">A origem de tudo</span>
                     </motion.div>
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight">
                         A história por trás{' '}<br className="hidden md:block" />
@@ -57,7 +57,7 @@ export default function HistoriaMetodo() {
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.25 }}
-                            className="text-slate-400"
+                            className="text-[#E2E2E2]"
                         >
                             Era cansativo, desmotivador e parecia que eu nunca saía do lugar.
                         </motion.p>
@@ -104,7 +104,7 @@ export default function HistoriaMetodo() {
                             <p className="text-white text-xl md:text-2xl font-black tracking-tight">
                                 Foi assim que nasceu o Método ITR.
                             </p>
-                            <p className="text-slate-500 mt-2">
+                            <p className="text-[#CCCCCC] mt-2">
                                 Não é um curso cheio de teoria inútil. É a organização que eu gostaria de ter encontrado anos atrás.
                             </p>
                         </motion.div>

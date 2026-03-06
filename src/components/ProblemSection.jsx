@@ -26,7 +26,7 @@ export default function ProblemSection() {
                     whileHover={{ scale: 1.2, borderColor: "rgba(244,63,94,0.5)" }}
                     className="w-10 h-10 rounded-full border border-slate-700 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center cursor-pointer transition-colors"
                 >
-                    <ArrowDown className="w-4 h-4 text-slate-500" />
+                    <ArrowDown className="w-4 h-4 text-[#CCCCCC]" />
                 </motion.div>
             </motion.div>
 
@@ -66,7 +66,7 @@ export default function ProblemSection() {
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-slate-400 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed"
+                        className="text-[#E2E2E2] text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed"
                     >
                         A maioria passa <strong className="text-white font-semibold">anos</strong> pagando mensalidades em escolas de inglês. Mesmo assim, na hora H, a voz some.
                     </motion.p>
@@ -89,7 +89,7 @@ export default function ProblemSection() {
                             <p className="text-slate-300 font-light">
                                 O coração acelera. O suor frio bate. A frase que você <em className="text-white font-medium not-italic">ensaiou mentalmente</em> em português simplesmente não sai em inglês.
                             </p>
-                            <p className="text-slate-400 font-light">
+                            <p className="text-[#E2E2E2] font-light">
                                 Não é falta de inteligência. Não é falta de esforço.
                             </p>
                             <motion.p
@@ -152,18 +152,18 @@ export default function ProblemSection() {
                             animate={{ scale: [1, 1.05, 1] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                         >
-                            <Brain className="w-24 h-24 text-slate-500 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity" />
+                            <Brain className="w-24 h-24 text-[#CCCCCC] opacity-[0.04] group-hover:opacity-[0.08] transition-opacity" />
                         </motion.div>
                         <div className="flex items-center gap-3 mb-4">
                             <div className="w-8 h-8 rounded-lg bg-slate-700/50 flex items-center justify-center border border-slate-600/30 group-hover:bg-slate-700/70 transition-colors">
-                                <Brain className="w-4 h-4 text-slate-400" />
+                                <Brain className="w-4 h-4 text-[#E2E2E2]" />
                             </div>
-                            <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">A consequência</span>
+                            <span className="text-[#E2E2E2] text-xs font-bold uppercase tracking-widest">A consequência</span>
                         </div>
                         <p className="text-slate-300 leading-relaxed font-light">
                             Sem um <span className="text-white font-semibold underline decoration-emerald-500/40 underline-offset-4">vocabulário ativo</span> instalado na sua memória de longo prazo, não existe fluência. Você sabe a regra do <em>Present Perfect</em>...
                         </p>
-                        <p className="text-slate-500 font-medium text-lg mt-3 tracking-tight">
+                        <p className="text-[#CCCCCC] font-medium text-lg mt-3 tracking-tight">
                             ...mas a palavra não vem em milissegundos.
                         </p>
                     </motion.div>

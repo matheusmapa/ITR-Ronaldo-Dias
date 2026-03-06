@@ -20,19 +20,19 @@ export default function Exclusivo() {
                     <TiltCard className="bg-gradient-to-br from-slate-900 to-[#0A0D14] p-8 border-slate-800 hover:border-yellow-500/30">
                         <Brain className="w-10 h-10 text-yellow-500 mb-6" />
                         <h3 className="text-xl font-bold text-white mb-3 tracking-tight">Módulo Expansão</h3>
-                        <p className="text-slate-400 font-light">Técnicas de memorização testadas em outras áreas da vida.</p>
+                        <p className="text-[#E2E2E2] font-light">Técnicas de memorização testadas em outras áreas da vida.</p>
                     </TiltCard>
 
                     <TiltCard className="bg-gradient-to-br from-slate-900 to-[#0A0D14] p-8 border-slate-800 hover:border-yellow-500/30">
                         <Bot className="w-10 h-10 text-yellow-500 mb-6" />
                         <h3 className="text-xl font-bold text-white mb-3 tracking-tight">IA Personalizada</h3>
-                        <p className="text-slate-400 font-light">Inteligência Artificial programada para te treinar 24/7 sem julgamento.</p>
+                        <p className="text-[#E2E2E2] font-light">Inteligência Artificial programada para te treinar 24/7 sem julgamento.</p>
                     </TiltCard>
 
                     <TiltCard className="bg-gradient-to-br from-slate-900 to-[#0A0D14] p-8 border-slate-800 hover:border-yellow-500/30">
                         <Users className="w-10 h-10 text-yellow-500 mb-6" />
                         <h3 className="text-xl font-bold text-white mb-3 tracking-tight">Comunidade VIP</h3>
-                        <p className="text-slate-400 font-light">Acesso no WhatsApp para suporte, troca de experiências e desafios.</p>
+                        <p className="text-[#E2E2E2] font-light">Acesso no WhatsApp para suporte, troca de experiências e desafios.</p>
                     </TiltCard>
                 </div>
 

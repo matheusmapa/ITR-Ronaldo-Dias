@@ -52,7 +52,7 @@ function FaqItem({ pergunta, isOpen, onClick, index }) {
                     transition={{ duration: 0.25 }}
                     className="shrink-0"
                 >
-                    <ChevronDown className={`w-5 h-5 transition-colors ${isOpen ? 'text-emerald-400' : 'text-slate-500'}`} />
+                    <ChevronDown className={`w-5 h-5 transition-colors ${isOpen ? 'text-emerald-400' : 'text-[#CCCCCC]'}`} />
                 </motion.div>
             </button>
             <AnimatePresence>
@@ -65,7 +65,7 @@ function FaqItem({ pergunta, isOpen, onClick, index }) {
                     >
                         <div className="px-5 md:px-6 pb-5 md:pb-6">
                             {pergunta.a.split('\n\n').map((paragraph, j) => (
-                                <p key={j} className="text-slate-400 leading-relaxed font-light text-sm md:text-base mb-3 last:mb-0">
+                                <p key={j} className="text-[#E2E2E2] leading-relaxed font-light text-sm md:text-base mb-3 last:mb-0">
                                     {paragraph}
                                 </p>
                             ))}
@@ -98,7 +98,7 @@ export default function FaqNovo() {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default"
                     >
                         <HelpCircle className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">Dúvidas</span>
+                        <span className="text-[#E2E2E2] text-xs font-bold uppercase tracking-widest">Dúvidas</span>
                     </motion.div>
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight">
                         Perguntas{' '}

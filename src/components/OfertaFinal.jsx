@@ -67,8 +67,8 @@ export default function OfertaFinal({ onInView }) {
                                 <span className="text-amber-400 text-[10px] font-bold uppercase tracking-wider">Preço promocional</span>
                             </div>
                             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.06]">
-                                <Users className="w-3 h-3 text-slate-400" />
-                                <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider">+200 alunos</span>
+                                <Users className="w-3 h-3 text-[#E2E2E2]" />
+                                <span className="text-[#E2E2E2] text-[10px] font-bold uppercase tracking-wider">+200 alunos</span>
                             </div>
                         </motion.div>
 
@@ -118,8 +118,8 @@ export default function OfertaFinal({ onInView }) {
 
                             {/* 3. Badge café + à vista */}
                             <span className="bg-slate-800/50 px-3 py-1 rounded-full text-slate-300 text-sm mt-3 inline-block">Menos de R$ 0,70 por dia</span>
-                            <p className="text-sm text-slate-500 mt-2">
-                                ou <span className="text-slate-400 font-semibold">R$ 179,99</span> à vista
+                            <p className="text-sm text-[#CCCCCC] mt-2">
+                                ou <span className="text-[#E2E2E2] font-semibold">R$ 179,99</span> à vista
                             </p>
                         </div>
 
@@ -189,7 +189,7 @@ export default function OfertaFinal({ onInView }) {
                         </motion.p>
 
                         {/* Trust badges */}
-                        <div className="flex flex-wrap justify-center gap-4 text-xs text-slate-500">
+                        <div className="flex flex-wrap justify-center gap-4 text-xs text-[#CCCCCC]">
                             <div className="flex items-center gap-1.5">
                                 <CreditCard className="w-3.5 h-3.5" />
                                 <span>Pagamento seguro</span>

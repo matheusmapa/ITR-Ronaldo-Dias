@@ -44,7 +44,7 @@ export default function ParaQuem() {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default"
                     >
                         <Target className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">É pra você?</span>
+                        <span className="text-[#E2E2E2] text-xs font-bold uppercase tracking-widest">É pra você?</span>
                     </motion.div>
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight">
                         Esse método é{' '}<br className="hidden md:block" />

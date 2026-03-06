@@ -12,7 +12,7 @@ const FaqItem = ({ q, a }) => {
             >
                 <span className={`font-bold pr-4 transition-colors ${isOpen ? 'text-emerald-400' : 'text-slate-200 group-hover:text-white'}`}>{q}</span>
                 <motion.div animate={{ rotate: isOpen ? 180 : 0 }}>
-                    <ChevronDown className={`w-5 h-5 shrink-0 ${isOpen ? 'text-emerald-400' : 'text-slate-500'}`} />
+                    <ChevronDown className={`w-5 h-5 shrink-0 ${isOpen ? 'text-emerald-400' : 'text-[#CCCCCC]'}`} />
                 </motion.div>
             </button>
             <AnimatePresence>
@@ -23,7 +23,7 @@ const FaqItem = ({ q, a }) => {
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                     >
-                        <div className="px-6 pb-6 text-slate-400 leading-relaxed font-light">
+                        <div className="px-6 pb-6 text-[#E2E2E2] leading-relaxed font-light">
                             {a}
                         </div>
                     </motion.div>

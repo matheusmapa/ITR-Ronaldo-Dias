@@ -44,7 +44,7 @@ function TimerDigits({ time, size = 'sm' }) {
                     {i > 0 && <span className="text-emerald-500/50 font-bold">:</span>}
                     <div className={`flex flex-col items-center ${s.pad} rounded-lg bg-black/40 border border-emerald-500/20 min-w-[2.5rem]`}>
                         <span className={`${s.digit} font-mono font-black text-white tabular-nums leading-none`}>{unit.val}</span>
-                        <span className={`${s.label} text-slate-500 font-bold uppercase tracking-wider mt-0.5`}>{unit.label}</span>
+                        <span className={`${s.label} text-[#CCCCCC] font-bold uppercase tracking-wider mt-0.5`}>{unit.label}</span>
                     </div>
                 </React.Fragment>
             ))}

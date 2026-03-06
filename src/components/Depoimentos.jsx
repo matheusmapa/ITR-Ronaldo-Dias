@@ -52,13 +52,13 @@ export default function Depoimentos() {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default"
                     >
                         <MessageSquareQuote className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">Quem já testou</span>
+                        <span className="text-[#E2E2E2] text-xs font-bold uppercase tracking-widest">Quem já testou</span>
                     </motion.div>
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight mb-5">
                         O que dizem os{' '}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">alunos ITR</span>
                     </h2>
-                    <p className="text-slate-400 text-base md:text-lg font-light max-w-lg mx-auto">
+                    <p className="text-[#E2E2E2] text-base md:text-lg font-light max-w-lg mx-auto">
                         Resultados reais de quem aplicou o método na prática.
                     </p>
                 </motion.div>

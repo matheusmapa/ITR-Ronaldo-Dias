@@ -16,14 +16,14 @@ export default function Oferta() {
                         </p>
 
                         <h2 className="text-3xl md:text-5xl font-black text-white mb-4">A hora de agir é <span className="text-emerald-400">agora</span></h2>
-                        <p className="text-slate-400 text-lg mb-10 max-w-xl">
+                        <p className="text-[#E2E2E2] text-lg mb-10 max-w-xl">
                             Tenha acesso imediato a todo o método ITR, todos os módulos e todos os bônus exclusivos.
                         </p>
 
                         <div className="mb-10 flex flex-col items-center">
-                            <span className="text-slate-500 font-medium line-through mb-2 text-xl">De R$ 399,00</span>
+                            <span className="text-[#CCCCCC] font-medium line-through mb-2 text-xl">De R$ 399,00</span>
                             <div className="flex items-start justify-center gap-3">
-                                <span className="text-2xl font-bold text-slate-400 mt-2">por</span>
+                                <span className="text-2xl font-bold text-[#E2E2E2] mt-2">por</span>
                                 <span className="text-7xl md:text-8xl font-black text-emerald-400 tracking-tighter drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">R$ 200</span>
                             </div>
                             <span className="bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full font-medium text-sm mt-6 border border-emerald-500/20">Acesso Vitalício</span>

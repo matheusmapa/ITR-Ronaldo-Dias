@@ -68,12 +68,12 @@ export default function ComoFunciona() {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] mb-6 cursor-default"
                     >
                         <Zap className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">Os 3 Pilares</span>
+                        <span className="text-[#E2E2E2] text-xs font-bold uppercase tracking-widest">Os 3 Pilares</span>
                     </motion.div>
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight mb-5">
                         Como o <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">ITR</span> funciona
                     </h2>
-                    <p className="text-slate-400 text-base md:text-lg font-light max-w-xl mx-auto leading-relaxed">
+                    <p className="text-[#E2E2E2] text-base md:text-lg font-light max-w-xl mx-auto leading-relaxed">
                         Nada de conteúdo solto. São <strong className="text-white font-semibold">3 pilares</strong> que trabalham juntos para gravar o inglês na sua mente.
                     </p>
                 </motion.div>
@@ -114,7 +114,7 @@ export default function ComoFunciona() {
                             {/* Content */}
                             <h3 className="text-xl font-bold text-white mb-2 relative z-10">{pilar.title}</h3>
                             <p className={`text-xs font-bold uppercase tracking-widest ${pilar.tagColor} mb-4`}>{pilar.tagline}</p>
-                            <p className="text-slate-400 text-sm leading-relaxed font-light relative z-10">{pilar.desc}</p>
+                            <p className="text-[#E2E2E2] text-sm leading-relaxed font-light relative z-10">{pilar.desc}</p>
 
                             {/* Bottom accent bar */}
                             <div className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r ${pilar.gradient} opacity-0 group-hover:opacity-60 transition-opacity duration-500`}></div>
@@ -130,7 +130,7 @@ export default function ComoFunciona() {
                     transition={{ duration: 0.5, delay: 0.4 }}
                     className="text-center mt-10"
                 >
-                    <p className="text-slate-500 text-sm font-light">
+                    <p className="text-[#CCCCCC] text-sm font-light">
                         Os 3 pilares se conectam em um <span className="text-white font-medium">sistema único</span> — e o resultado é fluência construída do jeito certo.
                     </p>
                 </motion.div>
