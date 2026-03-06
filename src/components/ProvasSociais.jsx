@@ -3,7 +3,7 @@ import { TiltCard } from './Common';
 
 export default function ProvasSociais() {
     return (
-        <section className="py-24 px-6 bg-[#050510] relative overflow-hidden border-t border-slate-900">
+        <section className="py-12 md:py-16 px-6 bg-[#050510] relative overflow-hidden border-t border-slate-900">
             {/* Background elements */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[300px] bg-emerald-900/10 blur-[120px] rounded-full pointer-events-none"></div>
 

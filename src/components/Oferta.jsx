@@ -4,7 +4,7 @@ import { TiltCard, MagneticButton } from './Common';
 
 export default function Oferta() {
     return (
-        <section id="oferta" className="py-32 px-6 bg-[#030308] flex justify-center items-center">
+        <section id="oferta" className="py-16 md:py-20 px-6 bg-[#030308] flex justify-center items-center">
             <div className="w-full max-w-4xl">
                 <TiltCard className="bg-gradient-to-b from-slate-900 to-[#0A0D14] border-t-4 border-t-emerald-500 border-x-slate-800 border-b-slate-800 overflow-hidden relative">
 

@@ -57,7 +57,7 @@ const fases = [
 
 export default function JornadaEvolucao() {
     return (
-        <section className="relative py-16 md:py-24 px-6 bg-[#030308] overflow-hidden">
+        <section className="relative py-10 md:py-16 px-6 bg-[#030308] overflow-hidden">
 
             <div className="absolute top-1/3 right-0 w-[400px] h-[400px] bg-teal-900/5 blur-3xl rounded-full pointer-events-none"></div>
             <div className="absolute bottom-1/4 left-0 w-[300px] h-[300px] bg-violet-900/5 blur-3xl rounded-full pointer-events-none"></div>

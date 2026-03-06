@@ -4,7 +4,7 @@ import { TiltCard } from './Common';
 
 export default function Exclusivo() {
     return (
-        <section className="py-24 px-6 bg-[#050510] relative overflow-hidden">
+        <section className="py-12 md:py-16 px-6 bg-[#050510] relative overflow-hidden">
             {/* Glow Effects */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[100px]"></div>
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-yellow-500/10 rounded-full blur-[120px]"></div>

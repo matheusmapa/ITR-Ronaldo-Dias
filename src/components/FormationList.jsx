@@ -5,7 +5,7 @@ import { MagneticButton } from './Common';
 
 export default function FormationList() {
     return (
-        <section className="py-24 px-6 bg-[#030308] border-t border-slate-900">
+        <section className="py-12 md:py-16 px-6 bg-[#030308] border-t border-slate-900">
             <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16">
                 <div className="w-full md:w-1/2">
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">

@@ -12,7 +12,7 @@ export default function ParaVoce() {
     ];
 
     return (
-        <section className="py-24 px-6 bg-[#050510]">
+        <section className="py-12 md:py-16 px-6 bg-[#050510]">
             <div className="max-w-4xl mx-auto">
                 <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-white">
                     Esse curso é <span className="text-emerald-400 font-black">para você</span>

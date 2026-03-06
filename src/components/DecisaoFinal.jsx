@@ -5,7 +5,7 @@ import { MagneticButton } from './Common';
 
 export default function DecisaoFinal() {
     return (
-        <section className="relative py-16 md:py-24 px-6 bg-[#030308] overflow-hidden">
+        <section className="relative py-10 md:py-16 px-6 bg-[#030308] overflow-hidden">
 
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-emerald-900/8 blur-3xl rounded-full pointer-events-none"></div>
 

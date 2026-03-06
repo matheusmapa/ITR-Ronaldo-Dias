@@ -4,7 +4,7 @@ import { TiltCard } from './Common';
 
 export default function BentoGrid() {
     return (
-        <section className="pt-16 pb-24 px-6 bg-[#030308] relative">
+        <section className="pt-16 pb-12 md:pb-16 px-6 bg-[#030308] relative">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-20">
                     <h2 className="text-4xl md:text-5xl font-black text-white mb-6">

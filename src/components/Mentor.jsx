@@ -4,7 +4,7 @@ import { TiltCard } from './Common';
 
 export default function Mentor() {
     return (
-        <section className="py-32 px-6 bg-[#030308] border-t border-slate-900 border-b relative overflow-hidden">
+        <section className="py-16 md:py-20 px-6 bg-[#030308] border-t border-slate-900 border-b relative overflow-hidden">
             {/* Abstract background shape */}
             <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none"></div>
 

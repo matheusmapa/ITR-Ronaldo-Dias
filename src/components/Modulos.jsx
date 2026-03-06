@@ -12,7 +12,7 @@ export default function Modulos() {
     ];
 
     return (
-        <section className="py-32 px-6 bg-[#030308] border-t border-slate-900">
+        <section className="py-16 md:py-20 px-6 bg-[#030308] border-t border-slate-900">
             <div className="max-w-6xl mx-auto">
                 <h2 className="text-3xl md:text-5xl font-bold text-center mb-20 text-white">
                     Estrutura <span className="text-teal-400 font-black">Completa</span>

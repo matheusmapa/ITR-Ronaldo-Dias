@@ -6,7 +6,7 @@ import HeroVisuals from './HeroVisuals';
 
 export default function Hero() {
     return (
-        <section className="relative min-h-screen lg:min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#050510] pt-20 pb-24 md:pb-32">
+        <section className="relative min-h-screen lg:min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#050510] pt-20 pb-12 md:pb-16 md:pb-32">
             {/* Background Gradients (Apple Style) */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-600/20 blur-3xl rounded-full pointer-events-none"></div>
             <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-teal-600/10 blur-3xl rounded-full pointer-events-none"></div>

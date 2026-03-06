@@ -81,7 +81,7 @@ export default function FaqNovo() {
     const [openIndex, setOpenIndex] = useState(null);
 
     return (
-        <section className="relative py-16 md:py-24 px-6 bg-[#030308] overflow-hidden">
+        <section className="relative py-10 md:py-16 px-6 bg-[#030308] overflow-hidden">
 
             <div className="max-w-3xl mx-auto relative z-10">
 
