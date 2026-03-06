@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import './index.css';
 
 // ── Componentes críticos (above-the-fold, carregam imediato) ──
-import Hero from './components/Hero';
+import HeroPlus from './components/HeroPlus';
 import { PromoBanner } from './components/CountdownTimer';
 
 const ProblemSection = lazy(() => import('./components/ProblemSection'));
@@ -51,7 +51,7 @@ const LandingPageRonaldoDias = () => {
             <PromoBanner visible={showBanner && !ofertaInView} />
 
             {/* 1. A Primeira Impressão */}
-            <Hero />
+            <HeroPlus />
 
             <Suspense fallback={<div className="min-h-screen bg-[#030308] flex items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin"></div></div>}>
                 {/* 2. Agitação da Dor */}
