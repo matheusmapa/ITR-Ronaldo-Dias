@@ -90,7 +90,7 @@ export default function HeroPlus() {
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1.1] mb-2 md:mb-3 tracking-tight"
+                        className="text-4xl sm:text-5xl md:text-5xl lg:text-7xl font-black text-white leading-[1.1] mb-2 md:mb-3 tracking-tight"
                     >
                         O Fim da <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 text-glow">
@@ -102,7 +102,7 @@ export default function HeroPlus() {
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-sm md:text-lg text-emerald-400 mb-2 md:mb-3 max-w-xl leading-relaxed font-bold uppercase tracking-widest"
+                        className="text-base md:text-lg text-emerald-400 mb-2 md:mb-3 max-w-xl leading-snug md:leading-relaxed font-bold uppercase tracking-widest"
                     >
                         Destrave sua Fluência e Fale Inglês com Naturalidade.
                     </motion.p>
@@ -111,7 +111,7 @@ export default function HeroPlus() {
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.25 }}
-                        className="text-xs md:text-base text-[#E2E2E2] mb-4 md:mb-6 max-w-xl leading-relaxed font-light"
+                        className="text-base md:text-lg text-[#E2E2E2] mb-4 md:mb-6 max-w-xl leading-relaxed font-light"
                     >
                         Descubra o método exato de memorização que desbloqueia a sua mente para aprender dezenas de palavras por dia, eliminando os "brancos" na hora de conversar — mesmo que você já tenha tentado de tudo.
                     </motion.p>
