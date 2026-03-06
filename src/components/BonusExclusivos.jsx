@@ -165,7 +165,7 @@ export default function BonusExclusivos() {
                         <div className="mt-4 flex justify-center relative z-10 w-full px-2">
                             <button className="bg-emerald-500 hover:bg-emerald-400 text-white font-black px-6 md:px-10 py-4 text-base md:text-xl rounded-full transition-colors w-full sm:w-auto shadow-lg shadow-emerald-500/20 flex flex-nowrap items-center justify-center gap-2 md:gap-3">
                                 <span className="whitespace-nowrap">VER OFERTA ESPECIAL</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" className="md:w-6 md:h-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" className="hidden sm:block md:w-6 md:h-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
                             </button>
                         </div>
                     </div>

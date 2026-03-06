@@ -5,7 +5,7 @@ import { MagneticButton } from './Common';
 
 export default function QuebraDeCrenca() {
     return (
-        <section className="relative pt-8 pb-12 md:pt-10 md:pb-16 px-6 bg-[#030308] overflow-hidden">
+        <section className="relative pt-6 pb-10 md:pt-10 md:pb-12 px-6 bg-[#030308] overflow-hidden">
 
             {/* ── Glows ──────────────────────────────────────── */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-emerald-900/10 blur-3xl rounded-full pointer-events-none"></div>
