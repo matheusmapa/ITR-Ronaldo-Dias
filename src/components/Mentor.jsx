@@ -11,12 +11,12 @@ export default function Mentor() {
             <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
                 <div className="w-full md:w-5/12">
                     <TiltCard className="aspect-[4/5] bg-slate-800 rounded-[2rem] overflow-hidden flex items-center justify-center p-0 border-4 border-slate-800 shadow-2xl relative">
-                        {/* FOTO AQUI */}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#030308] via-transparent to-transparent z-10"></div>
-                        <div className="text-slate-600 flex flex-col items-center">
-                            <Users className="w-16 h-16 mb-4 opacity-50" />
-                            <span>Foto Ronaldo Durães</span>
-                        </div>
+                        <img
+                            src="/ronaldo-mentor.jpg"
+                            alt="Ronaldo Durães - Mentor"
+                            className="absolute inset-0 w-full h-full object-cover object-center"
+                        />
                     </TiltCard>
                 </div>
                 <div className="w-full md:w-7/12 text-slate-300">
