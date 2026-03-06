@@ -4,11 +4,13 @@ import { Sparkles, Star, Play, Pause, VolumeX, Volume2, Maximize2 } from 'lucide
 import ReactPlayer from 'react-player';
 import { MagneticButton } from './Common';
 import { TravelGlobe } from './ui/travel-globe';
+import videoThumb from '../assets/video-thumb.png';
 
 export default function HeroPlus() {
     const [hasInteracted, setHasInteracted] = useState(false);
     const [isPlaying, setIsPlaying] = useState(true);
     const [played, setPlayed] = useState(0);
+    const [videoReady, setVideoReady] = useState(false);
     const playerRef = useRef(null);
 
     const handleInteract = () => {
@@ -43,6 +45,7 @@ export default function HeroPlus() {
         const el = playerRef.current;
         if (el && el.duration) {
             setPlayed(el.currentTime / el.duration);
+            if (!videoReady) setVideoReady(true);
         }
     };
 
@@ -156,6 +159,24 @@ export default function HeroPlus() {
                                     }}
                                 />
                             </div>
+
+                            {/* Custom Thumbnail — shows until video starts playing */}
+                            <AnimatePresence>
+                                {!videoReady && (
+                                    <motion.div
+                                        initial={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.5 }}
+                                        className="absolute inset-0 z-[5]"
+                                    >
+                                        <img
+                                            src={videoThumb}
+                                            alt="Método ITR"
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
                             {/* Protective Invisible Overlay to block interactions after start */}
                             {hasInteracted && (
