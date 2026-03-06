@@ -9,10 +9,9 @@ const videos = [
     { id: 'MfdTXirx7fY' },
     { id: 'tTuSQtRSjlM' },
     { id: 'XmFx6DuvEIc' },
-    // duplicados pro carrossel funcionar — troque pelos links reais
-    { id: 'MfdTXirx7fY' },
-    { id: 'tTuSQtRSjlM' },
-    { id: 'XmFx6DuvEIc' },
+    { id: '_QXXglLmSTk' },
+    { id: 'rm1DZnxf1AI' },
+    // adicione mais vídeos aqui: { id: 'VIDEO_ID' },
 ];
 
 const AUTO_ADVANCE_MS = 10000;
