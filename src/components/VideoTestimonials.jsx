@@ -222,45 +222,38 @@ function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex }
     );
 }
 
-/* ── Carrossel principal ── */
+/* ── Carrossel principal (sliding window — 1 por vez) ── */
 export default function VideoTestimonials() {
     const isMobile = useIsMobile();
-    const perPage = isMobile ? 1 : 3;
-    const totalPages = Math.ceil(videos.length / perPage);
-    const [page, setPage] = useState(0);
+    const visible = isMobile ? 1 : 3; // quantos ficam visíveis
+    const maxIndex = Math.max(0, videos.length - visible); // última posição válida
+    const [index, setIndex] = useState(0); // posição do primeiro vídeo visível
     const [anyPlaying, setAnyPlaying] = useState(false);
     const [activePlayingIndex, setActivePlayingIndex] = useState(null);
     const timerRef = useRef(null);
 
-    // Reset page if perPage changes and current page is out of bounds
+    // Garante que o index respeita os limites quando muda de mobile ↔ desktop
     useEffect(() => {
-        const maxPage = Math.ceil(videos.length / perPage) - 1;
-        if (page > maxPage) setPage(maxPage);
-    }, [perPage]);
-
-    const currentVideos = videos.slice(
-        page * perPage,
-        page * perPage + perPage
-    );
+        if (index > maxIndex) setIndex(maxIndex);
+    }, [visible]);
 
     /* ── Auto-advance (desativado enquanto algum vídeo toca) ── */
     const resetTimer = useCallback(() => {
         clearTimeout(timerRef.current);
-        if (totalPages > 1 && !anyPlaying) {
+        if (!anyPlaying && maxIndex > 0) {
             timerRef.current = setTimeout(() => {
-                setPage((prev) => (prev + 1) % totalPages);
+                setIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
             }, AUTO_ADVANCE_MS);
         }
-    }, [totalPages, anyPlaying]);
+    }, [anyPlaying, maxIndex]);
 
     useEffect(() => {
         resetTimer();
         return () => clearTimeout(timerRef.current);
-    }, [page, resetTimer]);
+    }, [index, resetTimer]);
 
-    const goTo = (idx) => setPage(idx);
-    const prev = () => goTo((page - 1 + totalPages) % totalPages);
-    const next = () => goTo((page + 1) % totalPages);
+    const prev = () => setIndex((i) => (i <= 0 ? maxIndex : i - 1));
+    const next = () => setIndex((i) => (i >= maxIndex ? 0 : i + 1));
 
     /* ── Swipe ── */
     const touchStart = useRef(0);
@@ -270,33 +263,46 @@ export default function VideoTestimonials() {
         if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
     };
 
+    // Largura de cada card em % do container
+    const cardWidth = 100 / visible;
+    const gap = isMobile ? 0 : 1; // gap em % entre cards
+
     return (
         <div
             className="relative w-full max-w-5xl mx-auto"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
         >
-            {/* Grid: 1 coluna mobile, 3 desktop */}
-            <div className={`grid gap-3 md:gap-4 ${isMobile ? 'grid-cols-1 max-w-xs mx-auto' : 'grid-cols-3'}`}>
-                {currentVideos.map((video, i) => {
-                    const globalIndex = page * perPage + i;
-                    return (
-                        <VideoCard
-                            key={`${page}-${i}`}
-                            videoId={video.id}
-                            globalIndex={globalIndex}
-                            activePlayingIndex={activePlayingIndex}
-                            onPlayingChange={(playing) => {
-                                setAnyPlaying(playing);
-                                setActivePlayingIndex(playing ? globalIndex : null);
-                            }}
-                        />
-                    );
-                })}
+            {/* Track container — overflow hidden */}
+            <div className="overflow-hidden rounded-2xl">
+                <div
+                    className="flex transition-transform duration-500 ease-out"
+                    style={{
+                        transform: `translateX(-${index * cardWidth}%)`,
+                    }}
+                >
+                    {videos.map((video, i) => (
+                        <div
+                            key={video.id + '-' + i}
+                            className="flex-shrink-0 px-1 md:px-2"
+                            style={{ width: `${cardWidth}%` }}
+                        >
+                            <VideoCard
+                                videoId={video.id}
+                                globalIndex={i}
+                                activePlayingIndex={activePlayingIndex}
+                                onPlayingChange={(playing) => {
+                                    setAnyPlaying(playing);
+                                    setActivePlayingIndex(playing ? i : null);
+                                }}
+                            />
+                        </div>
+                    ))}
+                </div>
             </div>
 
             {/* Setas */}
-            {totalPages > 1 && (
+            {videos.length > visible && (
                 <>
                     <button
                         onClick={prev}
@@ -315,18 +321,18 @@ export default function VideoTestimonials() {
                 </>
             )}
 
-            {/* Dots */}
-            {totalPages > 1 && (
+            {/* Dots — um por posição */}
+            {videos.length > visible && (
                 <div className="flex justify-center gap-2 mt-6">
-                    {Array.from({ length: totalPages }).map((_, i) => (
+                    {Array.from({ length: maxIndex + 1 }).map((_, i) => (
                         <button
                             key={i}
-                            onClick={() => goTo(i)}
-                            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${i === page
-                                ? 'w-8 bg-emerald-400'
-                                : 'w-1.5 bg-white/20 hover:bg-white/40'
+                            onClick={() => setIndex(i)}
+                            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${i === index
+                                    ? 'w-8 bg-emerald-400'
+                                    : 'w-1.5 bg-white/20 hover:bg-white/40'
                                 }`}
-                            aria-label={`Página ${i + 1}`}
+                            aria-label={`Posição ${i + 1}`}
                         />
                     ))}
                 </div>
@@ -334,3 +340,4 @@ export default function VideoTestimonials() {
         </div>
     );
 }
+
