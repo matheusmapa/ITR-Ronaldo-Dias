@@ -33,7 +33,7 @@ export default function OfertaFinal({ onInView }) {
             id="oferta"
             className="relative min-h-screen flex flex-col items-center justify-center px-6 py-10 bg-[#030308] overflow-hidden"
         >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-emerald-900/8 blur-3xl rounded-full pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-emerald-900/[0.04] blur-3xl rounded-full pointer-events-none"></div>
 
             <div className="max-w-3xl w-full mx-auto relative z-10">
 
@@ -47,7 +47,7 @@ export default function OfertaFinal({ onInView }) {
                 >
                     <div className="bg-gradient-to-b from-[#0d1520] to-[#080c15] border-2 border-emerald-500/30 rounded-[2rem] p-6 md:p-10 text-center relative overflow-hidden hover:border-emerald-500/50 transition-colors duration-500">
                         {/* Top glow */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent"></div>
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-px bg-gradient-to-r from-transparent via-emerald-400/25 to-transparent"></div>
 
                         {/* Urgência: vagas + live badge */}
                         <motion.div
@@ -86,10 +86,10 @@ export default function OfertaFinal({ onInView }) {
                             <span className="text-emerald-400 text-xs font-bold uppercase tracking-widest">Acesso Vitalício</span>
                         </motion.div>
 
-                        {/* Price — Hierarquia: Âncora animada → Parcelado GIGANTE → Café anchor → À vista */}
+                        {/* Price — Hierarquia: Âncora animada → Parcelado GIGANTE → Badge café → À vista */}
                         <div className="mb-5">
-                            {/* 1. Âncora com strikethrough animado — grande e dramática */}
-                            <div className="relative inline-block mb-5">
+                            {/* 1. Âncora com strikethrough animado — colada no preço */}
+                            <div className="relative inline-block mb-0">
                                 <span className="text-red-400/80 text-2xl md:text-3xl font-bold">R$ 399,00</span>
                                 <motion.div
                                     className="absolute top-1/2 left-[-4%] h-[4px] bg-gradient-to-r from-red-500 via-red-400 to-red-500 rounded-full shadow-[0_0_12px_rgba(239,68,68,0.5)]"
@@ -100,28 +100,25 @@ export default function OfertaFinal({ onInView }) {
                                 />
                             </div>
 
-                            {/* 2. Preço parcelado — HERO PRICE (12x inline com o valor) */}
+                            {/* 2. Preço parcelado — HERO PRICE (R$20 juntos e proporcionais) */}
                             <motion.div
-                                className="flex items-end justify-center gap-1 cursor-default"
+                                className="flex items-baseline justify-center cursor-default -mt-2 mb-2"
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 whileInView={{ scale: 1, opacity: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: 0.2, type: "spring", stiffness: 150 }}
                                 whileHover={{ scale: 1.03 }}
                             >
-                                <span className="text-emerald-400/70 text-xl md:text-2xl font-bold mb-3 md:mb-4">12x</span>
-                                <span className="text-emerald-400 text-xl md:text-2xl font-bold mb-1 md:mb-2">R$</span>
-                                <span className="text-7xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-300 via-emerald-400 to-teal-500 leading-none drop-shadow-[0_0_30px_rgba(16,185,129,0.4)]">
-                                    20
+                                <span className="text-emerald-400/80 text-xl md:text-2xl font-bold mr-2">12x</span>
+                                <span className="text-6xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-300 via-emerald-400 to-teal-500 leading-none tracking-tighter drop-shadow-[0_0_20px_rgba(16,185,129,0.2)] pr-2">
+                                    R$20
                                 </span>
-                                <span className="text-emerald-300 text-2xl md:text-3xl font-bold mb-1 md:mb-2">,81</span>
+                                <span className="text-emerald-400 text-3xl md:text-4xl font-bold">,81</span>
                             </motion.div>
 
-                            {/* 3. Âncora do "café" + à vista — juntos, sem espaçamento excessivo */}
-                            <p className="text-sm text-slate-400 italic mt-2">
-                                (Isso dá menos de R$ 0,70 por dia)
-                            </p>
-                            <p className="text-sm text-slate-500 mt-1">
+                            {/* 3. Badge café + à vista */}
+                            <span className="bg-slate-800/50 px-3 py-1 rounded-full text-slate-300 text-sm mt-3 inline-block">Menos de R$ 0,70 por dia</span>
+                            <p className="text-sm text-slate-500 mt-2">
                                 ou <span className="text-slate-400 font-semibold">R$ 179,99</span> à vista
                             </p>
                         </div>
