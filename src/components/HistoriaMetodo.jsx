@@ -15,7 +15,7 @@ export default function HistoriaMetodo() {
                 <motion.div
                     initial={{ opacity: 0, y: 25 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.6 }}
                     className="text-center mb-12"
                 >
@@ -38,7 +38,7 @@ export default function HistoriaMetodo() {
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.05 }}
                         transition={{ duration: 0.6 }}
                         className="w-full max-w-sm lg:w-5/12 shrink-0"
                     >
@@ -64,7 +64,7 @@ export default function HistoriaMetodo() {
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.05 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
                         whileHover={{ scale: 1.005 }}
                         className="flex-1 bg-[#080c15] border border-white/[0.05] rounded-[2rem] p-8 md:p-12 relative overflow-hidden hover:border-emerald-500/15 transition-all duration-500"
@@ -75,7 +75,7 @@ export default function HistoriaMetodo() {
                             <motion.p
                                 initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, amount: 0.05 }}
                                 transition={{ delay: 0.15 }}
                             >
                                 Durante anos, eu tentei aprender inglês da forma tradicional. Passei por <strong className="text-white font-semibold">quatro escolas</strong>, fiz centenas de exercícios, segui os métodos prontos... e a sensação era sempre a mesma: <em className="text-slate-200">muito esforço, pouco resultado.</em>
@@ -84,7 +84,7 @@ export default function HistoriaMetodo() {
                             <motion.p
                                 initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, amount: 0.05 }}
                                 transition={{ delay: 0.25 }}
                                 className="text-[#E2E2E2]"
                             >
@@ -95,7 +95,7 @@ export default function HistoriaMetodo() {
                             <motion.div
                                 initial={{ opacity: 0, x: -10 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, amount: 0.05 }}
                                 transition={{ delay: 0.35 }}
                                 whileHover={{ x: 4 }}
                                 className="border-l-2 border-emerald-500/40 pl-6 py-2 my-8 cursor-default"
@@ -108,7 +108,7 @@ export default function HistoriaMetodo() {
                             <motion.p
                                 initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, amount: 0.05 }}
                                 transition={{ delay: 0.45 }}
                             >
                                 Eu estava tentando aprender um idioma sem entender <strong className="text-white font-medium">como o cérebro realmente fixa informações</strong>. A partir desse momento, mergulhei no estudo da memorização aplicada a idiomas.
@@ -117,7 +117,7 @@ export default function HistoriaMetodo() {
                             <motion.p
                                 initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, amount: 0.05 }}
                                 transition={{ delay: 0.55 }}
                             >
                                 Absorvi <strong className="text-white font-semibold">centenas de palavras em tempo recorde</strong> — e, mais importante, mantive tudo na memória de longo prazo. Quando compartilhei essa estrutura com amigos e familiares, o padrão se repetiu: <span className="text-emerald-400 font-medium">menos frustração e evolução perceptível.</span>
@@ -126,7 +126,7 @@ export default function HistoriaMetodo() {
                             <motion.div
                                 initial={{ opacity: 0, y: 10 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, amount: 0.05 }}
                                 transition={{ delay: 0.65 }}
                                 className="pt-6 mt-6 border-t border-white/5"
                             >

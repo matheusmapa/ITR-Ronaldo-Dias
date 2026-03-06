@@ -118,7 +118,7 @@ export default function BonusExclusivos() {
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     className="max-w-3xl mx-auto mt-20 bg-gradient-to-br from-slate-900 to-slate-800 border-2 border-slate-700/50 rounded-2xl p-6 md:p-10 shadow-[0_0_40px_rgba(0,0,0,0.5)] relative overflow-hidden"
                 >
                     {/* Glow effect */}

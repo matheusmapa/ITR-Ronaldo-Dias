@@ -35,7 +35,7 @@ export default function ParaQuem() {
                 <motion.div
                     initial={{ opacity: 0, y: 25 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.6 }}
                     className="text-center mb-12"
                 >
@@ -59,7 +59,7 @@ export default function ParaQuem() {
                             key={i}
                             initial={{ opacity: 0, x: -25 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, amount: 0.05 }}
                             transition={{ duration: 0.4, delay: i * 0.08 }}
                             whileHover={{ x: 6, transition: { duration: 0.2 } }}
                             className="flex gap-4 items-start p-5 rounded-xl bg-[#080c15] border border-white/[0.05] hover:border-emerald-500/25 hover:bg-[#0a0f1a] transition-all duration-300 group cursor-default"
@@ -82,7 +82,7 @@ export default function ParaQuem() {
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.4, delay: 0.3 }}
                     whileHover={{ scale: 1.01 }}
                     className="flex gap-3 items-start p-5 rounded-xl bg-amber-500/[0.04] border border-amber-500/15 hover:border-amber-500/30 transition-all duration-300 cursor-default mb-12"
@@ -102,7 +102,7 @@ export default function ParaQuem() {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.5, delay: 0.4 }}
                     className="flex justify-center"
                 >

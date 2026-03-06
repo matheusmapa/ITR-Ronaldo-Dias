@@ -43,7 +43,7 @@ export default function Depoimentos() {
                 <motion.div
                     initial={{ opacity: 0, y: 25 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.6 }}
                     className="text-center mb-12"
                 >
@@ -72,7 +72,7 @@ export default function Depoimentos() {
                                 key={i}
                                 initial={{ opacity: 0, y: 25 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, amount: 0.05 }}
                                 transition={{ duration: 0.5, delay: i * 0.1 }}
                                 whileHover={{ y: -5, transition: { duration: 0.25 } }}
                                 className={`bg-[#080c15] border border-white/[0.05] ${c.hoverBorder} rounded-2xl p-6 md:p-7 relative overflow-hidden group hover:shadow-[0_10px_40px_rgba(0,0,0,0.3)] transition-all duration-300 cursor-default flex flex-col`}
@@ -96,7 +96,7 @@ export default function Depoimentos() {
                                             key={j}
                                             initial={{ opacity: 0, scale: 0 }}
                                             whileInView={{ opacity: 1, scale: 1 }}
-                                            viewport={{ once: true }}
+                                            viewport={{ once: true, amount: 0.05 }}
                                             transition={{ duration: 0.2, delay: i * 0.1 + j * 0.05 }}
                                         >
                                             <Star className="w-4 h-4 text-amber-400 fill-amber-400" />

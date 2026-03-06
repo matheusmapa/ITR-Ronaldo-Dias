@@ -14,7 +14,7 @@ export default function ProblemSection() {
             <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.05 }}
                 className="flex justify-center mb-6 relative z-20"
             >
                 <motion.div
@@ -33,14 +33,14 @@ export default function ProblemSection() {
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.7 }}
                     className="text-center mb-14"
                 >
                     <motion.p
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.05 }}
                         transition={{ duration: 0.5 }}
                         className="text-rose-400/80 text-xs font-bold uppercase tracking-[0.3em] mb-4"
                     >
@@ -49,7 +49,7 @@ export default function ProblemSection() {
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.05 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="text-4xl md:text-6xl font-black text-white leading-[1.1] mb-6 tracking-tight"
                     >
@@ -61,7 +61,7 @@ export default function ProblemSection() {
                     <motion.p
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.05 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="text-[#E2E2E2] text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
                     >
@@ -73,7 +73,7 @@ export default function ProblemSection() {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                     whileHover={{ scale: 1.01 }}
                     className="relative max-w-3xl mx-auto mb-12"
@@ -92,7 +92,7 @@ export default function ProblemSection() {
                             <motion.p
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, amount: 0.05 }}
                                 transition={{ duration: 0.5, delay: 0.4 }}
                                 className="text-white text-2xl md:text-3xl font-black tracking-tight"
                             >
@@ -109,7 +109,7 @@ export default function ProblemSection() {
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.05 }}
                         transition={{ duration: 0.5 }}
                         whileHover={{ y: -4, transition: { duration: 0.2 } }}
                         className="bg-rose-500/[0.04] border border-rose-500/10 rounded-2xl p-7 relative overflow-hidden group hover:border-rose-500/30 hover:shadow-[0_0_30px_rgba(244,63,94,0.06)] transition-all duration-300 cursor-default"
@@ -139,7 +139,7 @@ export default function ProblemSection() {
                     <motion.div
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.05 }}
                         transition={{ duration: 0.5, delay: 0.1 }}
                         whileHover={{ y: -4, transition: { duration: 0.2 } }}
                         className="bg-slate-900/40 border border-slate-800 rounded-2xl p-7 relative overflow-hidden group hover:border-slate-600 hover:shadow-[0_0_30px_rgba(100,116,139,0.06)] transition-all duration-300 cursor-default"
@@ -170,7 +170,7 @@ export default function ProblemSection() {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.5 }}
                     className="text-center"
                 >

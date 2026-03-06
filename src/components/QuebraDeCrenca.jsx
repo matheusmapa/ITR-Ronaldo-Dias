@@ -16,7 +16,7 @@ export default function QuebraDeCrenca() {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.5 }}
                     className="flex justify-center mb-8"
                 >
@@ -34,7 +34,7 @@ export default function QuebraDeCrenca() {
                 <motion.div
                     initial={{ opacity: 0, y: 25 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
                     className="text-center mb-10"
                 >
@@ -51,7 +51,7 @@ export default function QuebraDeCrenca() {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                     whileHover={{ scale: 1.01 }}
                     className="bg-[#0a0e18]/80 backdrop-blur-md border border-white/[0.06] rounded-[2rem] p-8 md:p-10 relative overflow-hidden mb-10 hover:border-emerald-500/15 transition-colors duration-500"
@@ -65,7 +65,7 @@ export default function QuebraDeCrenca() {
                             className="shrink-0 text-center md:text-left"
                             initial={{ scale: 0.5, opacity: 0 }}
                             whileInView={{ scale: 1, opacity: 1 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, amount: 0.05 }}
                             transition={{ duration: 0.6, delay: 0.3, type: "spring", stiffness: 150 }}
                         >
                             <motion.span
@@ -93,7 +93,7 @@ export default function QuebraDeCrenca() {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
                     className="text-center mb-16"
                 >
@@ -109,7 +109,7 @@ export default function QuebraDeCrenca() {
                 <motion.div
                     initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.5 }}
                     className="flex flex-col items-center gap-6 mt-8"
                 >

@@ -41,7 +41,7 @@ export default function OfertaFinal({ onInView }) {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.5 }}
                     className="relative"
                 >
@@ -53,7 +53,7 @@ export default function OfertaFinal({ onInView }) {
                         <motion.div
                             initial={{ opacity: 0, y: -10 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, amount: 0.05 }}
                             transition={{ delay: 0.1 }}
                             className="flex flex-wrap items-center justify-center gap-3 mb-5"
                         >
@@ -95,7 +95,7 @@ export default function OfertaFinal({ onInView }) {
                                     className="absolute top-1/2 left-[-4%] h-[4px] bg-gradient-to-r from-red-500 via-red-400 to-red-500 rounded-full shadow-[0_0_12px_rgba(239,68,68,0.5)]"
                                     initial={{ width: '0%' }}
                                     whileInView={{ width: '108%' }}
-                                    viewport={{ once: true }}
+                                    viewport={{ once: true, amount: 0.05 }}
                                     transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
                                 />
                             </div>
@@ -105,7 +105,7 @@ export default function OfertaFinal({ onInView }) {
                                 className="flex items-baseline justify-center cursor-default -mt-2 mb-2"
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 whileInView={{ scale: 1, opacity: 1 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, amount: 0.05 }}
                                 transition={{ duration: 0.5, delay: 0.2, type: "spring", stiffness: 150 }}
                                 whileHover={{ scale: 1.03 }}
                             >
@@ -135,7 +135,7 @@ export default function OfertaFinal({ onInView }) {
                                         key={f}
                                         initial={{ opacity: 0, y: 8 }}
                                         whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
+                                        viewport={{ once: true, amount: 0.05 }}
                                         transition={{ delay: 0.3 + i * 0.05 }}
                                         className="flex items-center gap-1.5"
                                     >
@@ -153,7 +153,7 @@ export default function OfertaFinal({ onInView }) {
                                         key={f}
                                         initial={{ opacity: 0, y: 8 }}
                                         whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
+                                        viewport={{ once: true, amount: 0.05 }}
                                         transition={{ delay: 0.45 + i * 0.05 }}
                                         className="flex items-center gap-1.5"
                                     >
@@ -210,7 +210,7 @@ export default function OfertaFinal({ onInView }) {
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.4, delay: 0.2 }}
                     whileHover={{ scale: 1.01 }}
                     className="mt-4 bg-emerald-500/[0.04] border border-emerald-500/15 rounded-2xl px-6 py-3.5 text-center hover:border-emerald-500/30 transition-all duration-300 cursor-default flex items-center justify-center gap-3"

@@ -14,7 +14,7 @@ export default function DecisaoFinal() {
                 <motion.div
                     initial={{ opacity: 0, y: 25 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.6 }}
                     className="text-center"
                 >
@@ -37,7 +37,7 @@ export default function DecisaoFinal() {
                         <motion.p
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, amount: 0.05 }}
                             transition={{ delay: 0.1 }}
                         >
                             Imagine assistir a uma série sem legenda e perceber que está <strong className="text-white font-semibold">entendendo o contexto</strong>. Imagine conversar e não precisar traduzir mentalmente cada palavra.
@@ -45,7 +45,7 @@ export default function DecisaoFinal() {
                         <motion.p
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, amount: 0.05 }}
                             transition={{ delay: 0.2 }}
                             className="text-[#E2E2E2]"
                         >
@@ -54,7 +54,7 @@ export default function DecisaoFinal() {
                         <motion.p
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, amount: 0.05 }}
                             transition={{ delay: 0.3 }}
                             className="text-[#CCCCCC]"
                         >
@@ -67,7 +67,7 @@ export default function DecisaoFinal() {
                     <motion.div
                         initial={{ opacity: 0, y: 15 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.05 }}
                         transition={{ delay: 0.4 }}
                     >
                         <MagneticButton

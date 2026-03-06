@@ -68,7 +68,7 @@ export default function JornadaEvolucao() {
                 <motion.div
                     initial={{ opacity: 0, y: 25 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.6 }}
                     className="text-center mb-14"
                 >
@@ -100,7 +100,7 @@ export default function JornadaEvolucao() {
                                 key={i}
                                 initial={{ opacity: 0, x: -20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, amount: 0.05 }}
                                 transition={{ duration: 0.4, delay: i * 0.08 }}
                                 whileHover={{ x: 4, transition: { duration: 0.2 } }}
                                 className="flex gap-5 md:gap-6 items-stretch group cursor-default"
@@ -145,7 +145,7 @@ export default function JornadaEvolucao() {
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
                     className="text-center mt-10"
                 >

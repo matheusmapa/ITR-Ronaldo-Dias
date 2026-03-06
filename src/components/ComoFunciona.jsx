@@ -59,7 +59,7 @@ export default function ComoFunciona() {
                 <motion.div
                     initial={{ opacity: 0, y: 25 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.6 }}
                     className="text-center mb-14"
                 >
@@ -85,7 +85,7 @@ export default function ComoFunciona() {
                             key={i}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, amount: 0.05 }}
                             transition={{ duration: 0.5, delay: i * 0.12 }}
                             whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
                             className={`relative group bg-[#080c15] border ${pilar.borderColor} ${pilar.hoverBorder} ${pilar.hoverShadow} rounded-2xl p-7 md:p-8 transition-all duration-300 overflow-hidden cursor-default`}
@@ -126,7 +126,7 @@ export default function ComoFunciona() {
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.05 }}
                     transition={{ duration: 0.5, delay: 0.4 }}
                     className="text-center mt-10"
                 >
