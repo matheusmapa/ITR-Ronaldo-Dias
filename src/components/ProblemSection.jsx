@@ -6,9 +6,6 @@ export default function ProblemSection() {
     return (
         <section className="relative pt-6 md:pt-10 pb-6 md:pb-10 px-6 bg-[#030308] overflow-hidden">
 
-            {/* ── Transição suave do Hero ─────────────────────── */}
-            <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#050510] to-transparent pointer-events-none z-10"></div>
-
             {/* ── Glows de fundo ──────────────────────────────── */}
             <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-rose-900/8 blur-3xl rounded-full pointer-events-none"></div>
             <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-900/5 blur-3xl rounded-full pointer-events-none"></div>
