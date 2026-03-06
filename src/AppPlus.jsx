@@ -16,7 +16,6 @@ import BonusExclusivos from './components/BonusExclusivos';
 import OfertaFinal from './components/OfertaFinal';
 import FaqNovo from './components/FaqNovo';
 import DecisaoFinal from './components/DecisaoFinal';
-import FloatingCTA from './components/FloatingCTA';
 
 // ============================================
 // LP Plus — cópia da LP principal para testes
@@ -87,11 +86,8 @@ const LandingPagePlus = () => {
             {/* 12. Decisão Final */}
             <DecisaoFinal />
 
-            {/* Mobile CTA flutuante */}
-            <FloatingCTA />
-
-            <footer className="bg-[#030308] py-8 text-center border-t border-slate-900 border-b-8 border-b-emerald-600 pb-28 md:pb-8">
-                <p className="text-slate-600 font-medium">© 2024 Ronaldo Dias | ITR. Todos os direitos reservados.</p>
+            <footer className="bg-[#030308] py-8 text-center border-t border-slate-900 border-b-8 border-b-emerald-600 pb-8">
+                <p className="text-slate-600 font-medium">© 2026 Ronaldo Durães | ITR. Todos os direitos reservados.</p>
             </footer>
         </div>
     );

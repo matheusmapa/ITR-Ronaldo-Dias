@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Check, AlertTriangle, Target } from 'lucide-react';
+import { MagneticButton } from './Common';
 
 const perfis = [
     {
@@ -84,7 +85,7 @@ export default function ParaQuem() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: 0.3 }}
                     whileHover={{ scale: 1.01 }}
-                    className="flex gap-3 items-start p-5 rounded-xl bg-amber-500/[0.04] border border-amber-500/15 hover:border-amber-500/30 transition-all duration-300 cursor-default"
+                    className="flex gap-3 items-start p-5 rounded-xl bg-amber-500/[0.04] border border-amber-500/15 hover:border-amber-500/30 transition-all duration-300 cursor-default mb-12"
                 >
                     <motion.div
                         animate={{ rotate: [0, 5, -5, 0] }}
@@ -95,6 +96,20 @@ export default function ParaQuem() {
                     <p className="text-amber-300/80 text-sm leading-relaxed font-light italic">
                         Este treinamento não é para quem quer mil PDFs de teoria infinita. É para quem busca <strong className="text-amber-200 font-medium not-italic">resultado prático.</strong>
                     </p>
+                </motion.div>
+
+                {/* CTA */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    className="flex justify-center"
+                >
+                    <MagneticButton onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}>
+                        <span className="hidden sm:inline">QUERO ACELERAR MEU INGLÊS AGORA</span>
+                        <span className="sm:hidden">ACELERAR MEU INGLÊS</span>
+                    </MagneticButton>
                 </motion.div>
 
             </div>

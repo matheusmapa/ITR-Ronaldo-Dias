@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Lightbulb } from 'lucide-react';
+import { MagneticButton } from './Common';
 
 export default function QuebraDeCrenca() {
     return (
@@ -104,22 +105,20 @@ export default function QuebraDeCrenca() {
                     </p>
                 </motion.div>
 
-                {/* ── Transição visual pro ComoFunciona ───────── */}
+                {/* ── Transição visual e CTA ───────── */}
                 <motion.div
                     initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="flex flex-col items-center gap-3"
+                    className="flex flex-col items-center gap-6 mt-8"
                 >
                     <div className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent"></div>
-                    <motion.p
-                        animate={{ opacity: [0.4, 1, 0.4] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        className="text-slate-500 text-xs font-bold uppercase tracking-[0.3em] mt-4"
-                    >
-                        Veja o que te espera ↓
-                    </motion.p>
+
+                    <MagneticButton onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}>
+                        <span className="hidden sm:inline">QUERO ACELERAR MEU INGLÊS AGORA</span>
+                        <span className="sm:hidden">ACELERAR MEU INGLÊS</span>
+                    </MagneticButton>
                 </motion.div>
 
             </div>
