@@ -32,7 +32,7 @@ function useIsMobile(breakpoint = 768) {
 }
 
 /* ── Player individual para cada vídeo ── */
-function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex }) {
+function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex, pauseAll }) {
     const playerRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [played, setPlayed] = useState(0);
@@ -47,6 +47,16 @@ function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex }
             setIsPlaying(false);
         }
     }, [activePlayingIndex]);
+
+    // Pausa quando o carrossel navega
+    useEffect(() => {
+        if (pauseAll > 0 && isPlaying) {
+            const el = playerRef.current;
+            if (el) { el.pause(); }
+            setIsPlaying(false);
+            onPlayingChange?.(false);
+        }
+    }, [pauseAll]);
 
     const handlePlay = () => {
         setShowThumbnail(false);
@@ -239,6 +249,7 @@ export default function VideoTestimonials() {
     const [isTransitioning, setIsTransitioning] = useState(true);
     const [anyPlaying, setAnyPlaying] = useState(false);
     const [activePlayingIndex, setActivePlayingIndex] = useState(null);
+    const [pauseAll, setPauseAll] = useState(0);
     const timerRef = useRef(null);
 
     const cardWidth = 100 / visible;
@@ -280,8 +291,8 @@ export default function VideoTestimonials() {
         return () => clearTimeout(timerRef.current);
     }, [pos, resetTimer]);
 
-    const next = () => { setActivePlayingIndex(null); setAnyPlaying(false); setPos((p) => p + 1); };
-    const prev = () => { setActivePlayingIndex(null); setAnyPlaying(false); setPos((p) => p - 1); };
+    const next = () => { setPauseAll((c) => c + 1); setAnyPlaying(false); setPos((p) => p + 1); };
+    const prev = () => { setPauseAll((c) => c + 1); setAnyPlaying(false); setPos((p) => p - 1); };
 
     /* ── Swipe ── */
     const touchStart = useRef(0);
@@ -322,6 +333,7 @@ export default function VideoTestimonials() {
                                     videoId={video.id}
                                     globalIndex={ri}
                                     activePlayingIndex={activePlayingIndex}
+                                    pauseAll={pauseAll}
                                     onPlayingChange={(playing) => {
                                         setAnyPlaying(playing);
                                         setActivePlayingIndex(playing ? ri : null);
