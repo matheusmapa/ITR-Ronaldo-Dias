@@ -169,7 +169,7 @@ function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex }
                 </button>
             )}
 
-            {/* Controles customizados — aparecem quando o vídeo foi ativado */}
+            {/* Controles customizados */}
             {!showThumbnail && (
                 <div className="absolute bottom-0 left-0 right-0 z-30 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 pt-10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"
                     style={{ opacity: isPlaying ? undefined : 1 }}
@@ -210,7 +210,7 @@ function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex }
                 </div>
             )}
 
-            {/* Bloqueio de cliques no player do YouTube (evita abrir YouTube) */}
+            {/* Bloqueio de cliques no player do YouTube */}
             {!showThumbnail && (
                 <div
                     className="absolute inset-0 z-10"
@@ -222,38 +222,66 @@ function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex }
     );
 }
 
-/* ── Carrossel principal (sliding window — 1 por vez) ── */
+/* ── Carrossel principal (loop infinito — 1 por vez) ── */
 export default function VideoTestimonials() {
     const isMobile = useIsMobile();
-    const visible = isMobile ? 1 : 3; // quantos ficam visíveis
-    const maxIndex = Math.max(0, videos.length - visible); // última posição válida
-    const [index, setIndex] = useState(0); // posição do primeiro vídeo visível
+    const visible = isMobile ? 1 : 3;
+    const total = videos.length;
+
+    // Clones: adicionamos `visible` itens no começo e no fim pra criar o loop
+    const clonedVideos = [
+        ...videos.slice(-visible),
+        ...videos,
+        ...videos.slice(0, visible),
+    ];
+
+    const [pos, setPos] = useState(visible);
+    const [isTransitioning, setIsTransitioning] = useState(true);
     const [anyPlaying, setAnyPlaying] = useState(false);
     const [activePlayingIndex, setActivePlayingIndex] = useState(null);
     const timerRef = useRef(null);
 
-    // Garante que o index respeita os limites quando muda de mobile ↔ desktop
-    useEffect(() => {
-        if (index > maxIndex) setIndex(maxIndex);
-    }, [visible]);
+    const cardWidth = 100 / visible;
+    const realIndex = ((pos - visible) % total + total) % total;
 
-    /* ── Auto-advance (desativado enquanto algum vídeo toca) ── */
+    /* ── Quando a transição acaba nos clones, pula silenciosamente ── */
+    const handleTransitionEnd = () => {
+        if (pos <= visible - 1) {
+            setIsTransitioning(false);
+            setPos(pos + total);
+        } else if (pos >= total + visible) {
+            setIsTransitioning(false);
+            setPos(pos - total);
+        }
+    };
+
+    useEffect(() => {
+        if (!isTransitioning) {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    setIsTransitioning(true);
+                });
+            });
+        }
+    }, [isTransitioning]);
+
+    /* ── Auto-advance ── */
     const resetTimer = useCallback(() => {
         clearTimeout(timerRef.current);
-        if (!anyPlaying && maxIndex > 0) {
+        if (!anyPlaying && total > visible) {
             timerRef.current = setTimeout(() => {
-                setIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+                setPos((p) => p + 1);
             }, AUTO_ADVANCE_MS);
         }
-    }, [anyPlaying, maxIndex]);
+    }, [anyPlaying, total, visible]);
 
     useEffect(() => {
         resetTimer();
         return () => clearTimeout(timerRef.current);
-    }, [index, resetTimer]);
+    }, [pos, resetTimer]);
 
-    const prev = () => setIndex((i) => (i <= 0 ? maxIndex : i - 1));
-    const next = () => setIndex((i) => (i >= maxIndex ? 0 : i + 1));
+    const next = () => setPos((p) => p + 1);
+    const prev = () => setPos((p) => p - 1);
 
     /* ── Swipe ── */
     const touchStart = useRef(0);
@@ -263,9 +291,11 @@ export default function VideoTestimonials() {
         if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
     };
 
-    // Largura de cada card em % do container
-    const cardWidth = 100 / visible;
-    const gap = isMobile ? 0 : 1; // gap em % entre cards
+    // Reseta ao mudar breakpoint
+    useEffect(() => {
+        setIsTransitioning(false);
+        setPos(visible);
+    }, [visible]);
 
     return (
         <div
@@ -273,36 +303,38 @@ export default function VideoTestimonials() {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
         >
-            {/* Track container — overflow hidden */}
+            {/* Track */}
             <div className="overflow-hidden rounded-2xl">
                 <div
-                    className="flex transition-transform duration-500 ease-out"
-                    style={{
-                        transform: `translateX(-${index * cardWidth}%)`,
-                    }}
+                    className={`flex ${isTransitioning ? 'transition-transform duration-500 ease-out' : ''}`}
+                    style={{ transform: `translateX(-${pos * cardWidth}%)` }}
+                    onTransitionEnd={handleTransitionEnd}
                 >
-                    {videos.map((video, i) => (
-                        <div
-                            key={video.id + '-' + i}
-                            className="flex-shrink-0 px-1 md:px-2"
-                            style={{ width: `${cardWidth}%` }}
-                        >
-                            <VideoCard
-                                videoId={video.id}
-                                globalIndex={i}
-                                activePlayingIndex={activePlayingIndex}
-                                onPlayingChange={(playing) => {
-                                    setAnyPlaying(playing);
-                                    setActivePlayingIndex(playing ? i : null);
-                                }}
-                            />
-                        </div>
-                    ))}
+                    {clonedVideos.map((video, i) => {
+                        const ri = ((i - visible) % total + total) % total;
+                        return (
+                            <div
+                                key={`slide-${i}`}
+                                className="flex-shrink-0 px-1 md:px-2"
+                                style={{ width: `${cardWidth}%` }}
+                            >
+                                <VideoCard
+                                    videoId={video.id}
+                                    globalIndex={ri}
+                                    activePlayingIndex={activePlayingIndex}
+                                    onPlayingChange={(playing) => {
+                                        setAnyPlaying(playing);
+                                        setActivePlayingIndex(playing ? ri : null);
+                                    }}
+                                />
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
 
             {/* Setas */}
-            {videos.length > visible && (
+            {total > visible && (
                 <>
                     <button
                         onClick={prev}
@@ -321,18 +353,18 @@ export default function VideoTestimonials() {
                 </>
             )}
 
-            {/* Dots — um por posição */}
-            {videos.length > visible && (
+            {/* Dots — um por vídeo */}
+            {total > visible && (
                 <div className="flex justify-center gap-2 mt-6">
-                    {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+                    {videos.map((_, i) => (
                         <button
                             key={i}
-                            onClick={() => setIndex(i)}
-                            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${i === index
+                            onClick={() => setPos(i + visible)}
+                            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${i === realIndex
                                     ? 'w-8 bg-emerald-400'
                                     : 'w-1.5 bg-white/20 hover:bg-white/40'
                                 }`}
-                            aria-label={`Posição ${i + 1}`}
+                            aria-label={`Vídeo ${i + 1}`}
                         />
                     ))}
                 </div>
@@ -340,4 +372,3 @@ export default function VideoTestimonials() {
         </div>
     );
 }
-
