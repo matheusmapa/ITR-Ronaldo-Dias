@@ -19,12 +19,21 @@ const VIDEOS_PER_PAGE = 3;
 const AUTO_ADVANCE_MS = 10000;
 
 /* ── Player individual para cada vídeo ── */
-function VideoCard({ videoId, globalIndex, onPlayingChange }) {
+function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex }) {
     const playerRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [played, setPlayed] = useState(0);
     const [showThumbnail, setShowThumbnail] = useState(true);
     const [ready, setReady] = useState(false);
+
+    // Pausa este vídeo se outro começou a tocar
+    useEffect(() => {
+        if (activePlayingIndex !== null && activePlayingIndex !== globalIndex && isPlaying) {
+            const el = playerRef.current;
+            if (el) { el.pause(); }
+            setIsPlaying(false);
+        }
+    }, [activePlayingIndex]);
 
     const handlePlay = () => {
         setShowThumbnail(false);
@@ -205,6 +214,7 @@ export default function VideoTestimonials() {
     const totalPages = Math.ceil(videos.length / VIDEOS_PER_PAGE);
     const [page, setPage] = useState(0);
     const [anyPlaying, setAnyPlaying] = useState(false);
+    const [activePlayingIndex, setActivePlayingIndex] = useState(null);
     const timerRef = useRef(null);
 
     const currentVideos = videos.slice(
@@ -254,7 +264,11 @@ export default function VideoTestimonials() {
                             key={`${page}-${i}`}
                             videoId={video.id}
                             globalIndex={globalIndex}
-                            onPlayingChange={(playing) => setAnyPlaying(playing)}
+                            activePlayingIndex={activePlayingIndex}
+                            onPlayingChange={(playing) => {
+                                setAnyPlaying(playing);
+                                setActivePlayingIndex(playing ? globalIndex : null);
+                            }}
                         />
                     );
                 })}
