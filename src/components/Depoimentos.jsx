@@ -6,19 +6,19 @@ const depoimentos = [
     {
         text: <>No começo achei estranho, mas depois de uns dias <strong className="text-white font-semibold">comecei a lembrar das palavras sem precisar traduzir</strong>. Ainda erro bastante, mas <strong className="text-white font-semibold">já consigo conversar bem melhor</strong>.</>,
         name: "Marcos Silva",
-        avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+        avatar: "/avatar-1.jpg",
         color: "emerald"
     },
     {
         text: <>Sinceramente, comprei sem muita expectativa porque <strong className="text-white font-semibold">já tinha tentado outras vezes e sempre travava</strong>. No começo achei estranho focar tanto em vocabulário, mas depois de alguns dias <strong className="text-white font-semibold">comecei a lembrar das palavras muito mais rápido</strong>. Excelente curso, me ajudou muito.</>,
         name: "Ricardo Mendes",
-        avatar: "https://randomuser.me/api/portraits/men/72.jpg",
+        avatar: "/avatar-2.jpg",
         color: "teal"
     },
     {
         text: <>O que mais mudou pra mim foi que eu <strong className="text-white font-semibold">parei de traduzir tudo</strong>. Antes eu montava frase em português e tentava converter. Agora <strong className="text-white font-semibold">já vem direto algumas palavras na cabeça</strong>. Não é automático 100% ainda, mas <strong className="text-white font-semibold">já é MUITO mais natural do que antes</strong>. Sou muito grata por ter encontrado um método que realmente funciona.</>,
         name: "Juliana Costa",
-        avatar: "https://randomuser.me/api/portraits/women/84.jpg",
+        avatar: "/avatar-3.jpg",
         color: "cyan"
     }
 ];

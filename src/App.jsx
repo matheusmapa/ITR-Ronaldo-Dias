@@ -89,6 +89,7 @@ const LandingPageRonaldoDias = () => {
             </Suspense>
 
             <footer className="bg-[#030308] py-8 text-center border-t border-slate-900 border-b-8 border-b-emerald-600 pb-8">
+                <img src="/logo-itr.png" alt="ITR Logo" className="h-8 mx-auto mb-3 opacity-60" />
                 <p className="text-slate-600 font-medium">© 2026 Ronaldo Durães | ITR. Todos os direitos reservados.</p>
             </footer>
         </div>

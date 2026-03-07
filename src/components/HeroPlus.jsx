@@ -269,9 +269,9 @@ export default function HeroPlus() {
 
                         <div className="flex items-center gap-4 bg-slate-900/40 p-2.5 rounded-xl border border-slate-800/50 w-auto self-center md:self-start justify-center">
                             <div className="flex -space-x-3">
-                                <img src="https://randomuser.me/api/portraits/women/30.jpg" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
-                                <img src="https://randomuser.me/api/portraits/women/38.jpg" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
-                                <img src="https://randomuser.me/api/portraits/men/93.jpg" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                                <img src="/avatar-social-1.jpg" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                                <img src="/avatar-social-2.jpg" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
+                                <img src="/avatar-social-3.jpg" className="w-8 h-8 rounded-full border-2 border-slate-900 object-cover" alt="Student" />
                             </div>
                             <div className="flex flex-col text-left">
                                 <div className="flex text-yellow-500 gap-0.5">

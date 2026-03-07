@@ -12,21 +12,6 @@ export default function OfertaFinal({ onInView }) {
         if (onInView) onInView(isInView);
     }, [isInView, onInView]);
 
-    useEffect(() => {
-        if (!sectionRef.current) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
-                    sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.15 }
-        );
-        observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
-
     return (
         <section
             ref={sectionRef}
@@ -168,7 +153,7 @@ export default function OfertaFinal({ onInView }) {
                         <div className="mb-4">
                             <MagneticButton>
                                 <a
-                                    href="https://pay.cakto.com.br/36u8zua_785324"
+                                    href={import.meta.env.VITE_PAYMENT_URL || "https://pay.cakto.com.br/36u8zua_785324"}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="group inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-black text-base md:text-lg px-8 py-4 rounded-full shadow-[0_0_40px_rgba(16,185,129,0.3)] hover:shadow-[0_0_60px_rgba(16,185,129,0.5)] transition-all duration-300 uppercase tracking-wider"

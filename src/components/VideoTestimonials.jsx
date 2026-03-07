@@ -37,7 +37,6 @@ function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex, 
     const [isPlaying, setIsPlaying] = useState(false);
     const [played, setPlayed] = useState(0);
     const [showThumbnail, setShowThumbnail] = useState(true);
-    const [ready, setReady] = useState(false);
 
     // Reinicia este vídeo se outro começou a tocar
     useEffect(() => {
@@ -110,7 +109,6 @@ function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex, 
         const el = playerRef.current;
         if (el && el.duration) {
             setPlayed(el.currentTime / el.duration);
-            if (!ready) setReady(true);
         }
     };
 
