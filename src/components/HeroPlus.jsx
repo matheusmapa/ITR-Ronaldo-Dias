@@ -102,9 +102,9 @@ export default function HeroPlus() {
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-2 backdrop-blur-md"
+                        className="mb-2"
                     >
-                        <span>ITR | Inglês em Tempo Recorde</span>
+                        <img src="/logo-itr.png" alt="ITR | Inglês em Tempo Recorde" className="h-8 md:h-10" />
                     </motion.div>
 
                     <motion.h1
