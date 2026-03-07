@@ -8,7 +8,7 @@ import ReactPlayer from 'react-player';
 const videos = [
     { id: 'MfdTXirx7fY' },
     { id: 'tTuSQtRSjlM' },
-    { id: 'XmFx6DuvEIc' },
+    { id: 'cBJMf6Mj2pI' },
     { id: '_QXXglLmSTk' },
     { id: 'rm1DZnxf1AI' },
     // adicione mais vídeos aqui: { id: 'VIDEO_ID' },
