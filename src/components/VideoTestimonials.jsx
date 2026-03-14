@@ -9,6 +9,7 @@ const videos = [
     { id: 'ZWeW5_f6KA0' },
     { id: 'cBJMf6Mj2pI' },
     { id: '4amM1464bB8' },
+    { id: 'FKsz-C5U4dE' },
 ];
 
 const AUTO_ADVANCE_MS = 10000;
