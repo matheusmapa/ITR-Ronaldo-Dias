@@ -6,12 +6,9 @@ import ReactPlayer from 'react-player';
    VÍDEOS DE DEPOIMENTO — adicione/remova aqui
    ─────────────────────────────────────────────── */
 const videos = [
-    { id: 'MfdTXirx7fY' },
-    { id: 'tTuSQtRSjlM' },
+    { id: 'ZWeW5_f6KA0' },
     { id: 'cBJMf6Mj2pI' },
     { id: '4amM1464bB8' },
-    { id: 'rm1DZnxf1AI' },
-    // adicione mais vídeos aqui: { id: 'VIDEO_ID' },
 ];
 
 const AUTO_ADVANCE_MS = 10000;
