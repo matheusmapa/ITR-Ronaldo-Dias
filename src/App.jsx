@@ -20,9 +20,17 @@ const DecisaoFinal = lazy(() => import('./components/DecisaoFinal'));
 // =====================================
 // Montagem Principal
 // =====================================
+const AFFILIATE_ROUTES = {
+    '/acelerar': '?affiliate=YRwE3aKT',
+};
+
 const LandingPageRonaldoDias = () => {
     const [showBanner, setShowBanner] = useState(false);
     const [ofertaInView, setOfertaInView] = useState(false);
+
+    const basePaymentUrl = import.meta.env.VITE_PAYMENT_URL || 'https://pay.cakto.com.br/36u8zua_785324';
+    const affiliateSuffix = AFFILIATE_ROUTES[window.location.pathname] || '';
+    const paymentUrl = basePaymentUrl + affiliateSuffix;
 
     useEffect(() => {
         document.title = "ITR | Inglês em Tempo Recorde";
@@ -79,7 +87,7 @@ const LandingPageRonaldoDias = () => {
                 <BonusExclusivos />
 
                 {/* 10. A Oferta + Garantia */}
-                <OfertaFinal onInView={handleOfertaInView} />
+                <OfertaFinal onInView={handleOfertaInView} paymentUrl={paymentUrl} />
 
                 {/* 11. FAQ */}
                 <FaqNovo />
