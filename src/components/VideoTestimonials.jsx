@@ -168,7 +168,6 @@ function VideoCard({ videoId, globalIndex, onPlayingChange, activePlayingIndex, 
                 <button
                     onClick={handlePlay}
                     data-track={`play-depoimento-${globalIndex + 1}`}
-                    data-track={`play-depoimento-${globalIndex + 1}`}
                     className="absolute inset-0 z-20 w-full h-full cursor-pointer group/thumb"
                     aria-label={`Assistir depoimento ${globalIndex + 1}`}
                 >
