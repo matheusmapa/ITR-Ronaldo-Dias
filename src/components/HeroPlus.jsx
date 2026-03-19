@@ -259,8 +259,10 @@ export default function HeroPlus() {
 
                         <div className="flex flex-col items-center md:items-start gap-3 w-full">
                             <MagneticButton className="w-full md:w-auto text-center" onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}>
-                                <span className="hidden sm:inline">QUERO ACELERAR MEU INGLÊS AGORA</span>
-                                <span className="sm:hidden">ACELERAR MEU INGLÊS</span>
+                                <div data-track="cta-hero" className="w-full h-full flex items-center justify-center">
+                                    <span className="hidden sm:inline">QUERO ACELERAR MEU INGLÊS AGORA</span>
+                                    <span className="sm:hidden">ACELERAR MEU INGLÊS</span>
+                                </div>
                             </MagneticButton>
                             <p className="text-[10px] text-[#CCCCCC] font-medium tracking-widest w-full text-center uppercase">
                                 Acesso Imediato • 7 Dias de Garantia

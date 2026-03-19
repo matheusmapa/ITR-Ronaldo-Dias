@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { useLeadAnalytics } from './lib/useLeadAnalytics';
 import './index.css';
 
 // ── Componentes críticos (above-the-fold, carregam imediato) ──
@@ -24,7 +26,12 @@ const AFFILIATE_ROUTES = {
     '/acelerar': '?affiliate=YRwE3aKT',
 };
 
+const AdminLeads = lazy(() => import('./components/AdminLeads'));
+
 const LandingPageRonaldoDias = () => {
+    // Call the analytics hook for the landing page
+    useLeadAnalytics();
+
     const [showBanner, setShowBanner] = useState(false);
     const [ofertaInView, setOfertaInView] = useState(false);
 
@@ -104,4 +111,18 @@ const LandingPageRonaldoDias = () => {
     );
 };
 
-export default LandingPageRonaldoDias;
+export default function App() {
+    return (
+        <Routes>
+            <Route path="/" element={<LandingPageRonaldoDias />} />
+            <Route
+                path="/admin/leads"
+                element={
+                    <Suspense fallback={<div className="min-h-screen bg-[#030308] flex items-center justify-center"><div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div></div>}>
+                        <AdminLeads />
+                    </Suspense>
+                }
+            />
+        </Routes>
+    );
+}
