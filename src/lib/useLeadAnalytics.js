@@ -13,7 +13,10 @@ function getUTMs() {
         utm_medium: params.get('utm_medium') || '',
         utm_campaign: params.get('utm_campaign') || '',
         utm_content: params.get('utm_content') || '',
-        utm_term: params.get('utm_term') || ''
+        utm_term: params.get('utm_term') || '',
+        contact_email: params.get('email') || params.get('e') || params.get('mail') || '',
+        contact_name: params.get('nome') || params.get('name') || params.get('n') || '',
+        contact_phone: params.get('telefone') || params.get('phone') || params.get('wpp') || params.get('whatsapp') || ''
     };
 }
 

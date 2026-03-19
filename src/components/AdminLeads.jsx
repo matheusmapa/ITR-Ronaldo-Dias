@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
-import { Activity, Users, MousePointer2, Clock, Smartphone, Monitor, ChevronDown, ChevronUp, Link as LinkIcon, Fingerprint, MapPin, Compass, Globe, Map } from 'lucide-react';
+import { Activity, Users, MousePointer2, Clock, Smartphone, Monitor, ChevronDown, ChevronUp, Link as LinkIcon, Fingerprint, MapPin, Compass, Globe, Map, Download, Printer } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AdminLeads() {
@@ -128,6 +128,38 @@ export default function AdminLeads() {
         }
     };
 
+    const exportCSV = () => {
+        const headers = ["Data", "Hora", "Nome", "Email", "Telefone", "Origem", "Campanha", "Scroll %", "Tempo (s)", "Dispositivo", "Localização", "ID do Lead"];
+        const rows = leads.map(l => [
+            formatDate(l.startTime).split(' ')[0],
+            formatDate(l.startTime).split(' ')[1],
+            l.contact_name || '-',
+            l.contact_email || '-',
+            l.contact_phone || '-',
+            l.utm_source || 'Orgânico',
+            l.utm_campaign || '-',
+            l.maxScrollDepth || 0,
+            l.timeOnPageSeconds || 0,
+            l.isMobile ? 'Mobile' : 'Desktop',
+            `"${l.location || 'Desconhecida'}"`,
+            l.visitorId || l.id
+        ]);
+        const csvContent = "data:text/csv;charset=utf-8," 
+            + headers.join(",") + "\n"
+            + rows.map(e => e.join(",")).join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `itr_leads_export_${new Date().getTime()}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const handlePrintPDF = () => {
+        window.print();
+    };
+
     if (!isAuthenticated) {
         return (
             <div className="min-h-screen bg-[#030308] flex items-center justify-center p-4 font-sans">
@@ -166,16 +198,37 @@ export default function AdminLeads() {
     }
 
     return (
-        <div className="min-h-screen bg-[#030308] text-slate-300 p-4 md:p-8 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+        <div className="min-h-screen bg-[#030308] text-slate-300 p-4 md:p-8 font-sans selection:bg-emerald-500/30 selection:text-emerald-200 print:bg-white print:text-black print:p-0">
+            <style>{`
+                @media print {
+                    .print-hide { display: none !important; }
+                    body { background: white !important; color: black !important; }
+                    * { border-color: #ddd !important; }
+                    .bg-[#0a0f18] { background: #f8f9fa !important; }
+                    .text-white { color: black !important; }
+                    .text-slate-400 { color: #444 !important; }
+                }
+            `}</style>
             <div className="max-w-7xl mx-auto">
-                <div className="mb-8">
-                    <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-3 mb-2">
-                        <Activity className="w-8 h-8 text-emerald-500" />
-                        Tráfego Inteligente ITR
-                    </h1>
-                    <p className="text-slate-400 text-sm max-w-2xl">
-                        Acompanhe em tempo real quem são as pessoas na sua página de vendas, de qual canal (Instagram, Facebook) estão vindo, quais anúncios estão clicando e como estão se comportando.
-                    </p>
+                <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h1 className="text-3xl font-black text-white print:text-black tracking-tight flex items-center gap-3 mb-2">
+                            <Activity className="w-8 h-8 text-emerald-500 print:text-black" />
+                            Tráfego Inteligente ITR
+                        </h1>
+                        <p className="text-slate-400 print:text-gray-600 text-sm max-w-2xl">
+                            Acompanhe em tempo real quem são as pessoas na sua página de vendas, de qual canal estão vindo e como estão se comportando.
+                        </p>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 print-hide">
+                        <button onClick={exportCSV} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2.5 rounded-xl font-medium text-sm transition-colors border border-white/5">
+                            <Download className="w-4 h-4" /> Exportar Planilha (CSV)
+                        </button>
+                        <button onClick={handlePrintPDF} className="flex items-center gap-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 px-4 py-2.5 rounded-xl font-medium text-sm transition-colors border border-emerald-500/20">
+                            <Printer className="w-4 h-4" /> Salvar PDF
+                        </button>
+                    </div>
                 </div>
 
                 {/* Linha de Estatísticas Visuais */}
@@ -266,9 +319,14 @@ export default function AdminLeads() {
                                                 </div>
                                             </div>
 
-                                            {/* Nome da Campanha Rápidinho */}
-                                            <div className="hidden md:flex flex-1 text-sm text-slate-400 truncate max-w-[200px]">
-                                                {lead.utm_campaign || lead.referrer || 'Acesso Orgânico'}
+                                            {/* Nome da Campanha Rápidinho ou Contato */}
+                                            <div className="hidden md:flex flex-col flex-1 text-sm text-slate-400 space-y-1">
+                                                <span className="truncate max-w-[200px] font-medium text-white">{lead.utm_campaign || lead.referrer || 'Acesso Orgânico'}</span>
+                                                {(lead.contact_email || lead.contact_name) && (
+                                                    <span className="text-xs text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 w-fit truncate max-w-[200px]">
+                                                        📧 {lead.contact_email || lead.contact_name}
+                                                    </span>
+                                                )}
                                             </div>
 
                                             {/* Resumo de Ações: Scroll e Cliques */}
