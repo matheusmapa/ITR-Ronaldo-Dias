@@ -49,12 +49,14 @@ export function useLeadAnalytics() {
                 sessionRef.current.timeOnPageSeconds = Math.floor((last - start) / 1000);
 
                 await setDoc(doc(db, 'lead_interactions', sessionId), sessionRef.current, { merge: true });
+                console.log(`[Analytics] Saved session ${sessionId} to Firebase`, sessionRef.current);
             } catch (err) {
-                console.error("Error syncing analytics:", err);
+                console.error("[Analytics] Error syncing analytics to Firebase. Rules or config might be invalid:", err);
             }
         };
 
         // Initial Sync
+        console.log("[Analytics] Initializing hook...");
         syncToFirebase();
 
         // 1. Track Scroll
@@ -81,6 +83,7 @@ export function useLeadAnalytics() {
             const trackElement = e.target.closest('[data-track]');
             if (trackElement) {
                 const trackAction = trackElement.getAttribute('data-track');
+                console.log(`[Analytics] Click detected on CTA: ${trackAction}`);
                 sessionRef.current.clicks.push({
                     action: trackAction,
                     time: new Date().toISOString(),

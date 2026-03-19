@@ -115,6 +115,7 @@ export default function App() {
     return (
         <Routes>
             <Route path="/" element={<LandingPageRonaldoDias />} />
+            <Route path="/acelerar" element={<LandingPageRonaldoDias />} />
             <Route
                 path="/admin/leads"
                 element={
@@ -123,6 +124,7 @@ export default function App() {
                     </Suspense>
                 }
             />
+            <Route path="*" element={<LandingPageRonaldoDias />} />
         </Routes>
     );
 }
