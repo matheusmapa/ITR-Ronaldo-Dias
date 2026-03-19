@@ -21,6 +21,13 @@ export function useLeadAnalytics() {
     const sessionRef = useRef(null);
 
     useEffect(() => {
+        // Bloqueio de Admin: Se este visitante já abriu a página /admin, 
+        // nós desativamos o rastreador silenciosamente para não sujar as métricas do cliente.
+        if (localStorage.getItem('itr_admin_mode') === 'true') {
+            console.log("[Analytics] Acesso administrativo detectado. Rastreador desativado.");
+            return;
+        }
+
         // Only run once per session
         if (!sessionRef.current) {
             sessionRef.current = {

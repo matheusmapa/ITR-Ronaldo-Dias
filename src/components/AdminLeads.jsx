@@ -17,6 +17,11 @@ export default function AdminLeads() {
     });
 
     useEffect(() => {
+        // Marca este navegador específico como Admin permanentemente.
+        // Assim, quando o admin visitar a Landing Page, os scripts de rastreamento serão desativados
+        // para não poluir os dados e as métricas.
+        localStorage.setItem('itr_admin_mode', 'true');
+
         const q = query(
             collection(db, 'lead_interactions'),
             orderBy('startTime', 'desc'),
