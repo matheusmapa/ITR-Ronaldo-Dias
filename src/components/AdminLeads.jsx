@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { db } from '../firebase';
 import { collection, query, orderBy, limit, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
-import { Activity, Users, MousePointer2, Clock, Smartphone, Monitor, ChevronDown, ChevronUp, Link as LinkIcon, Fingerprint, MapPin, Compass, Globe, Map, Download, Printer, Trash2, Filter, BarChart2, LogOut } from 'lucide-react';
+import { Activity, Users, MousePointer2, Clock, Smartphone, Monitor, ChevronDown, ChevronUp, Link as LinkIcon, Fingerprint, MapPin, Compass, Globe, Map, Download, Printer, Trash2, Filter, BarChart2, LogOut, Eye, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, BarChart, Bar, CartesianGrid, AreaChart, Area } from 'recharts';
 
@@ -82,6 +82,7 @@ export default function AdminLeads() {
         return { total: 0, mobilePerc: 0, avgScroll: 0, avgTime: 0, clickers: 0 };
     }, [leads]);
 
+    // Data for Line Chart (Traffic Volume)
     const dailyData = useMemo(() => {
         const days = {};
         for(let i=9; i>=0; i--) {
@@ -96,35 +97,73 @@ export default function AdminLeads() {
         return Object.keys(days).map(date => ({ name: date, Visitas: days[date] }));
     }, [leads]);
 
+    // Data for Radar Chart (Sources)
     const sourceData = useMemo(() => {
-        const counts = { Instagram: 0, Facebook: 0, Google: 0, TikTok: 0, Baixa: 0, Orgânico: 0 };
+        const counts = { Instagram: 0, Facebook: 0, Google: 0, TikTok: 0, YouTube: 0, Orgânico: 0 };
         leads.forEach(l => {
             const s = (l.utm_source || '').toLowerCase();
             if (s.includes('instagram') || s.includes('ig')) counts.Instagram++;
             else if (s.includes('facebook') || s.includes('fb')) counts.Facebook++;
             else if (s.includes('google')) counts.Google++;
             else if (s.includes('tiktok')) counts.TikTok++;
+            else if (s.includes('youtube') || s.includes('yt')) counts.YouTube++;
             else counts.Orgânico++;
         });
-        // Scale fullMark dynamically to always nicely fill the radar graph
         const max = Math.max(...Object.values(counts), 1);
         return Object.keys(counts).map(key => ({ subject: key, A: counts[key], fullMark: max + (max * 0.2) }));
     }, [leads]);
 
-    const funnelData = useMemo(() => {
-        let reached50 = 0;
-        let clicked = 0;
+    // Data for Section Dropoff Bar Chart
+    const sectionData = useMemo(() => {
+        const counts = { '1. Início': 0, '2. Problema': 0, '3. Método': 0, '4. Prova Social': 0, '5. Oferta': 0 };
         leads.forEach(l => {
-            if(l.maxScrollDepth >= 50) reached50++;
-            const hasClickEvent = l.journey && l.journey.some(e => e.type === 'click');
-            const hasLegacyClick = l.clicks && l.clicks.length > 0;
-            if (hasClickEvent || hasLegacyClick) clicked++;
+            if(l.journey) {
+                l.journey.forEach(e => {
+                    if (e.type === 'section_view') {
+                        if (e.label.includes('Herói')) counts['1. Início']++;
+                        if (e.label.includes('Dores')) counts['2. Problema']++;
+                        if (e.label.includes('Funciona')) counts['3. Método']++;
+                        if (e.label.includes('Prova Social')) counts['4. Prova Social']++;
+                        if (e.label.includes('Oferta Final')) counts['5. Oferta']++;
+                    }
+                    if (e.type === 'page_enter') {
+                        counts['1. Início']++; // Everyone who enters sees Hero
+                    }
+                });
+            } else {
+                // Legacy leads: assume entering saw Hero
+                counts['1. Início']++;
+            }
         });
-        return [
-            { name: 'Visitantes', leads: leads.length, fill: '#10b981' }, // emerald-500
-            { name: 'Leram 50%', leads: reached50, fill: '#0ea5e9' }, // sky-500
-            { name: 'Clicaram p/ Comprar', leads: clicked, fill: '#f59e0b' } // amber-500
-        ];
+        return Object.keys(counts).map(k => ({ name: k, visualizações: counts[k], fill: '#0ea5e9' }));
+    }, [leads]);
+
+    // Data for Click Tracking Bar Chart
+    const clickData = useMemo(() => {
+        const counts = {};
+        let empty = true;
+        leads.forEach(l => {
+            if(l.journey) {
+                l.journey.forEach(e => {
+                    if (e.type === 'click') {
+                        empty = false;
+                        let lbl = e.label.replace('cta-', '');
+                        if(lbl === 'checkout') lbl = 'Botão Oferta';
+                        else if(lbl === 'hero') lbl = 'Botão Topo';
+                        else if(lbl === 'decisao') lbl = 'Botão Rodapé';
+                        
+                        counts[lbl] = (counts[lbl] || 0) + 1;
+                    }
+                });
+            }
+        });
+        
+        if (empty) return [{ name: 'Sem Dados', cliques: 0, fill: '#14b8a6' }];
+        
+        return Object.keys(counts)
+            .map(k => ({ name: k, cliques: counts[k], fill: '#14b8a6' }))
+            .sort((a,b) => b.cliques - a.cliques)
+            .slice(0, 5);
     }, [leads]);
 
     const formatTimeDuration = (seconds) => {
@@ -201,9 +240,6 @@ export default function AdminLeads() {
 
     const clearLeads = async () => {
         if(window.confirm(`⚠️ PERIGO EXTREMO: Você está prestes a apagar permanentemente os registros do banco de dados.\n\nDeseja mesmo limpar estes contatos?`)) {
-            // Delete only what is currently filtered to be safe, or rawLeads?
-            // Usually "Limpar banco" means purge all. Let's purge all displayed.
-            const total = leads.length;
             let i = 0;
             for(let l of leads) {
                 await deleteDoc(doc(db, 'lead_interactions', l.id));
@@ -295,7 +331,6 @@ export default function AdminLeads() {
                     </div>
                     
                     <div className="flex flex-wrap items-center gap-2 md:gap-3 print-hide">
-                        {/* Filtros em Pílula */}
                         <div className="flex items-center bg-slate-800/50 p-1 rounded-xl border border-white/5 mr-2">
                             <button onClick={() => setDateFilter('today')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === 'today' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>Hoje</button>
                             <button onClick={() => setDateFilter('7d')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === '7d' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>7 Dias</button>
@@ -352,15 +387,15 @@ export default function AdminLeads() {
                 </div>
 
                 {/* GRÁFICOS VISUAIS - NOVA SEÇÃO */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
                     {/* Gráfico de Linha (Últimos 10 Dias) */}
-                    <div className="bg-[#0a0f18]/80 border border-white/5 rounded-3xl p-5 shadow-2xl backdrop-blur-sm lg:col-span-2">
+                    <div className="bg-[#0a0f18]/80 border border-white/5 rounded-3xl p-5 shadow-2xl backdrop-blur-sm">
                         <h3 className="text-sm font-bold text-white mb-6 flex items-center gap-2">
                             <BarChart2 className="w-4 h-4 text-emerald-500" /> Volume de Acessos Recentes
                         </h3>
                         <div className="h-[250px] w-full">
                             <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={dailyData}>
+                                <AreaChart data={dailyData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                                     <defs>
                                         <linearGradient id="colorVisitas" x1="0" y1="0" x2="0" y2="1">
                                             <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
@@ -368,8 +403,8 @@ export default function AdminLeads() {
                                         </linearGradient>
                                     </defs>
                                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                                    <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
-                                    <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
+                                    <XAxis dataKey="name" stroke="#64748b" fontSize={11} tickLine={false} axisLine={false} />
+                                    <YAxis stroke="#64748b" fontSize={11} tickLine={false} axisLine={false} />
                                     <RechartsTooltip 
                                         contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '12px', color: 'white' }}
                                         itemStyle={{ color: '#10b981', fontWeight: 'bold' }}
@@ -399,28 +434,53 @@ export default function AdminLeads() {
                             </ResponsiveContainer>
                         </div>
                     </div>
+                </div>
 
-                    {/* Gráfico de Funil / Barras */}
-                    <div className="bg-[#0a0f18]/80 border border-white/5 rounded-3xl p-5 shadow-2xl backdrop-blur-sm lg:col-span-3">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+                    {/* Gráfico de Retenção de Leitura (Funil / Barras) */}
+                    <div className="bg-[#0a0f18]/80 border border-white/5 rounded-3xl p-5 shadow-2xl backdrop-blur-sm">
                         <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                            <Activity className="w-4 h-4 text-emerald-500" /> Funil de Retenção Visual
+                            <Eye className="w-4 h-4 text-sky-400" /> Queda de Retenção na Página (Profundidade)
                         </h3>
-                        <div className="h-[150px] w-full">
+                        <div className="h-[250px] w-full">
                             <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={funnelData} layout="vertical" margin={{ top: 0, right: 30, left: 20, bottom: 0 }}>
+                                <BarChart data={sectionData} layout="vertical" margin={{ top: 0, right: 30, left: 10, bottom: 0 }}>
                                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
                                     <XAxis type="number" hide />
-                                    <YAxis dataKey="name" type="category" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} width={120} />
+                                    <YAxis dataKey="name" type="category" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} width={100} />
                                     <RechartsTooltip 
                                         cursor={{fill: 'rgba(255,255,255,0.02)'}}
                                         contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '12px', color: 'white' }}
                                     />
-                                    <Bar dataKey="leads" radius={[0, 8, 8, 0]} barSize={24}>
-                                        {
-                                            funnelData.map((entry, index) => (
-                                                <cell key={`cell-${index}`} fill={entry.fill} />
-                                            ))
-                                        }
+                                    <Bar dataKey="visualizações" radius={[0, 8, 8, 0]} barSize={20}>
+                                        {sectionData.map((entry, index) => (
+                                            <cell key={`cell-${index}`} fill={entry.fill} />
+                                        ))}
+                                    </Bar>
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+
+                    {/* Gráfico de Cliques Top */}
+                    <div className="bg-[#0a0f18]/80 border border-white/5 rounded-3xl p-5 shadow-2xl backdrop-blur-sm">
+                        <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
+                            <Target className="w-4 h-4 text-teal-400" /> Top Interações e Cliques
+                        </h3>
+                        <div className="h-[250px] w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={clickData} layout="vertical" margin={{ top: 0, right: 30, left: 10, bottom: 0 }}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
+                                    <XAxis type="number" hide />
+                                    <YAxis dataKey="name" type="category" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} width={100} />
+                                    <RechartsTooltip 
+                                        cursor={{fill: 'rgba(255,255,255,0.02)'}}
+                                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '12px', color: 'white' }}
+                                    />
+                                    <Bar dataKey="cliques" radius={[0, 8, 8, 0]} barSize={20}>
+                                        {clickData.map((entry, index) => (
+                                            <cell key={`cell-${index}`} fill={entry.fill} />
+                                        ))}
                                     </Bar>
                                 </BarChart>
                             </ResponsiveContainer>
