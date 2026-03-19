@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { db } from '../firebase';
 import { collection, query, orderBy, limit, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
-import { Activity, Users, MousePointer2, Clock, Smartphone, Monitor, ChevronDown, ChevronUp, Link as LinkIcon, Fingerprint, MapPin, Compass, Globe, Map, Download, Printer, Trash2, Filter, BarChart2 } from 'lucide-react';
+import { Activity, Users, MousePointer2, Clock, Smartphone, Monitor, ChevronDown, ChevronUp, Link as LinkIcon, Fingerprint, MapPin, Compass, Globe, Map, Download, Printer, Trash2, Filter, BarChart2, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, BarChart, Bar, CartesianGrid, AreaChart, Area } from 'recharts';
 
@@ -213,6 +213,15 @@ export default function AdminLeads() {
         }
     };
 
+    const handleLogout = () => {
+        if(window.confirm("Deseja sair do Painel VIP? Seu navegador voltará a ser rastreado pelas métricas como um visitante normal.")) {
+            localStorage.removeItem('itr_admin_auth');
+            localStorage.removeItem('itr_admin_mode');
+            setIsAuthenticated(false);
+            window.location.href = '/';
+        }
+    };
+
     const handleAuth = (e) => {
         e.preventDefault();
         if (passInput === 'SocioITR') {
@@ -302,6 +311,9 @@ export default function AdminLeads() {
                         </button>
                         <button onClick={clearLeads} className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-red-500/20 ml-2">
                             <Trash2 className="w-4 h-4" /> Limpar
+                        </button>
+                        <button onClick={handleLogout} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-white/5 ml-2">
+                            <LogOut className="w-4 h-4" /> Sair
                         </button>
                     </div>
                 </div>
