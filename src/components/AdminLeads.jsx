@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
-import { Activity, Users, MousePointer2, Clock, Smartphone, Monitor, ChevronDown, ChevronUp, Link as LinkIcon, Fingerprint, MapPin, Compass, Globe } from 'lucide-react';
+import { Activity, Users, MousePointer2, Clock, Smartphone, Monitor, ChevronDown, ChevronUp, Link as LinkIcon, Fingerprint, MapPin, Compass, Globe, Map } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AdminLeads() {
@@ -46,7 +46,13 @@ export default function AdminLeads() {
                 if (data.isMobile) mobileCount++;
                 scrollSum += (data.maxScrollDepth || 0);
                 timeSum += (data.timeOnPageSeconds || 0);
-                if (data.clicks && data.clicks.length > 0) clickersCount++;
+                
+                // Count if there are clicks in the new journey format
+                const hasClickEvent = data.journey && data.journey.some(e => e.type === 'click');
+                // Support legacy format for old leads
+                const hasLegacyClick = data.clicks && data.clicks.length > 0;
+                
+                if (hasClickEvent || hasLegacyClick) clickersCount++;
             });
 
             setLeads(fetched);
@@ -230,22 +236,34 @@ export default function AdminLeads() {
                                         className="flex flex-col md:flex-row md:items-center justify-between p-4 md:px-6 cursor-pointer gap-4 md:gap-0"
                                     >
                                         <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-8 flex-1">
-                                            {/* Hora de Chegada */}
-                                            <div className="w-32 text-sm">
-                                                <span className="text-white font-medium">{formatDate(lead.startTime).split(' ')[1]}</span>
-                                                <span className="text-slate-500 text-xs ml-2 md:block md:ml-0 mt-0.5">{formatDate(lead.startTime).split(' ')[0]}</span>
+                                            {/* Hora de Chegada e Categoria */}
+                                            <div className="w-32 text-sm flex flex-col gap-1">
+                                                <span>
+                                                    <span className="text-white font-medium">{formatDate(lead.startTime).split(' ')[1]}</span>
+                                                    <span className="text-slate-500 text-xs ml-2">{formatDate(lead.startTime).split(' ')[0]}</span>
+                                                </span>
+                                                {lead.isReturningVisitor ? (
+                                                    <span className="text-[10px] w-fit bg-purple-500/10 text-purple-400 border border-purple-500/20 px-1.5 rounded uppercase font-bold tracking-wider">RETORNOU</span>
+                                                ) : (
+                                                    <span className="text-[10px] w-fit bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 rounded uppercase font-bold tracking-wider">NOVO LEAD</span>
+                                                )}
                                             </div>
 
                                             {/* Mini Badge Visuais da Origem */}
-                                            <div className="flex items-center gap-3 min-w-[160px]">
-                                                <div className={`px-3 py-1 text-xs font-bold rounded-full ${sourceBadgeStyle}`}>
-                                                    {sourceLabel}
+                                            <div className="flex flex-col gap-1.5 min-w-[160px]">
+                                                <div className="flex items-center gap-3">
+                                                    <div className={`px-3 py-1 text-xs font-bold rounded-full ${sourceBadgeStyle}`}>
+                                                        {sourceLabel}
+                                                    </div>
+                                                    {lead.isMobile ? (
+                                                        <Smartphone className="w-4 h-4 text-slate-500" />
+                                                    ) : (
+                                                        <Monitor className="w-4 h-4 text-slate-500" />
+                                                    )}
                                                 </div>
-                                                {lead.isMobile ? (
-                                                    <Smartphone className="w-4 h-4 text-slate-500" />
-                                                ) : (
-                                                    <Monitor className="w-4 h-4 text-slate-500" />
-                                                )}
+                                                <div className="flex items-center gap-1 text-xs text-slate-400 font-medium truncate max-w-[150px]">
+                                                    <MapPin className="w-3 h-3 text-emerald-500/70" /> {lead.location || 'Localizando...'}
+                                                </div>
                                             </div>
 
                                             {/* Nome da Campanha Rápidinho */}
@@ -261,8 +279,8 @@ export default function AdminLeads() {
                                                 </div>
                                                 <div className="flex flex-col items-end">
                                                     <span className="text-[10px] text-slate-500 font-medium mb-1">Ação de Compra</span>
-                                                    {lead.clicks && lead.clicks.length > 0 ? (
-                                                        <span className="text-teal-400 font-bold text-sm">Sim ({lead.clicks.length}x)</span>
+                                                    {((lead.journey && lead.journey.some(e => e.type === 'click')) || (lead.clicks && lead.clicks.length > 0)) ? (
+                                                        <span className="text-teal-400 font-bold text-sm">Sim 🔥</span>
                                                     ) : (
                                                         <span className="text-slate-600 font-medium text-sm">Não</span>
                                                     )}
@@ -331,42 +349,74 @@ export default function AdminLeads() {
                                                     {/* Coluna 2: Jornada Visual na LP */}
                                                     <div>
                                                         <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                                                            <Activity className="w-4 h-4 text-emerald-500" /> O que ele fez na Landing Page?
+                                                            <Activity className="w-4 h-4 text-emerald-500" /> Raio-X da Rota do Lead
                                                         </h3>
                                                         
                                                         <div className="bg-[#0a0f18] border border-white/5 rounded-2xl p-6">
-                                                            <div className="relative pl-6 border-l-2 border-slate-800 space-y-7">
+                                                            <div className="relative pl-6 border-l-2 border-slate-800 space-y-6">
                                                                 
-                                                                {/* Evento 1: Entrou */}
-                                                                <div className="relative">
-                                                                    <div className="absolute -left-[31px] top-0 w-3.5 h-3.5 bg-emerald-500 rounded-full border-[3px] border-[#0a0f18]"></div>
-                                                                    <p className="text-white font-medium text-sm">Entrou na Landing Page</p>
-                                                                    <p className="text-xs text-slate-500 mt-1">Às {formatDate(lead.startTime).split(' ')[1]}</p>
-                                                                </div>
+                                                                {/* Renderização da Linha do Tempo Refinada */}
+                                                                {lead.journey ? (
+                                                                    lead.journey.map((event, i) => {
+                                                                        let evtIconColor = 'bg-slate-600';
+                                                                        let evtRingColor = 'border-[#0a0f18]';
+                                                                        let textCss = 'text-slate-300';
+                                                                        let labelValue = event.label;
+                                                                        let extraStyle = '';
 
-                                                                {/* Eventos 2: Cliques (se houver) */}
-                                                                {lead.clicks && lead.clicks.map((click, i) => {
-                                                                    let clickName = 'Botão de Compra';
-                                                                    if (click.action === 'cta-hero') clickName = 'Botão Verde do Início (Hero)';
-                                                                    if (click.action === 'cta-checkout') clickName = 'Botão Principal da Oferta';
-                                                                    if (click.action === 'cta-decisao') clickName = 'Botão Verde Final da Página';
+                                                                        if (event.type === 'page_enter') {
+                                                                            evtIconColor = 'bg-emerald-500';
+                                                                            textCss = 'text-white font-medium';
+                                                                        }
+                                                                        if (event.type === 'section_view') {
+                                                                            evtIconColor = 'bg-slate-400';
+                                                                            textCss = 'text-slate-400';
+                                                                            extraStyle = 'text-xs uppercase font-bold tracking-wider';
+                                                                        }
+                                                                        if (event.type === 'click') {
+                                                                            evtIconColor = 'bg-teal-500';
+                                                                            evtRingColor = 'border-[#0a0f18] ring-2 ring-teal-500/30';
+                                                                            textCss = 'text-teal-400 font-bold bg-teal-500/10 px-2.5 py-1 rounded inline-block';
+                                                                            
+                                                                            if (labelValue.includes('cta-hero')) labelValue = '🔥 Clicou: Botão Verde do Topo';
+                                                                            else if (labelValue.includes('cta-checkout')) labelValue = '💳 Clicou: Botão Ir Para Pagamento';
+                                                                            else if (labelValue.includes('cta-decisao')) labelValue = '🚀 Clicou: Botão Acelerar Inglês (Rodapé)';
+                                                                            else labelValue = `🔥 Clicou: ${event.label.replace('Clicou no botão:', '')}`;
+                                                                        }
 
-                                                                    return (
-                                                                        <div key={i} className="relative">
-                                                                            <div className="absolute -left-[31px] top-0 w-3.5 h-3.5 bg-teal-500 rounded-full border-[3px] border-[#0a0f18] ring-2 ring-teal-500/30"></div>
-                                                                            <p className="text-white font-medium text-sm">Clicou interessado em comprar!</p>
-                                                                            <p className="text-xs text-teal-400 mt-1 bg-teal-500/10 inline-block px-2 py-0.5 rounded-md border border-teal-500/20">{clickName} - {formatDate(click.time).split(' ')[1]}</p>
+                                                                        return (
+                                                                            <div key={i} className="relative">
+                                                                                <div className={`absolute -left-[31px] top-0 w-3.5 h-3.5 rounded-full border-[3px] ${evtIconColor} ${evtRingColor}`}></div>
+                                                                                <p className={`text-sm ${textCss} ${extraStyle}`}>{labelValue}</p>
+                                                                                <p className="text-xs text-slate-500 mt-1">{formatDate(event.time).split(' ')[1]}</p>
+                                                                            </div>
+                                                                        );
+                                                                    })
+                                                                ) : (
+                                                                    // Compatibilidade retroativa para leads velhos 
+                                                                    <>
+                                                                        <div className="relative">
+                                                                            <div className="absolute -left-[31px] top-0 w-3.5 h-3.5 bg-emerald-500 rounded-full border-[3px] border-[#0a0f18]"></div>
+                                                                            <p className="text-white font-medium text-sm">Entrou na Landing Page</p>
+                                                                            <p className="text-xs text-slate-500 mt-1">Às {formatDate(lead.startTime).split(' ')[1]}</p>
                                                                         </div>
-                                                                    );
-                                                                })}
+                                                                        {lead.clicks && lead.clicks.map((click, i) => (
+                                                                            <div key={`old-${i}`} className="relative">
+                                                                                <div className="absolute -left-[31px] top-0 w-3.5 h-3.5 bg-teal-500 rounded-full border-[3px] border-[#0a0f18] ring-2 ring-teal-500/30"></div>
+                                                                                <p className="text-teal-400 font-bold bg-teal-500/10 inline-block px-2 py-0.5 rounded-md text-sm">Clicou em Comprar</p>
+                                                                                <p className="text-xs text-slate-500 mt-1">{formatDate(click.time).split(' ')[1]}</p>
+                                                                            </div>
+                                                                        ))}
+                                                                    </>
+                                                                )}
 
-                                                                {/* Evento 3: Final da Sessão */}
-                                                                <div className="relative">
-                                                                    <div className="absolute -left-[31px] top-0 w-3.5 h-3.5 bg-slate-600 rounded-full border-[3px] border-[#0a0f18]"></div>
-                                                                    <p className="text-slate-300 font-medium text-sm">Navegação Finalizada</p>
-                                                                    <p className="text-xs text-slate-500 mt-1">
-                                                                        Ele leu <strong className="text-white">{lead.maxScrollDepth}%</strong> da página e ficou prestando atenção por <strong className="text-white">{formatTimeDuration(lead.timeOnPageSeconds)}</strong>.
-                                                                    </p>
+                                                                {/* Evento Final */}
+                                                                <div className="relative pt-2">
+                                                                    <div className="absolute -left-[31px] top-2 w-3.5 h-3.5 bg-slate-700/80 rounded-full border-[3px] border-[#0a0f18] animate-pulse"></div>
+                                                                    <p className="text-slate-400 font-bold text-xs uppercase tracking-widest pl-1 mt-1">Sessão / Retenção</p>
+                                                                    <div className="mt-2 text-xs text-slate-400 bg-black/20 p-3 rounded-xl border border-white/5">
+                                                                        O Lead desceu até <strong className="text-emerald-400">{lead.maxScrollDepth}% da página</strong> <br/>e prestou atenção durante <strong className="text-emerald-400">{formatTimeDuration(lead.timeOnPageSeconds)}</strong>.
+                                                                    </div>
                                                                 </div>
 
                                                             </div>

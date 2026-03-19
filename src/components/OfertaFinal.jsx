@@ -16,6 +16,7 @@ export default function OfertaFinal({ onInView, paymentUrl }) {
         <section
             ref={sectionRef}
             id="oferta"
+            data-section="Oferta Final e Preços"
             className="relative min-h-screen flex flex-col items-center justify-center px-6 py-10 bg-[#030308] overflow-hidden"
         >
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-emerald-900/[0.04] blur-3xl rounded-full pointer-events-none"></div>

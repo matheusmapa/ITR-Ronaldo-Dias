@@ -89,7 +89,7 @@ export default function HeroPlus() {
     };
 
     return (
-        <section className="relative flex items-center justify-center overflow-x-clip bg-[#030308] pt-5 pb-10 md:pt-6 md:pb-16 lg:min-h-[92vh]">
+        <section data-section="Herói / Início da Página" className="relative flex items-center justify-center overflow-x-clip bg-[#030308] pt-5 pb-10 md:pt-6 md:pb-16 lg:minh-[92vh]">
 
             {/* Grid pattern */}
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUscDAuMDUpIi8+PC9zdmc+')] opacity-20"></div>

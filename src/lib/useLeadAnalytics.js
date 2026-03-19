@@ -35,19 +35,44 @@ export function useLeadAnalytics() {
             return;
         }
 
-        // Only run once per session
+        // Identificação de Visitante Recorrente
+        let visitorId = localStorage.getItem('itr_visitor_id');
+        let isReturning = true;
+        if (!visitorId) {
+            visitorId = `vis_${Math.random().toString(36).substring(2, 15)}`;
+            localStorage.setItem('itr_visitor_id', visitorId);
+            isReturning = false;
+        }
+
+        // Initialize Session Object
         if (!sessionRef.current) {
             sessionRef.current = {
                 sessionId: generateSessionId(),
+                visitorId: visitorId,
+                isReturningVisitor: isReturning,
                 startTime: new Date().toISOString(),
                 referrer: document.referrer || 'Direct',
                 userAgent: navigator.userAgent,
                 isMobile: /Mobi|Android/i.test(navigator.userAgent),
                 ...getUTMs(),
+                location: 'Buscando...',
                 maxScrollDepth: 0,
-                clicks: [],
+                journey: [{ type: 'page_enter', label: 'Entrou na Landing Page', time: new Date().toISOString() }],
                 lastActiveTime: new Date().toISOString()
             };
+
+            // Fetch Geolocation asynchronously
+            fetch('https://ipapi.co/json/')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.city) {
+                        sessionRef.current.location = `${data.city}, ${data.region}`;
+                        syncToFirebase();
+                    }
+                })
+                .catch(() => {
+                    sessionRef.current.location = 'Desconhecida';
+                });
         }
 
         const sessionId = sessionRef.current.sessionId;
@@ -92,14 +117,39 @@ export function useLeadAnalytics() {
 
         window.addEventListener('scroll', handleScroll, { passive: true });
 
-        // 2. Track Clicks (global listener for [data-track])
+        // 2. Track Section Views (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionName = entry.target.getAttribute('data-section');
+                    if (sectionName) {
+                        const alreadyViewed = sessionRef.current.journey.some(e => e.type === 'section_view' && e.label === sectionName);
+                        if (!alreadyViewed) {
+                            sessionRef.current.journey.push({
+                                type: 'section_view',
+                                label: sectionName,
+                                time: new Date().toISOString(),
+                            });
+                            syncToFirebase();
+                        }
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        setTimeout(() => {
+            document.querySelectorAll('[data-section]').forEach(el => observer.observe(el));
+        }, 1000);
+
+        // 3. Track Clicks (global listener for [data-track])
         const handleClick = (e) => {
             const trackElement = e.target.closest('[data-track]');
             if (trackElement) {
                 const trackAction = trackElement.getAttribute('data-track');
                 console.log(`[Analytics] Click detected on CTA: ${trackAction}`);
-                sessionRef.current.clicks.push({
-                    action: trackAction,
+                sessionRef.current.journey.push({
+                    type: 'click',
+                    label: trackAction,
                     time: new Date().toISOString(),
                 });
                 syncToFirebase(); // Force sync on click
@@ -108,10 +158,10 @@ export function useLeadAnalytics() {
 
         document.addEventListener('click', handleClick);
 
-        // 3. Periodic Sync (every 5 seconds)
+        // 4. Periodic Sync (every 5 seconds)
         const syncInterval = setInterval(syncToFirebase, 5000);
 
-        // 4. Sync on leave
+        // 5. Sync on leave
         const handleVisibilityChange = () => {
             if (document.visibilityState === 'hidden') {
                 syncToFirebase();
@@ -123,6 +173,7 @@ export function useLeadAnalytics() {
             window.removeEventListener('scroll', handleScroll);
             document.removeEventListener('click', handleClick);
             document.removeEventListener('visibilitychange', handleVisibilityChange);
+            observer.disconnect();
             clearInterval(syncInterval);
             syncToFirebase(); // Final sync
         };

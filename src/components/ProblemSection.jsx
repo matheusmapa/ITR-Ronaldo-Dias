@@ -4,7 +4,7 @@ import { XCircle, Brain, ArrowDown } from 'lucide-react';
 
 export default function ProblemSection() {
     return (
-        <section className="relative pt-6 md:pt-10 pb-6 md:pb-10 px-6 bg-[#030308] overflow-hidden">
+        <section data-section="Dores / Problema" className="relative pt-6 md:pt-10 pb-6 md:pb-10 px-6 bg-[#030308] overflow-hidden">
 
             {/* ── Glows de fundo ──────────────────────────────── */}
             <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-rose-900/8 blur-3xl rounded-full pointer-events-none"></div>
