@@ -24,6 +24,13 @@ export function useLeadAnalytics() {
     const sessionRef = useRef(null);
 
     useEffect(() => {
+        // Bloqueio de Bots e Scrapers (Vercel, Lighthouse, Googlebot, Headless)
+        const ua = navigator.userAgent.toLowerCase();
+        if (/bot|crawler|spider|crawling|lighthouse|vercel|headless/i.test(ua) || window.navigator.webdriver) {
+            console.log("[Analytics] Bot/Crawler detectado. Rastreador desativado.");
+            return;
+        }
+
         // Bloqueio de Admin: Se este visitante já abriu a página /admin, 
         // nós desativamos o rastreador silenciosamente para não sujar as métricas do cliente.
         if (localStorage.getItem('itr_admin_mode') === 'true') {
@@ -69,7 +76,14 @@ export function useLeadAnalytics() {
                 .then(res => res.json())
                 .then(data => {
                     if (data.city) {
-                        sessionRef.current.location = `${data.city}, ${data.region}`;
+                        const loc = `${data.city}, ${data.region}`;
+                        // Bloqueio extra para bots de deploy da Vercel/AWS que rodam nestes locais
+                        if (loc.includes('Santa Clara') || loc.includes('Ashburn') || loc.includes('Council Bluffs')) {
+                            console.log("[Analytics] IP de Datacenter/Bot detectado. Abortando rastreio.");
+                            sessionRef.current.isBot = true;
+                            return;
+                        }
+                        sessionRef.current.location = loc;
                         syncToFirebase();
                     }
                 })
@@ -81,7 +95,7 @@ export function useLeadAnalytics() {
         const sessionId = sessionRef.current.sessionId;
 
         const syncToFirebase = async () => {
-            if (!sessionRef.current) return;
+            if (!sessionRef.current || sessionRef.current.isBot) return;
             sessionRef.current.lastActiveTime = new Date().toISOString();
             
             try {
