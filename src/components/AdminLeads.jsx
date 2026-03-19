@@ -1,74 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { db } from '../firebase';
-import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
-import { Activity, Users, MousePointer2, Clock, Smartphone, Monitor, ChevronDown, ChevronUp, Link as LinkIcon, Fingerprint, MapPin, Compass, Globe, Map, Download, Printer } from 'lucide-react';
+import { collection, query, orderBy, limit, onSnapshot, doc, deleteDoc } from 'firebase/firestore';
+import { Activity, Users, MousePointer2, Clock, Smartphone, Monitor, ChevronDown, ChevronUp, Link as LinkIcon, Fingerprint, MapPin, Compass, Globe, Map, Download, Printer, Trash2, Filter, BarChart2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { LineChart, Line, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, BarChart, Bar, CartesianGrid, AreaChart, Area } from 'recharts';
 
 export default function AdminLeads() {
     const [isAuthenticated, setIsAuthenticated] = useState(
         localStorage.getItem('itr_admin_auth') === 'true'
     );
     const [passInput, setPassInput] = useState('');
-    const [leads, setLeads] = useState([]);
+    const [rawLeads, setRawLeads] = useState([]);
     const [loading, setLoading] = useState(true);
     const [expandedLead, setExpandedLead] = useState(null);
-    const [stats, setStats] = useState({
-        total: 0,
-        mobilePerc: 0,
-        avgScroll: 0,
-        avgTime: 0,
-        clickers: 0
-    });
+    const [dateFilter, setDateFilter] = useState('7d'); // 'today', '7d', '30d', 'all'
 
     useEffect(() => {
-        // Marca este navegador específico como Admin permanentemente.
-        // Assim, quando o admin visitar a Landing Page, os scripts de rastreamento serão desativados
-        // para não poluir os dados e as métricas.
-        localStorage.setItem('itr_admin_mode', 'true');
-
+        if(!isAuthenticated) return;
         const q = query(
             collection(db, 'lead_interactions'),
             orderBy('startTime', 'desc'),
-            limit(100)
+            limit(1000)
         );
 
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const fetched = [];
-            let mobileCount = 0;
-            let scrollSum = 0;
-            let timeSum = 0;
-            let clickersCount = 0;
-
             querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                fetched.push({ id: doc.id, ...data });
-                
-                if (data.isMobile) mobileCount++;
-                scrollSum += (data.maxScrollDepth || 0);
-                timeSum += (data.timeOnPageSeconds || 0);
-                
-                // Count if there are clicks in the new journey format
-                const hasClickEvent = data.journey && data.journey.some(e => e.type === 'click');
-                // Support legacy format for old leads
-                const hasLegacyClick = data.clicks && data.clicks.length > 0;
-                
-                if (hasClickEvent || hasLegacyClick) clickersCount++;
+                fetched.push({ id: doc.id, ...doc.data() });
             });
-
-            setLeads(fetched);
-            
-            const total = fetched.length;
-            if(total > 0) {
-                setStats({
-                    total,
-                    mobilePerc: Math.round((mobileCount / total) * 100),
-                    avgScroll: Math.round(scrollSum / total),
-                    avgTime: Math.round(timeSum / total),
-                    clickers: clickersCount
-                });
-            } else {
-                setStats({ total: 0, mobilePerc: 0, avgScroll: 0, avgTime: 0, clickers: 0 });
-            }
+            setRawLeads(fetched);
             setLoading(false);
         }, (error) => {
             console.error("Error fetching leads:", error);
@@ -76,13 +36,102 @@ export default function AdminLeads() {
         });
 
         return () => unsubscribe();
-    }, []);
+    }, [isAuthenticated]);
+
+    const leads = useMemo(() => {
+        const now = new Date();
+        return rawLeads.filter(lead => {
+            if (dateFilter === 'all') return true;
+            const leadDate = new Date(lead.startTime);
+            const diffTime = Math.abs(now - leadDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (dateFilter === 'today') return diffDays <= 1;
+            if (dateFilter === '7d') return diffDays <= 7;
+            if (dateFilter === '30d') return diffDays <= 30;
+            return true;
+        });
+    }, [rawLeads, dateFilter]);
+
+    const stats = useMemo(() => {
+        let mobileCount = 0;
+        let scrollSum = 0;
+        let timeSum = 0;
+        let clickersCount = 0;
+
+        leads.forEach((data) => {
+            if (data.isMobile) mobileCount++;
+            scrollSum += (data.maxScrollDepth || 0);
+            timeSum += (data.timeOnPageSeconds || 0);
+            
+            const hasClickEvent = data.journey && data.journey.some(e => e.type === 'click');
+            const hasLegacyClick = data.clicks && data.clicks.length > 0;
+            if (hasClickEvent || hasLegacyClick) clickersCount++;
+        });
+
+        const total = leads.length;
+        if(total > 0) {
+            return {
+                total,
+                mobilePerc: Math.round((mobileCount / total) * 100),
+                avgScroll: Math.round(scrollSum / total),
+                avgTime: Math.round(timeSum / total),
+                clickers: clickersCount
+            };
+        }
+        return { total: 0, mobilePerc: 0, avgScroll: 0, avgTime: 0, clickers: 0 };
+    }, [leads]);
+
+    const dailyData = useMemo(() => {
+        const days = {};
+        for(let i=9; i>=0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            days[d.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'})] = 0;
+        }
+        leads.forEach(l => {
+            const d = new Date(l.startTime).toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
+            if(days[d] !== undefined) days[d]++;
+        });
+        return Object.keys(days).map(date => ({ name: date, Visitas: days[date] }));
+    }, [leads]);
+
+    const sourceData = useMemo(() => {
+        const counts = { Instagram: 0, Facebook: 0, Google: 0, TikTok: 0, Baixa: 0, Orgânico: 0 };
+        leads.forEach(l => {
+            const s = (l.utm_source || '').toLowerCase();
+            if (s.includes('instagram') || s.includes('ig')) counts.Instagram++;
+            else if (s.includes('facebook') || s.includes('fb')) counts.Facebook++;
+            else if (s.includes('google')) counts.Google++;
+            else if (s.includes('tiktok')) counts.TikTok++;
+            else counts.Orgânico++;
+        });
+        // Scale fullMark dynamically to always nicely fill the radar graph
+        const max = Math.max(...Object.values(counts), 1);
+        return Object.keys(counts).map(key => ({ subject: key, A: counts[key], fullMark: max + (max * 0.2) }));
+    }, [leads]);
+
+    const funnelData = useMemo(() => {
+        let reached50 = 0;
+        let clicked = 0;
+        leads.forEach(l => {
+            if(l.maxScrollDepth >= 50) reached50++;
+            const hasClickEvent = l.journey && l.journey.some(e => e.type === 'click');
+            const hasLegacyClick = l.clicks && l.clicks.length > 0;
+            if (hasClickEvent || hasLegacyClick) clicked++;
+        });
+        return [
+            { name: 'Visitantes', leads: leads.length, fill: '#10b981' }, // emerald-500
+            { name: 'Leram 50%', leads: reached50, fill: '#0ea5e9' }, // sky-500
+            { name: 'Clicaram p/ Comprar', leads: clicked, fill: '#f59e0b' } // amber-500
+        ];
+    }, [leads]);
 
     const formatTimeDuration = (seconds) => {
         if (!seconds) return '0s';
         const m = Math.floor(seconds / 60);
         const s = seconds % 60;
-        return m > 0 ? `${m} min ${s} seg` : `${s} segundos`;
+        return m > 0 ? `${m}m ${s}s` : `${s}s`;
     };
 
     const formatDate = (isoString) => {
@@ -118,16 +167,6 @@ export default function AdminLeads() {
         return source || "Orgânico / Direto";
     };
 
-    const handleAuth = (e) => {
-        e.preventDefault();
-        if (passInput === 'SocioITR') {
-            localStorage.setItem('itr_admin_auth', 'true');
-            setIsAuthenticated(true);
-        } else {
-            alert('Acesso Restrito: Código Incorreto.');
-        }
-    };
-
     const exportCSV = () => {
         const headers = ["Data", "Hora", "Nome", "Email", "Telefone", "Origem", "Campanha", "Scroll %", "Tempo (s)", "Dispositivo", "Localização", "ID do Lead"];
         const rows = leads.map(l => [
@@ -150,7 +189,7 @@ export default function AdminLeads() {
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `itr_leads_export_${new Date().getTime()}.csv`);
+        link.setAttribute("download", `itr_leads_export_${dateFilter}.csv`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -158,6 +197,30 @@ export default function AdminLeads() {
 
     const handlePrintPDF = () => {
         window.print();
+    };
+
+    const clearLeads = async () => {
+        if(window.confirm(`⚠️ PERIGO EXTREMO: Você está prestes a apagar permanentemente os registros do banco de dados.\n\nDeseja mesmo limpar estes contatos?`)) {
+            // Delete only what is currently filtered to be safe, or rawLeads?
+            // Usually "Limpar banco" means purge all. Let's purge all displayed.
+            const total = leads.length;
+            let i = 0;
+            for(let l of leads) {
+                await deleteDoc(doc(db, 'lead_interactions', l.id));
+                i++;
+            }
+            alert(`✅ ${i} leads apagados com sucesso.`);
+        }
+    };
+
+    const handleAuth = (e) => {
+        e.preventDefault();
+        if (passInput === 'SocioITR') {
+            localStorage.setItem('itr_admin_auth', 'true');
+            setIsAuthenticated(true);
+        } else {
+            alert('Acesso Restrito: Código Incorreto.');
+        }
     };
 
     if (!isAuthenticated) {
@@ -204,9 +267,10 @@ export default function AdminLeads() {
                     .print-hide { display: none !important; }
                     body { background: white !important; color: black !important; }
                     * { border-color: #ddd !important; }
-                    .bg-[#0a0f18] { background: #f8f9fa !important; }
+                    .bg-[#0a0f18] { background: white !important; }
                     .text-white { color: black !important; }
                     .text-slate-400 { color: #444 !important; }
+                    .recharts-text { fill: #000 !important; }
                 }
             `}</style>
             <div className="max-w-7xl mx-auto">
@@ -221,34 +285,45 @@ export default function AdminLeads() {
                         </p>
                     </div>
                     
-                    <div className="flex items-center gap-3 print-hide">
-                        <button onClick={exportCSV} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2.5 rounded-xl font-medium text-sm transition-colors border border-white/5">
-                            <Download className="w-4 h-4" /> Exportar Planilha (CSV)
+                    <div className="flex flex-wrap items-center gap-2 md:gap-3 print-hide">
+                        {/* Filtros em Pílula */}
+                        <div className="flex items-center bg-slate-800/50 p-1 rounded-xl border border-white/5 mr-2">
+                            <button onClick={() => setDateFilter('today')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === 'today' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>Hoje</button>
+                            <button onClick={() => setDateFilter('7d')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === '7d' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>7 Dias</button>
+                            <button onClick={() => setDateFilter('30d')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === '30d' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>30 Dias</button>
+                            <button onClick={() => setDateFilter('all')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === 'all' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>Tudo</button>
+                        </div>
+                        
+                        <button onClick={exportCSV} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-white/5">
+                            <Download className="w-4 h-4" /> CSV
                         </button>
-                        <button onClick={handlePrintPDF} className="flex items-center gap-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 px-4 py-2.5 rounded-xl font-medium text-sm transition-colors border border-emerald-500/20">
-                            <Printer className="w-4 h-4" /> Salvar PDF
+                        <button onClick={handlePrintPDF} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-white/5">
+                            <Printer className="w-4 h-4" /> PDF
+                        </button>
+                        <button onClick={clearLeads} className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-red-500/20 ml-2">
+                            <Trash2 className="w-4 h-4" /> Limpar
                         </button>
                     </div>
                 </div>
 
                 {/* Linha de Estatísticas Visuais */}
-                <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 mb-8">
+                <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 mb-6">
                     <div className="bg-gradient-to-br from-[#0a0f18] to-slate-900/40 border border-white/5 p-5 rounded-2xl relative overflow-hidden group">
                         <Users className="w-5 h-5 text-emerald-500 mb-2" />
                         <div className="text-2xl font-bold text-white mb-1">{stats.total}</div>
-                        <div className="text-xs text-slate-400 font-medium">Visitantes na Página</div>
+                        <div className="text-xs text-slate-400 font-medium">Acessos no Período</div>
                     </div>
                     
                     <div className="bg-gradient-to-br from-[#0a0f18] to-slate-900/40 border border-white/5 p-5 rounded-2xl relative overflow-hidden group">
                         <MousePointer2 className="w-5 h-5 text-teal-500 mb-2" />
-                        <div className="text-2xl font-bold text-white mb-1">{stats.clickers} <span className="text-sm font-normal text-slate-500">({Math.round((stats.clickers/(stats.total||1))*100)}%)</span></div>
+                        <div className="text-2xl font-bold text-white mb-1">{stats.clickers} <span className="text-sm font-normal text-slate-500">({stats.total > 0 ? Math.round((stats.clickers/stats.total)*100) : 0}%)</span></div>
                         <div className="text-xs text-slate-400 font-medium">Clicaram nos Botões Verdes</div>
                     </div>
 
                     <div className="bg-gradient-to-br from-[#0a0f18] to-slate-900/40 border border-white/5 p-5 rounded-2xl relative overflow-hidden group">
                         <Activity className="w-5 h-5 text-amber-500 mb-2" />
                         <div className="text-2xl font-bold text-white mb-1">{stats.avgScroll}%</div>
-                        <div className="text-xs text-slate-400 font-medium">Evolução do Scroll</div>
+                        <div className="text-xs text-slate-400 font-medium">Evolução Média do Scroll</div>
                     </div>
 
                     <div className="bg-gradient-to-br from-[#0a0f18] to-slate-900/40 border border-white/5 p-5 rounded-2xl relative overflow-hidden group">
@@ -264,14 +339,91 @@ export default function AdminLeads() {
                     </div>
                 </div>
 
+                {/* GRÁFICOS VISUAIS - NOVA SEÇÃO */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
+                    {/* Gráfico de Linha (Últimos 10 Dias) */}
+                    <div className="bg-[#0a0f18]/80 border border-white/5 rounded-3xl p-5 shadow-2xl backdrop-blur-sm lg:col-span-2">
+                        <h3 className="text-sm font-bold text-white mb-6 flex items-center gap-2">
+                            <BarChart2 className="w-4 h-4 text-emerald-500" /> Volume de Acessos Recentes
+                        </h3>
+                        <div className="h-[250px] w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <AreaChart data={dailyData}>
+                                    <defs>
+                                        <linearGradient id="colorVisitas" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                                            <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                                        </linearGradient>
+                                    </defs>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                                    <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
+                                    <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
+                                    <RechartsTooltip 
+                                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '12px', color: 'white' }}
+                                        itemStyle={{ color: '#10b981', fontWeight: 'bold' }}
+                                    />
+                                    <Area type="monotone" dataKey="Visitas" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorVisitas)" />
+                                </AreaChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+
+                    {/* Gráfico Teia (Radar) de Origem */}
+                    <div className="bg-[#0a0f18]/80 border border-white/5 rounded-3xl p-5 shadow-2xl backdrop-blur-sm">
+                        <h3 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                            <Compass className="w-4 h-4 text-emerald-500" /> Fontes de Tráfego
+                        </h3>
+                        <div className="h-[250px] w-full mt-2">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <RadarChart cx="50%" cy="50%" outerRadius="70%" data={sourceData}>
+                                    <PolarGrid stroke="rgba(255,255,255,0.1)" />
+                                    <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 11, fontWeight: 600 }} />
+                                    <Radar name="Acessos" dataKey="A" stroke="#10b981" fill="#10b981" fillOpacity={0.4} />
+                                    <RechartsTooltip 
+                                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '12px', color: 'white' }}
+                                        itemStyle={{ color: '#10b981', fontWeight: 'bold' }}
+                                    />
+                                </RadarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+
+                    {/* Gráfico de Funil / Barras */}
+                    <div className="bg-[#0a0f18]/80 border border-white/5 rounded-3xl p-5 shadow-2xl backdrop-blur-sm lg:col-span-3">
+                        <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
+                            <Activity className="w-4 h-4 text-emerald-500" /> Funil de Retenção Visual
+                        </h3>
+                        <div className="h-[150px] w-full">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={funnelData} layout="vertical" margin={{ top: 0, right: 30, left: 20, bottom: 0 }}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
+                                    <XAxis type="number" hide />
+                                    <YAxis dataKey="name" type="category" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} width={120} />
+                                    <RechartsTooltip 
+                                        cursor={{fill: 'rgba(255,255,255,0.02)'}}
+                                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '12px', color: 'white' }}
+                                    />
+                                    <Bar dataKey="leads" radius={[0, 8, 8, 0]} barSize={24}>
+                                        {
+                                            funnelData.map((entry, index) => (
+                                                <cell key={`cell-${index}`} fill={entry.fill} />
+                                            ))
+                                        }
+                                    </Bar>
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Tabela Interativa de Leads */}
                 <div className="bg-[#0a0f18]/80 border border-white/5 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-sm">
                     <div className="p-5 border-b border-white/5 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <Compass className="w-5 h-5 text-slate-400" />
-                            <h2 className="text-white font-semibold">Visitantes Recentes</h2>
+                            <Users className="w-5 h-5 text-slate-400" />
+                            <h2 className="text-white font-semibold">Feed de Acessos Recentes</h2>
                         </div>
-                        <span className="text-xs text-slate-500">Últimos 100 acessos, atualiza sozinho 🟢</span>
+                        <span className="text-xs text-slate-500">Listando últimos acessos 🟢</span>
                     </div>
 
                     <div className="divide-y divide-white/5">
@@ -283,7 +435,7 @@ export default function AdminLeads() {
 
                             return (
                                 <div key={lead.id} className="flex flex-col transition-colors hover:bg-white/[0.02]">
-                                    {/* Linha Resumo (Mais limpa e focada no Marketing) */}
+                                    {/* Linha Resumo */}
                                     <div 
                                         onClick={() => toggleExpand(lead.id)}
                                         className="flex flex-col md:flex-row md:items-center justify-between p-4 md:px-6 cursor-pointer gap-4 md:gap-0"
@@ -305,14 +457,8 @@ export default function AdminLeads() {
                                             {/* Mini Badge Visuais da Origem */}
                                             <div className="flex flex-col gap-1.5 min-w-[160px]">
                                                 <div className="flex items-center gap-3">
-                                                    <div className={`px-3 py-1 text-xs font-bold rounded-full ${sourceBadgeStyle}`}>
-                                                        {sourceLabel}
-                                                    </div>
-                                                    {lead.isMobile ? (
-                                                        <Smartphone className="w-4 h-4 text-slate-500" />
-                                                    ) : (
-                                                        <Monitor className="w-4 h-4 text-slate-500" />
-                                                    )}
+                                                    <div className={`px-3 py-1 text-xs font-bold rounded-full ${sourceBadgeStyle}`}>{sourceLabel}</div>
+                                                    {lead.isMobile ? <Smartphone className="w-4 h-4 text-slate-500" /> : <Monitor className="w-4 h-4 text-slate-500" />}
                                                 </div>
                                                 <div className="flex items-center gap-1 text-xs text-slate-400 font-medium truncate max-w-[150px]">
                                                     <MapPin className="w-3 h-3 text-emerald-500/70" /> {lead.location || 'Localizando...'}
@@ -352,7 +498,7 @@ export default function AdminLeads() {
                                         </div>
                                     </div>
 
-                                    {/* Detalhes Marketing (Fácil de entender sem termos difíceis) */}
+                                    {/* Detalhes Marketing (Fácil de entender) */}
                                     <AnimatePresence>
                                         {isExpanded && (
                                             <motion.div
@@ -412,7 +558,6 @@ export default function AdminLeads() {
                                                         
                                                         <div className="bg-[#0a0f18] border border-white/5 rounded-2xl p-6">
                                                             <div className="relative pl-6 border-l-2 border-slate-800 space-y-6">
-                                                                
                                                                 {/* Renderização da Linha do Tempo Refinada */}
                                                                 {lead.journey ? (
                                                                     lead.journey.map((event, i) => {
@@ -435,7 +580,6 @@ export default function AdminLeads() {
                                                                             evtIconColor = 'bg-teal-500';
                                                                             evtRingColor = 'border-[#0a0f18] ring-2 ring-teal-500/30';
                                                                             textCss = 'text-teal-400 font-bold bg-teal-500/10 px-2.5 py-1 rounded inline-block';
-                                                                            
                                                                             if (labelValue.includes('cta-hero')) labelValue = '🔥 Clicou: Botão Verde do Topo';
                                                                             else if (labelValue.includes('cta-checkout')) labelValue = '💳 Clicou: Botão Ir Para Pagamento';
                                                                             else if (labelValue.includes('cta-decisao')) labelValue = '🚀 Clicou: Botão Acelerar Inglês (Rodapé)';
@@ -451,7 +595,6 @@ export default function AdminLeads() {
                                                                         );
                                                                     })
                                                                 ) : (
-                                                                    // Compatibilidade retroativa para leads velhos 
                                                                     <>
                                                                         <div className="relative">
                                                                             <div className="absolute -left-[31px] top-0 w-3.5 h-3.5 bg-emerald-500 rounded-full border-[3px] border-[#0a0f18]"></div>
@@ -467,7 +610,6 @@ export default function AdminLeads() {
                                                                         ))}
                                                                     </>
                                                                 )}
-
                                                                 {/* Evento Final */}
                                                                 <div className="relative pt-2">
                                                                     <div className="absolute -left-[31px] top-2 w-3.5 h-3.5 bg-slate-700/80 rounded-full border-[3px] border-[#0a0f18] animate-pulse"></div>
@@ -476,7 +618,6 @@ export default function AdminLeads() {
                                                                         O Lead desceu até <strong className="text-emerald-400">{lead.maxScrollDepth}% da página</strong> <br/>e prestou atenção durante <strong className="text-emerald-400">{formatTimeDuration(lead.timeOnPageSeconds)}</strong>.
                                                                     </div>
                                                                 </div>
-
                                                             </div>
                                                         </div>
                                                     </div>
