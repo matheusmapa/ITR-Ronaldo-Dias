@@ -5,6 +5,10 @@ import { Activity, Users, MousePointer2, Clock, Smartphone, Monitor, ChevronDown
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AdminLeads() {
+    const [isAuthenticated, setIsAuthenticated] = useState(
+        localStorage.getItem('itr_admin_auth') === 'true'
+    );
+    const [passInput, setPassInput] = useState('');
     const [leads, setLeads] = useState([]);
     const [loading, setLoading] = useState(true);
     const [expandedLead, setExpandedLead] = useState(null);
@@ -107,6 +111,42 @@ export default function AdminLeads() {
         if (s.includes('youtube') || s.includes('yt')) return "YouTube";
         return source || "Orgânico / Direto";
     };
+
+    const handleAuth = (e) => {
+        e.preventDefault();
+        if (passInput === 'SocioITR') {
+            localStorage.setItem('itr_admin_auth', 'true');
+            setIsAuthenticated(true);
+        } else {
+            alert('Acesso Restrito: Código Incorreto.');
+        }
+    };
+
+    if (!isAuthenticated) {
+        return (
+            <div className="min-h-screen bg-[#030308] flex items-center justify-center p-4 font-sans">
+                <div className="bg-gradient-to-br from-[#0a0f18] to-slate-900/40 border border-white/5 p-8 rounded-3xl w-full max-w-sm shadow-2xl backdrop-blur-sm">
+                    <div className="flex justify-center mb-6">
+                        <Activity className="w-12 h-12 text-emerald-500/80" />
+                    </div>
+                    <h2 className="text-white text-xl font-bold mb-2 text-center tracking-tight">Tráfego Inteligente ITR</h2>
+                    <p className="text-slate-500 text-xs text-center mb-8">Digite o código do Sócio para acessar as métricas.</p>
+                    <form onSubmit={handleAuth} className="flex flex-col gap-4">
+                        <input
+                            type="password"
+                            placeholder="*************"
+                            value={passInput}
+                            onChange={(e) => setPassInput(e.target.value)}
+                            className="bg-[#030308]/50 border border-white/10 text-emerald-400 px-4 py-3 rounded-xl focus:outline-none focus:border-emerald-500 w-full text-center tracking-[0.3em] font-mono text-lg transition-colors placeholder:tracking-normal placeholder:font-sans placeholder:text-sm placeholder:text-slate-700"
+                        />
+                        <button type="submit" className="bg-emerald-500 hover:bg-emerald-400 text-[#030308] uppercase tracking-wider text-sm font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-500/20 active:scale-95">
+                            Destrancar Painel
+                        </button>
+                    </form>
+                </div>
+            </div>
+        );
+    }
 
     if (loading) {
         return (
