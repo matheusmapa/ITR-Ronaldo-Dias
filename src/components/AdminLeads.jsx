@@ -330,26 +330,30 @@ export default function AdminLeads() {
                         </p>
                     </div>
                     
-                    <div className="flex flex-wrap items-center gap-2 md:gap-3 print-hide">
-                        <div className="flex items-center bg-slate-800/50 p-1 rounded-xl border border-white/5 mr-2">
+                    <div className="flex flex-col items-end gap-3 print-hide">
+                        {/* Filtros em Pílula na Linha 1 */}
+                        <div className="flex items-center bg-slate-800/50 p-1 rounded-xl border border-white/5">
                             <button onClick={() => setDateFilter('today')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === 'today' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>Hoje</button>
                             <button onClick={() => setDateFilter('7d')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === '7d' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>7 Dias</button>
                             <button onClick={() => setDateFilter('30d')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === '30d' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>30 Dias</button>
                             <button onClick={() => setDateFilter('all')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === 'all' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>Tudo</button>
                         </div>
                         
-                        <button onClick={exportCSV} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-white/5">
-                            <Download className="w-4 h-4" /> CSV
-                        </button>
-                        <button onClick={handlePrintPDF} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-white/5">
-                            <Printer className="w-4 h-4" /> PDF
-                        </button>
-                        <button onClick={clearLeads} className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-red-500/20 ml-2">
-                            <Trash2 className="w-4 h-4" /> Limpar
-                        </button>
-                        <button onClick={handleLogout} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-white/5 ml-2">
-                            <LogOut className="w-4 h-4" /> Sair
-                        </button>
+                        {/* Botões de Ação na Linha 2 */}
+                        <div className="flex flex-wrap items-center justify-end gap-2">
+                            <button onClick={exportCSV} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-white/5">
+                                <Download className="w-4 h-4" /> CSV
+                            </button>
+                            <button onClick={handlePrintPDF} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-white/5">
+                                <Printer className="w-4 h-4" /> PDF
+                            </button>
+                            <button onClick={clearLeads} className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-red-500/20">
+                                <Trash2 className="w-4 h-4" /> Limpar
+                            </button>
+                            <button onClick={handleLogout} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-white/5">
+                                <LogOut className="w-4 h-4" /> Sair
+                            </button>
+                        </div>
                     </div>
                 </div>
 
