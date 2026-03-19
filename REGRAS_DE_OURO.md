@@ -43,6 +43,3 @@ Como a IDE vai bloquear comandos `git`, eu uso `node publish.js -message "sua me
 
 **4. Preservação de Histórico:**
 Nunca use `git push --force`. O histórico é nossa rede de segurança. Se houver bugs complexos durante o processo, pare a autonomia, me apresente o erro mastigado e sugira a causa raiz antes de tentar adivinhar a correção.
- obrigatoriamente rodar o comando de notificação push via ntfy.sh no terminal para avisar o celular do Matheus de que o trabalho está pronto.
-Tópico ntfy: **Metodo_ITR** (verificar se o tópico no app está exatamente assim).
-Nunca esquecer de avisar no final da execução.
