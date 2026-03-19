@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
-import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
+import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
 import { Activity, Users, MousePointer2, Clock, Globe, Smartphone, Monitor, ChevronDown, ChevronUp, Link as LinkIcon, Info, Fingerprint } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -17,50 +17,50 @@ export default function AdminLeads() {
     });
 
     useEffect(() => {
-        const fetchLeads = async () => {
-            try {
-                const q = query(
-                    collection(db, 'lead_interactions'),
-                    orderBy('startTime', 'desc'),
-                    limit(100)
-                );
-                const querySnapshot = await getDocs(q);
-                const fetched = [];
-                let mobileCount = 0;
-                let scrollSum = 0;
-                let timeSum = 0;
-                let clickersCount = 0;
+        const q = query(
+            collection(db, 'lead_interactions'),
+            orderBy('startTime', 'desc'),
+            limit(100)
+        );
 
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    fetched.push({ id: doc.id, ...data });
-                    
-                    if (data.isMobile) mobileCount++;
-                    scrollSum += (data.maxScrollDepth || 0);
-                    timeSum += (data.timeOnPageSeconds || 0);
-                    if (data.clicks && data.clicks.length > 0) clickersCount++;
-                });
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const fetched = [];
+            let mobileCount = 0;
+            let scrollSum = 0;
+            let timeSum = 0;
+            let clickersCount = 0;
 
-                setLeads(fetched);
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                fetched.push({ id: doc.id, ...data });
                 
-                const total = fetched.length;
-                if(total > 0) {
-                    setStats({
-                        total,
-                        mobilePerc: Math.round((mobileCount / total) * 100),
-                        avgScroll: Math.round(scrollSum / total),
-                        avgTime: Math.round(timeSum / total),
-                        clickers: clickersCount
-                    });
-                }
-            } catch (error) {
-                console.error("Error fetching leads:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+                if (data.isMobile) mobileCount++;
+                scrollSum += (data.maxScrollDepth || 0);
+                timeSum += (data.timeOnPageSeconds || 0);
+                if (data.clicks && data.clicks.length > 0) clickersCount++;
+            });
 
-        fetchLeads();
+            setLeads(fetched);
+            
+            const total = fetched.length;
+            if(total > 0) {
+                setStats({
+                    total,
+                    mobilePerc: Math.round((mobileCount / total) * 100),
+                    avgScroll: Math.round(scrollSum / total),
+                    avgTime: Math.round(timeSum / total),
+                    clickers: clickersCount
+                });
+            } else {
+                setStats({ total: 0, mobilePerc: 0, avgScroll: 0, avgTime: 0, clickers: 0 });
+            }
+            setLoading(false);
+        }, (error) => {
+            console.error("Error fetching leads:", error);
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
     }, []);
 
     const formatTimeDuration = (seconds) => {
@@ -107,16 +107,6 @@ export default function AdminLeads() {
                             Acompanhe extaamente de onde os leads vieram, até onde rolaram a página e o que fizeram.
                         </p>
                     </div>
-                    {/* Alerta sobre as Permissões */}
-                    {stats.total === 0 && (
-                        <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-xl flex items-start gap-3 max-w-md">
-                            <Info className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                            <div className="text-sm">
-                                <strong className="text-amber-500 block mb-1">Painel Zerado?</strong>
-                                <span className="text-amber-500/80">Lembre-se de alterar as <strong className="text-amber-400">Regras do Firestore</strong> para permitir a gravação dos rastros (allow write: if true; para a coleção lead_interactions). Explicarei como no chat!</span>
-                            </div>
-                        </div>
-                    )}
                 </div>
 
                 {/* Stats Row */}
