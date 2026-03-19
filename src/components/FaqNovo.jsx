@@ -44,6 +44,7 @@ function FaqItem({ pergunta, isOpen, onClick, index }) {
         >
             <button
                 onClick={onClick}
+                data-track={`faq-${index + 1}`}
                 className="w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left cursor-pointer"
             >
                 <span className="text-white font-semibold text-base md:text-lg leading-snug">{pergunta.q}</span>
