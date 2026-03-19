@@ -28,6 +28,13 @@ export function useLeadAnalytics() {
             return;
         }
 
+        // Bloqueio de Afiliado: Leads que chegam pela rota /acelerar não pertencem ao funil principal.
+        // O rastreio é desativado para não poluir as métricas do Dashboard.
+        if (window.location.pathname.toLowerCase().startsWith('/acelerar')) {
+            console.log("[Analytics] Rota de Afiliado detectada. Rastreador desativado.");
+            return;
+        }
+
         // Only run once per session
         if (!sessionRef.current) {
             sessionRef.current = {
