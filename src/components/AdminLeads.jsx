@@ -607,7 +607,7 @@ export default function AdminLeads() {
                     </div>
 
                     <div className="divide-y divide-white/5">
-                        {leads.map((lead, idx) => {
+                        {processedLeads.map((lead, idx) => {
                             const isExpanded = expandedLead === lead.id;
                             const hasUTM = lead.utm_source || lead.utm_medium || lead.utm_campaign;
                             const sourceLabel = getSourceLabel(lead.utm_source);
@@ -829,7 +829,7 @@ export default function AdminLeads() {
                             );
                         })}
 
-                        {leads.length === 0 && (
+                        {processedLeads.length === 0 && (
                             <div className="p-16 text-center flex flex-col items-center">
                                 <div className="w-20 h-20 bg-emerald-500/5 border border-emerald-500/20 rounded-full flex items-center justify-center mb-5">
                                     <Activity className="w-10 h-10 text-emerald-500/50" />
