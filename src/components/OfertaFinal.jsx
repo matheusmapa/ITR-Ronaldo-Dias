@@ -95,18 +95,14 @@ export default function OfertaFinal({ onInView, paymentUrl }) {
                                 transition={{ duration: 0.5, delay: 0.2, type: "spring", stiffness: 150 }}
                                 whileHover={{ scale: 1.03 }}
                             >
-                                <span className="text-emerald-400/80 text-xl md:text-2xl font-bold mr-2">12x</span>
                                 <span className="text-6xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-300 via-emerald-400 to-teal-500 leading-none tracking-tighter drop-shadow-[0_0_20px_rgba(16,185,129,0.2)] pr-2">
-                                    R$20
+                                    R$67
                                 </span>
-                                <span className="text-emerald-400 text-3xl md:text-4xl font-bold">,81</span>
+                                <span className="text-emerald-400 text-3xl md:text-4xl font-bold">,99</span>
                             </motion.div>
 
                             {/* 3. Badge café + à vista */}
-                            <span className="bg-slate-800/50 px-3 py-1 rounded-full text-slate-300 text-sm mt-3 inline-block">Menos de R$ 0,70 por dia</span>
-                            <p className="text-sm text-[#CCCCCC] mt-2">
-                                ou <span className="text-[#E2E2E2] font-semibold">R$ 179,99</span> à vista
-                            </p>
+                            <span className="bg-slate-800/50 px-3 py-1 rounded-full text-slate-300 text-sm mt-3 inline-block">Menos de R$ 0,20 por dia</span>
                         </div>
 
                         {/* O que está incluído */}

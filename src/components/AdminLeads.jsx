@@ -303,6 +303,19 @@ export default function AdminLeads() {
         }
     };
 
+    const deleteLead = async (id, e) => {
+        if (e) e.stopPropagation();
+        if(window.confirm("Deseja apagar APENAS este lead especificamente? Esta ação não pode ser desfeita.")) {
+            try {
+                await deleteDoc(doc(db, 'lead_interactions', id));
+                if (expandedLead === id) setExpandedLead(null);
+            } catch (err) {
+                console.error("Erro ao apagar lead:", err);
+                alert("Erro ao apagar lead.");
+            }
+        }
+    };
+
     const handleLogout = () => {
         if(window.confirm("Deseja sair do Painel VIP? Seu navegador voltará a ser rastreado pelas métricas como um visitante normal.")) {
             localStorage.removeItem('itr_admin_auth');
@@ -841,6 +854,15 @@ export default function AdminLeads() {
                                                         </div>
                                                     </div>
 
+                                                </div>
+                                                
+                                                <div className="px-6 pb-6 pt-2 border-t border-white/5 flex justify-end">
+                                                    <button 
+                                                        onClick={(e) => deleteLead(lead.id, e)}
+                                                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500/20 hover:text-red-400 text-xs font-semibold transition-colors border border-red-500/20"
+                                                    >
+                                                        <Trash2 className="w-3.5 h-3.5" /> Apagar Lead Específico
+                                                    </button>
                                                 </div>
                                             </motion.div>
                                         )}
