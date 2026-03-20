@@ -151,6 +151,9 @@ export default function AdminLeads() {
                         if(lbl === 'checkout') lbl = 'Botão Oferta';
                         else if(lbl === 'hero') lbl = 'Botão Topo';
                         else if(lbl === 'decisao') lbl = 'Botão Rodapé';
+                        else if(lbl === 'crenca') lbl = 'Botão Crença';
+                        else if(lbl === 'paraquem') lbl = 'Botão Para Quem';
+                        else if(lbl === 'bonus') lbl = 'Botão Bônus';
                         else if(lbl.startsWith('play-depoimento-')) lbl = `Dep. em Vídeo ${lbl.replace('play-depoimento-', '')}`;
                         else if(lbl === 'play-vsl') lbl = 'Ver Vídeo VSL';
                         else if(lbl.startsWith('faq-')) lbl = `Abrir FAQ ${lbl.replace('faq-', '')}`;
@@ -670,6 +673,9 @@ export default function AdminLeads() {
                                                                             if (labelValue.includes('cta-hero')) labelValue = '🔥 Clicou: Botão Verde do Topo';
                                                                             else if (labelValue.includes('cta-checkout')) labelValue = '💳 Clicou: Ir para Pagamento';
                                                                             else if (labelValue.includes('cta-decisao')) labelValue = '🚀 Clicou: Acelerar Inglês (Rodapé)';
+                                                                            else if (labelValue.includes('cta-crenca')) labelValue = '💡 Clicou: Acelerar Inglês (Quebra de Crença)';
+                                                                            else if (labelValue.includes('cta-paraquem')) labelValue = '🎯 Clicou: Acelerar Inglês (Para Quem É)';
+                                                                            else if (labelValue.includes('cta-bonus')) labelValue = '🎁 Clicou: Resgatar Bônus (Final)';
                                                                             else if (labelValue.startsWith('play-depoimento-')) labelValue = `▶️ Assistiu Depoimento: Aluno ${labelValue.split('-').pop()}`;
                                                                             else if (labelValue === 'play-vsl') labelValue = '▶️ Deu Play: Vídeo Principal';
                                                                             else if (labelValue.startsWith('faq-')) labelValue = `📖 Curiosidade: Abriu Perguntas Frequentes (${labelValue.split('-').pop()})`;

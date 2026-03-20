@@ -70,8 +70,10 @@ export default function QuebraDeCrenca() {
                     <div className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent"></div>
 
                     <MagneticButton onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}>
-                        <span className="hidden sm:inline">QUERO ACELERAR MEU INGLÊS AGORA</span>
-                        <span className="sm:hidden">ACELERAR MEU INGLÊS</span>
+                        <div data-track="cta-crenca" className="w-full h-full flex items-center justify-center">
+                            <span className="hidden sm:inline">QUERO ACELERAR MEU INGLÊS AGORA</span>
+                            <span className="sm:hidden">ACELERAR MEU INGLÊS</span>
+                        </div>
                     </MagneticButton>
                 </div>
             </div>

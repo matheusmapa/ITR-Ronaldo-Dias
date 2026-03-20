@@ -79,8 +79,10 @@ export default function ParaQuem() {
                     className="flex justify-center"
                 >
                     <MagneticButton onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}>
-                        <span className="hidden sm:inline">QUERO ACELERAR MEU INGLÊS AGORA</span>
-                        <span className="sm:hidden">ACELERAR MEU INGLÊS</span>
+                        <div data-track="cta-paraquem" className="w-full h-full flex items-center justify-center">
+                            <span className="hidden sm:inline">QUERO ACELERAR MEU INGLÊS AGORA</span>
+                            <span className="sm:hidden">ACELERAR MEU INGLÊS</span>
+                        </div>
                     </MagneticButton>
                 </motion.div>
 

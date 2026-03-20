@@ -147,7 +147,7 @@ export default function BonusExclusivos() {
                         </li>
                     </ul>
 
-                    <div className="bg-gradient-to-r from-emerald-900/40 to-teal-900/40 border border-emerald-500/30 rounded-xl p-8 text-center transform hover:scale-[1.02] transition-transform duration-300 shadow-[0_0_30px_rgba(16,185,129,0.15)] relative overflow-hidden cursor-pointer" onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}>
+                    <div data-track="cta-bonus" className="bg-gradient-to-r from-emerald-900/40 to-teal-900/40 border border-emerald-500/30 rounded-xl p-8 text-center transform hover:scale-[1.02] transition-transform duration-300 shadow-[0_0_30px_rgba(16,185,129,0.15)] relative overflow-hidden cursor-pointer" onClick={() => document.getElementById('oferta')?.scrollIntoView({ behavior: 'smooth' })}>
                         <div className="absolute inset-0 bg-emerald-400/5 animate-pulse"></div>
 
                         {/* Huge Strikethrough Anchor */}
@@ -163,7 +163,7 @@ export default function BonusExclusivos() {
                         </p>
 
                         <div className="mt-4 flex justify-center relative z-10 w-full px-2">
-                            <button className="bg-emerald-500 hover:bg-emerald-400 text-white font-black px-6 md:px-10 py-4 text-base md:text-xl rounded-full transition-colors w-full sm:w-auto shadow-lg shadow-emerald-500/20 flex flex-nowrap items-center justify-center gap-2 md:gap-3">
+                            <button data-track="cta-bonus" className="bg-emerald-500 hover:bg-emerald-400 text-white font-black px-6 md:px-10 py-4 text-base md:text-xl rounded-full transition-colors w-full sm:w-auto shadow-lg shadow-emerald-500/20 flex flex-nowrap items-center justify-center gap-2 md:gap-3">
                                 <span className="whitespace-nowrap">VER OFERTA ESPECIAL</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" className="hidden sm:block md:w-6 md:h-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
                             </button>
