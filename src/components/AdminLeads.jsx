@@ -16,8 +16,9 @@ export default function AdminLeads() {
     const [dateFilter, setDateFilter] = useState('7d'); // 'today', '7d', '30d', 'all'
     const [sourceFilter, setSourceFilter] = useState('all');
     const [campaignFilter, setCampaignFilter] = useState('all');
-    const [mediumFilter, setMediumFilter] = useState('all');
-    const [contentFilter, setContentFilter] = useState('all');
+    const [termFilter, setTermFilter] = useState('all'); // Conjunto (utm_term)
+    const [contentFilter, setContentFilter] = useState('all'); // Anúncio (utm_content)
+    const [mediumFilter, setMediumFilter] = useState('all'); // Posicionamento (utm_medium)
 
     useEffect(() => {
         if(!isAuthenticated) return;
@@ -50,17 +51,20 @@ export default function AdminLeads() {
 
     const availableCampaigns = useMemo(() => {
         const camps = new Set();
-        const mediums = new Set();
+        const terms = new Set();
         const contents = new Set();
+        const mediums = new Set();
         leads.forEach(l => {
             if (l.utm_campaign && l.utm_campaign.trim() !== '') camps.add(l.utm_campaign.trim());
-            if (l.utm_medium && l.utm_medium.trim() !== '') mediums.add(l.utm_medium.trim());
+            if (l.utm_term && l.utm_term.trim() !== '') terms.add(l.utm_term.trim());
             if (l.utm_content && l.utm_content.trim() !== '') contents.add(l.utm_content.trim());
+            if (l.utm_medium && l.utm_medium.trim() !== '') mediums.add(l.utm_medium.trim());
         });
         return {
             campaigns: Array.from(camps).sort(),
-            mediums: Array.from(mediums).sort(),
-            contents: Array.from(contents).sort()
+            terms: Array.from(terms).sort(),
+            contents: Array.from(contents).sort(),
+            mediums: Array.from(mediums).sort()
         };
     }, [leads]);
 
@@ -81,14 +85,17 @@ export default function AdminLeads() {
         if (campaignFilter !== 'all') {
             filtered = filtered.filter(l => l.utm_campaign && l.utm_campaign.trim() === campaignFilter);
         }
-        if (mediumFilter !== 'all') {
-            filtered = filtered.filter(l => l.utm_medium && l.utm_medium.trim() === mediumFilter);
+        if (termFilter !== 'all') {
+            filtered = filtered.filter(l => l.utm_term && l.utm_term.trim() === termFilter);
         }
         if (contentFilter !== 'all') {
             filtered = filtered.filter(l => l.utm_content && l.utm_content.trim() === contentFilter);
         }
+        if (mediumFilter !== 'all') {
+            filtered = filtered.filter(l => l.utm_medium && l.utm_medium.trim() === mediumFilter);
+        }
         return filtered;
-    }, [leads, dateFilter, sourceFilter, campaignFilter, mediumFilter, contentFilter]);
+    }, [leads, dateFilter, sourceFilter, campaignFilter, termFilter, contentFilter, mediumFilter]);
 
     const stats = useMemo(() => {
         let mobileCount = 0;
@@ -408,28 +415,37 @@ export default function AdminLeads() {
                             <select 
                                 value={campaignFilter}
                                 onChange={(e) => setCampaignFilter(e.target.value)}
-                                className="bg-[#05080f] border border-slate-700/50 text-slate-300 text-[11px] font-semibold rounded-lg px-3 py-2 cursor-pointer outline-none hover:border-emerald-500/50 transition-colors max-w-[170px] truncate"
+                                className="bg-[#05080f] border border-emerald-500/20 text-slate-300 text-[11px] font-semibold rounded-lg px-2 py-2 cursor-pointer outline-none hover:border-emerald-500/50 transition-colors max-w-[140px] truncate"
                             >
                                 <option value="all">🎯 Campanha (Tudo)</option>
                                 {availableCampaigns.campaigns.map(c => <option key={c} value={c}>{c}</option>)}
                             </select>
 
                             <select 
-                                value={mediumFilter}
-                                onChange={(e) => setMediumFilter(e.target.value)}
-                                className="bg-[#05080f] border border-slate-700/50 text-slate-300 text-[11px] font-semibold rounded-lg px-3 py-2 cursor-pointer outline-none hover:border-emerald-500/50 transition-colors max-w-[140px] truncate"
+                                value={termFilter}
+                                onChange={(e) => setTermFilter(e.target.value)}
+                                className="bg-[#05080f] border border-blue-500/20 text-slate-300 text-[11px] font-semibold rounded-lg px-2 py-2 cursor-pointer outline-none hover:border-blue-500/50 transition-colors max-w-[125px] truncate"
                             >
-                                <option value="all">📦 Conjunto (Tudo)</option>
-                                {availableCampaigns.mediums.map(m => <option key={m} value={m}>{m}</option>)}
+                                <option value="all">👥 Conjunto (Tudo)</option>
+                                {availableCampaigns.terms.map(t => <option key={t} value={t}>{t}</option>)}
                             </select>
 
                             <select 
                                 value={contentFilter}
                                 onChange={(e) => setContentFilter(e.target.value)}
-                                className="bg-[#05080f] border border-slate-700/50 text-slate-300 text-[11px] font-semibold rounded-lg px-3 py-2 cursor-pointer outline-none hover:border-emerald-500/50 transition-colors max-w-[140px] truncate"
+                                className="bg-[#05080f] border border-purple-500/20 text-slate-300 text-[11px] font-semibold rounded-lg px-2 py-2 cursor-pointer outline-none hover:border-purple-500/50 transition-colors max-w-[125px] truncate"
                             >
                                 <option value="all">📺 Anúncio (Tudo)</option>
                                 {availableCampaigns.contents.map(c => <option key={c} value={c}>{c}</option>)}
+                            </select>
+
+                            <select 
+                                value={mediumFilter}
+                                onChange={(e) => setMediumFilter(e.target.value)}
+                                className="bg-[#05080f] border border-slate-700/50 text-slate-400 text-[11px] font-semibold rounded-lg px-2 py-2 cursor-pointer outline-none hover:border-slate-500/50 transition-colors max-w-[120px] truncate"
+                            >
+                                <option value="all">📱 Posic./Meio (Tudo)</option>
+                                {availableCampaigns.mediums.map(m => <option key={m} value={m}>{m}</option>)}
                             </select>
                         </div>
                         
