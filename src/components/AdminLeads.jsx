@@ -39,19 +39,27 @@ export default function AdminLeads() {
     }, [isAuthenticated]);
 
     const leads = useMemo(() => {
-        const now = new Date();
-        return rawLeads.filter(lead => {
-            if (dateFilter === 'all') return true;
-            const leadDate = new Date(lead.startTime);
-            const diffTime = Math.abs(now - leadDate);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            if (dateFilter === 'today') return diffDays <= 1;
-            if (dateFilter === '7d') return diffDays <= 7;
-            if (dateFilter === '30d') return diffDays <= 30;
-            return true;
-        });
-    }, [rawLeads, dateFilter]);
+        // This `leads` useMemo now just sorts rawLeads, no filtering here.
+        // Filtering will happen in `processedLeads` based on `dateFilter` and `sourceFilter`.
+        return rawLeads.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
+    }, [rawLeads]);
+
+    // Filter Logic
+    const processedLeads = useMemo(() => {
+        let filtered = leads;
+        if (dateFilter !== 'all') {
+            const now = new Date().getTime();
+            const limits = { 'today': 86400000, '7d': 86400000 * 7, '30d': 86400000 * 30 };
+            filtered = filtered.filter(l => (now - new Date(l.startTime).getTime()) < limits[dateFilter]);
+        }
+        if (sourceFilter !== 'all') {
+            filtered = filtered.filter(l => {
+                let src = (l.utm_source || 'orgânico').toLowerCase();
+                return src.includes(sourceFilter);
+            });
+        }
+        return filtered;
+    }, [leads, dateFilter, sourceFilter]);
 
     const stats = useMemo(() => {
         let mobileCount = 0;
@@ -59,7 +67,7 @@ export default function AdminLeads() {
         let timeSum = 0;
         let clickersCount = 0;
 
-        leads.forEach((data) => {
+        processedLeads.forEach((data) => {
             if (data.isMobile) mobileCount++;
             scrollSum += (data.maxScrollDepth || 0);
             timeSum += (data.timeOnPageSeconds || 0);
@@ -69,7 +77,7 @@ export default function AdminLeads() {
             if (hasClickEvent || hasLegacyClick) clickersCount++;
         });
 
-        const total = leads.length;
+        const total = processedLeads.length;
         if(total > 0) {
             return {
                 total,
@@ -80,7 +88,7 @@ export default function AdminLeads() {
             };
         }
         return { total: 0, mobilePerc: 0, avgScroll: 0, avgTime: 0, clickers: 0 };
-    }, [leads]);
+    }, [processedLeads]);
 
     // Data for Line Chart (Traffic Volume)
     const dailyData = useMemo(() => {
@@ -90,17 +98,17 @@ export default function AdminLeads() {
             d.setDate(d.getDate() - i);
             days[d.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'})] = 0;
         }
-        leads.forEach(l => {
+        processedLeads.forEach(l => {
             const d = new Date(l.startTime).toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
             if(days[d] !== undefined) days[d]++;
         });
         return Object.keys(days).map(date => ({ name: date, Visitas: days[date] }));
-    }, [leads]);
+    }, [processedLeads]);
 
     // Data for Radar Chart (Sources)
     const sourceData = useMemo(() => {
         const counts = { Instagram: 0, Facebook: 0, Google: 0, TikTok: 0, YouTube: 0, Orgânico: 0 };
-        leads.forEach(l => {
+        processedLeads.forEach(l => {
             const s = (l.utm_source || '').toLowerCase();
             if (s.includes('instagram') || s.includes('ig')) counts.Instagram++;
             else if (s.includes('facebook') || s.includes('fb')) counts.Facebook++;
@@ -111,12 +119,12 @@ export default function AdminLeads() {
         });
         const max = Math.max(...Object.values(counts), 1);
         return Object.keys(counts).map(key => ({ subject: key, A: counts[key], fullMark: max + (max * 0.2) }));
-    }, [leads]);
+    }, [processedLeads]);
 
     // Data for Section Dropoff Bar Chart
     const sectionData = useMemo(() => {
         const counts = { '1. Início': 0, '2. Problema': 0, '3. Método': 0, '4. Prova Social': 0, '5. Oferta': 0 };
-        leads.forEach(l => {
+        processedLeads.forEach(l => {
             if(l.journey) {
                 l.journey.forEach(e => {
                     if (e.type === 'section_view') {
@@ -136,13 +144,13 @@ export default function AdminLeads() {
             }
         });
         return Object.keys(counts).map(k => ({ name: k, visualizações: counts[k], fill: '#0ea5e9' }));
-    }, [leads]);
+    }, [processedLeads]);
 
     // Data for Click Tracking Bar Chart
     const clickData = useMemo(() => {
         const counts = {};
         let empty = true;
-        leads.forEach(l => {
+        processedLeads.forEach(l => {
             if(l.journey) {
                 l.journey.forEach(e => {
                     if (e.type === 'click') {
@@ -170,7 +178,7 @@ export default function AdminLeads() {
             .map(k => ({ name: k, cliques: counts[k], fill: '#14b8a6' }))
             .sort((a,b) => b.cliques - a.cliques)
             .slice(0, 5);
-    }, [leads]);
+    }, [processedLeads]);
 
     const formatTimeDuration = (seconds) => {
         if (!seconds) return '0s';
@@ -214,7 +222,7 @@ export default function AdminLeads() {
 
     const exportCSV = () => {
         const headers = ["Data", "Hora", "Nome", "Email", "Telefone", "Origem", "Campanha", "Scroll %", "Tempo (s)", "Dispositivo", "Localização", "ID do Lead"];
-        const rows = leads.map(l => [
+        const rows = processedLeads.map(l => [
             formatDate(l.startTime).split(' ')[0],
             formatDate(l.startTime).split(' ')[1],
             l.contact_name || '-',
@@ -247,7 +255,7 @@ export default function AdminLeads() {
     const clearLeads = async () => {
         if(window.confirm(`⚠️ PERIGO EXTREMO: Você está prestes a apagar permanentemente os registros do banco de dados.\n\nDeseja mesmo limpar estes contatos?`)) {
             let i = 0;
-            for(let l of leads) {
+            for(let l of processedLeads) {
                 await deleteDoc(doc(db, 'lead_interactions', l.id));
                 i++;
             }
@@ -338,11 +346,27 @@ export default function AdminLeads() {
                     
                     <div className="flex flex-col items-end gap-3 print-hide">
                         {/* Filtros em Pílula na Linha 1 */}
-                        <div className="flex items-center bg-slate-800/50 p-1 rounded-xl border border-white/5">
+                        <div className="flex flex-wrap items-center gap-2 bg-slate-800/40 p-2 rounded-xl border border-white/5">
+                            <span className="text-slate-400 text-xs font-medium px-2 uppercase tracking-wider hidden sm:inline">PERÍODO</span>
                             <button onClick={() => setDateFilter('today')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === 'today' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>Hoje</button>
                             <button onClick={() => setDateFilter('7d')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === '7d' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>7 Dias</button>
                             <button onClick={() => setDateFilter('30d')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === '30d' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>30 Dias</button>
                             <button onClick={() => setDateFilter('all')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === 'all' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>Tudo</button>
+                            
+                            <div className="w-px h-6 bg-slate-700/50 hidden sm:block mx-1"></div>
+                            <select 
+                                value={sourceFilter}
+                                onChange={(e) => setSourceFilter(e.target.value)}
+                                className="bg-[#05080f] border border-slate-700/50 text-slate-300 text-xs font-semibold rounded-lg px-2 py-1.5 cursor-pointer outline-none hover:border-slate-600 transition-colors"
+                            >
+                                <option value="all">Todas as Origens</option>
+                                <option value="instagram">Instagram</option>
+                                <option value="facebook">Facebook</option>
+                                <option value="tiktok">TikTok</option>
+                                <option value="google">Google</option>
+                                <option value="youtube">YouTube</option>
+                                <option value="orgânico">Orgânico</option>
+                            </select>
                         </div>
                         
                         {/* Botões de Ação na Linha 2 */}
@@ -363,36 +387,46 @@ export default function AdminLeads() {
                     </div>
                 </div>
 
-                {/* Linha de Estatísticas Visuais */}
-                <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 mb-6">
-                    <div className="bg-gradient-to-br from-[#0a0f18] to-slate-900/40 border border-white/5 p-5 rounded-2xl relative overflow-hidden group">
-                        <Users className="w-5 h-5 text-emerald-500 mb-2" />
-                        <div className="text-2xl font-bold text-white mb-1">{stats.total}</div>
-                        <div className="text-xs text-slate-400 font-medium">Acessos no Período</div>
+                {/* Resumo Rápido */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+                    <div className="bg-[#080c15]/80 p-5 rounded-2xl border border-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.02)]">
+                        <h3 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
+                            <Users className="w-4 h-4 text-emerald-400" /> Total Leads
+                        </h3>
+                        <p className="text-3xl font-black text-white">{processedLeads.length}</p>
                     </div>
-                    
-                    <div className="bg-gradient-to-br from-[#0a0f18] to-slate-900/40 border border-white/5 p-5 rounded-2xl relative overflow-hidden group">
-                        <MousePointer2 className="w-5 h-5 text-teal-500 mb-2" />
-                        <div className="text-2xl font-bold text-white mb-1">{stats.clickers} <span className="text-sm font-normal text-slate-500">({stats.total > 0 ? Math.round((stats.clickers/stats.total)*100) : 0}%)</span></div>
-                        <div className="text-xs text-slate-400 font-medium">Clicaram nos Botões Verdes</div>
+                    <div className="bg-[#080c15]/80 p-5 rounded-2xl border border-white/5">
+                        <h3 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-emerald-400" /> Tempo Médio
+                        </h3>
+                        <p className="text-3xl font-black text-white">
+                            {Math.round(processedLeads.reduce((acc, l) => acc + (l.timeOnPageSeconds || 0), 0) / (processedLeads.length || 1))}s
+                        </p>
                     </div>
-
-                    <div className="bg-gradient-to-br from-[#0a0f18] to-slate-900/40 border border-white/5 p-5 rounded-2xl relative overflow-hidden group">
-                        <Activity className="w-5 h-5 text-amber-500 mb-2" />
-                        <div className="text-2xl font-bold text-white mb-1">{stats.avgScroll}%</div>
-                        <div className="text-xs text-slate-400 font-medium">Evolução Média do Scroll</div>
+                    <div className="bg-[#080c15]/80 p-5 rounded-2xl border border-white/5">
+                        <h3 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
+                            <Activity className="w-4 h-4 text-emerald-400" /> Scroll Médio
+                        </h3>
+                        <p className="text-3xl font-black text-white">
+                            {Math.round(processedLeads.reduce((acc, l) => acc + (l.maxScrollDepth || 0), 0) / (processedLeads.length || 1))}%
+                        </p>
                     </div>
-
-                    <div className="bg-gradient-to-br from-[#0a0f18] to-slate-900/40 border border-white/5 p-5 rounded-2xl relative overflow-hidden group">
-                        <Clock className="w-5 h-5 text-blue-500 mb-2" />
-                        <div className="text-2xl font-bold text-white mb-1">{formatTimeDuration(stats.avgTime)}</div>
-                        <div className="text-xs text-slate-400 font-medium">Tempo Médio Lendo</div>
+                    <div className="bg-[#080c15]/80 p-5 rounded-2xl border border-white/5">
+                        <h3 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
+                            <Smartphone className="w-4 h-4 text-emerald-400" /> Mobile
+                        </h3>
+                        <p className="text-3xl font-black text-white">
+                            {processedLeads.length ? Math.round((processedLeads.filter(l => l.isMobile).length / processedLeads.length) * 100) : 0}%
+                        </p>
                     </div>
-
-                    <div className="bg-gradient-to-br from-[#0a0f18] to-slate-900/40 border border-white/5 p-5 rounded-2xl relative overflow-hidden group col-span-2 lg:col-span-1">
-                        <Smartphone className="w-5 h-5 text-purple-500 mb-2" />
-                        <div className="text-2xl font-bold text-white mb-1">{stats.mobilePerc}%</div>
-                        <div className="text-xs text-slate-400 font-medium">Acesso via Celular</div>
+                    <div className="bg-[#0a0f18]/90 p-5 rounded-2xl border border-red-500/20 shadow-[0_0_20px_rgba(239,68,68,0.05)] col-span-2 md:col-span-1 lg:col-span-1">
+                        <h3 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-2">
+                            <AlertCircle className="w-4 h-4 text-red-400" /> Rejeição (Turistas)
+                        </h3>
+                        <p className="text-3xl font-black text-red-400">
+                            {processedLeads.length ? Math.round((processedLeads.filter(l => (l.timeOnPageSeconds || 0) < 10 && (l.maxScrollDepth || 0) < 25).length / processedLeads.length) * 100) : 0}%
+                        </p>
+                        <p className="text-[10px] text-slate-500 mt-1">&lt; 10s &amp; sem rolar a tela</p>
                     </div>
                 </div>
 
@@ -660,6 +694,11 @@ export default function AdminLeads() {
                                                                         if (event.type === 'page_return') {
                                                                             evtIconColor = 'bg-emerald-500/50';
                                                                             textCss = 'text-emerald-500/80 font-medium italic';
+                                                                        }
+                                                                        if (event.type === 'video_progress') {
+                                                                            evtIconColor = 'bg-blue-500';
+                                                                            textCss = 'text-blue-400 font-bold bg-blue-500/10 px-2.5 py-1 rounded inline-block';
+                                                                            labelValue = `⏱️ Retenção VSL: Assistiu ${event.label}`;
                                                                         }
                                                                         if (event.type === 'section_view') {
                                                                             evtIconColor = 'bg-slate-400';

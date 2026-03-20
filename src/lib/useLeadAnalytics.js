@@ -175,7 +175,24 @@ export function useLeadAnalytics() {
 
         document.addEventListener('click', handleClick);
 
-        // 4. Periodic Sync (every 5 seconds)
+        // 4. Listen to Custom Tracking Events (e.g., Video Progress)
+        const handleCustomTrack = (e) => {
+            if (!sessionRef.current || sessionRef.current.isBot) return;
+            const { type, label } = e.detail;
+            
+            const alreadyTracked = sessionRef.current.journey.some(ev => ev.type === type && ev.label === label);
+            if (!alreadyTracked) {
+                sessionRef.current.journey.push({
+                    type,
+                    label,
+                    time: new Date().toISOString()
+                });
+                syncToFirebase();
+            }
+        };
+        window.addEventListener('itr_track', handleCustomTrack);
+
+        // 5. Periodic Sync (every 5 seconds)
         const syncInterval = setInterval(syncToFirebase, 5000);
 
         // 5. Sync and Track Exit on leave
@@ -202,6 +219,7 @@ export function useLeadAnalytics() {
             window.removeEventListener('scroll', handleScroll);
             document.removeEventListener('click', handleClick);
             document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('itr_track', handleCustomTrack);
             observer.disconnect();
             clearInterval(syncInterval);
             syncToFirebase(); // Final sync

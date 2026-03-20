@@ -158,6 +158,20 @@ export default function HeroPlus() {
                                     controls={false}
                                     playsInline={true}
                                     onTimeUpdate={handleTimeUpdate}
+                                    onProgress={({ played }) => {
+                                        const percents = [25, 50, 75, 90];
+                                        percents.forEach(pct => {
+                                            if (played >= pct / 100) {
+                                                const key = `vsl_tracked_${pct}`;
+                                                if (!window[key]) {
+                                                    window[key] = true;
+                                                    window.dispatchEvent(new CustomEvent('itr_track', { 
+                                                        detail: { type: 'video_progress', label: `${pct}%` } 
+                                                    }));
+                                                }
+                                            }
+                                        });
+                                    }}
                                     config={{
                                         youtube: {
                                             playerVars: {
