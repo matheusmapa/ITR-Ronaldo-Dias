@@ -78,8 +78,12 @@ export default function AdminLeads() {
         }
         if (sourceFilter !== 'all') {
             filtered = filtered.filter(l => {
-                let src = (l.utm_source || 'orgânico').toLowerCase();
-                return src.includes(sourceFilter);
+                let s = (l.utm_source || '').toLowerCase();
+                if (sourceFilter === 'instagram') return s.includes('instagram') || s.includes('ig');
+                if (sourceFilter === 'facebook') return s.includes('facebook') || s.includes('fb');
+                if (sourceFilter === 'youtube') return s.includes('youtube') || s.includes('yt');
+                if (sourceFilter === 'orgânico') return !l.utm_source || s.includes('orgânico') || s.includes('direct');
+                return s.includes(sourceFilter);
             });
         }
         if (campaignFilter !== 'all') {
@@ -405,7 +409,7 @@ export default function AdminLeads() {
                                     <option value="tiktok">TikTok</option>
                                     <option value="google">Google</option>
                                     <option value="youtube">YouTube</option>
-                                    <option value="orgânico">Apenas Orgânico</option>
+                                    <option value="orgânico">Orgânico / Direct</option>
                                 </select>
                             </div>
                         </div>
