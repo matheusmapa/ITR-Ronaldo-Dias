@@ -16,6 +16,8 @@ export default function AdminLeads() {
     const [dateFilter, setDateFilter] = useState('7d'); // 'today', '7d', '30d', 'all'
     const [sourceFilter, setSourceFilter] = useState('all');
     const [campaignFilter, setCampaignFilter] = useState('all');
+    const [mediumFilter, setMediumFilter] = useState('all');
+    const [contentFilter, setContentFilter] = useState('all');
 
     useEffect(() => {
         if(!isAuthenticated) return;
@@ -48,12 +50,18 @@ export default function AdminLeads() {
 
     const availableCampaigns = useMemo(() => {
         const camps = new Set();
+        const mediums = new Set();
+        const contents = new Set();
         leads.forEach(l => {
-            if (l.utm_campaign && l.utm_campaign.trim() !== '') {
-                camps.add(l.utm_campaign.trim());
-            }
+            if (l.utm_campaign && l.utm_campaign.trim() !== '') camps.add(l.utm_campaign.trim());
+            if (l.utm_medium && l.utm_medium.trim() !== '') mediums.add(l.utm_medium.trim());
+            if (l.utm_content && l.utm_content.trim() !== '') contents.add(l.utm_content.trim());
         });
-        return Array.from(camps).sort();
+        return {
+            campaigns: Array.from(camps).sort(),
+            mediums: Array.from(mediums).sort(),
+            contents: Array.from(contents).sort()
+        };
     }, [leads]);
 
     // Filter Logic
@@ -73,8 +81,14 @@ export default function AdminLeads() {
         if (campaignFilter !== 'all') {
             filtered = filtered.filter(l => l.utm_campaign && l.utm_campaign.trim() === campaignFilter);
         }
+        if (mediumFilter !== 'all') {
+            filtered = filtered.filter(l => l.utm_medium && l.utm_medium.trim() === mediumFilter);
+        }
+        if (contentFilter !== 'all') {
+            filtered = filtered.filter(l => l.utm_content && l.utm_content.trim() === contentFilter);
+        }
         return filtered;
-    }, [leads, dateFilter, sourceFilter, campaignFilter]);
+    }, [leads, dateFilter, sourceFilter, campaignFilter, mediumFilter, contentFilter]);
 
     const stats = useMemo(() => {
         let mobileCount = 0;
@@ -359,44 +373,68 @@ export default function AdminLeads() {
                         </p>
                     </div>
                     
-                    <div className="flex flex-col items-end gap-3 print-hide">
-                        {/* Filtros em Pílula na Linha 1 */}
-                        <div className="flex flex-wrap items-center gap-2 bg-slate-800/40 p-2 rounded-xl border border-white/5">
-                            <span className="text-slate-400 text-xs font-medium px-2 uppercase tracking-wider hidden sm:inline">PERÍODO</span>
-                            <button onClick={() => setDateFilter('today')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === 'today' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>Hoje</button>
-                            <button onClick={() => setDateFilter('7d')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === '7d' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>7 Dias</button>
-                            <button onClick={() => setDateFilter('30d')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === '30d' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>30 Dias</button>
-                            <button onClick={() => setDateFilter('all')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === 'all' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>Tudo</button>
-                            
-                            <div className="w-px h-6 bg-slate-700/50 hidden sm:block mx-1"></div>
-                            <select 
-                                value={sourceFilter}
-                                onChange={(e) => setSourceFilter(e.target.value)}
-                                className="bg-[#05080f] border border-slate-700/50 text-slate-300 text-xs font-semibold rounded-lg px-2 py-1.5 cursor-pointer outline-none hover:border-slate-600 transition-colors"
-                            >
-                                <option value="all">Todas as Origens</option>
-                                <option value="instagram">Instagram</option>
-                                <option value="facebook">Facebook</option>
-                                <option value="tiktok">TikTok</option>
-                                <option value="google">Google</option>
-                                <option value="youtube">YouTube</option>
-                                <option value="orgânico">Orgânico</option>
-                            </select>
+                    <div className="flex flex-col items-end gap-3 print-hide w-full lg:w-auto">
+                        
+                        {/* Linha 1: Período e Fonte Básica */}
+                        <div className="flex flex-wrap items-center justify-end gap-2 w-full">
+                            <div className="flex items-center gap-1 bg-slate-800/40 p-1.5 rounded-xl border border-white/5">
+                                <span className="text-slate-400 text-[10px] font-bold px-2 uppercase tracking-widest hidden sm:inline">Período</span>
+                                <button onClick={() => setDateFilter('today')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === 'today' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>Hoje</button>
+                                <button onClick={() => setDateFilter('7d')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === '7d' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>7 Dias</button>
+                                <button onClick={() => setDateFilter('30d')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === '30d' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>30 Dias</button>
+                                <button onClick={() => setDateFilter('all')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${dateFilter === 'all' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}>Tudo</button>
+                            </div>
 
+                            <div className="flex items-center bg-slate-800/40 p-1 rounded-xl border border-white/5">
+                                <Filter className="w-3.5 h-3.5 text-slate-400 ml-2 mr-1" />
+                                <select 
+                                    value={sourceFilter}
+                                    onChange={(e) => setSourceFilter(e.target.value)}
+                                    className="bg-transparent border-none text-slate-300 text-xs font-semibold rounded-lg px-2 py-1.5 cursor-pointer outline-none transition-colors"
+                                >
+                                    <option value="all">Origem (Todas)</option>
+                                    <option value="instagram">Instagram</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="tiktok">TikTok</option>
+                                    <option value="google">Google</option>
+                                    <option value="youtube">YouTube</option>
+                                    <option value="orgânico">Apenas Orgânico</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* Linha 2: Filtros UTM Dinâmicos Avançados */}
+                        <div className="flex flex-wrap items-center justify-end gap-2 w-full">
                             <select 
                                 value={campaignFilter}
                                 onChange={(e) => setCampaignFilter(e.target.value)}
-                                className="bg-[#05080f] border border-slate-700/50 text-slate-300 text-xs font-semibold rounded-lg px-2 py-1.5 cursor-pointer outline-none hover:border-slate-600 transition-colors max-w-[150px] truncate"
+                                className="bg-[#05080f] border border-slate-700/50 text-slate-300 text-[11px] font-semibold rounded-lg px-3 py-2 cursor-pointer outline-none hover:border-emerald-500/50 transition-colors max-w-[170px] truncate"
                             >
-                                <option value="all">Todas Campanhas</option>
-                                {availableCampaigns.map(c => (
-                                    <option key={c} value={c}>{c}</option>
-                                ))}
+                                <option value="all">🎯 Campanha (Tudo)</option>
+                                {availableCampaigns.campaigns.map(c => <option key={c} value={c}>{c}</option>)}
+                            </select>
+
+                            <select 
+                                value={mediumFilter}
+                                onChange={(e) => setMediumFilter(e.target.value)}
+                                className="bg-[#05080f] border border-slate-700/50 text-slate-300 text-[11px] font-semibold rounded-lg px-3 py-2 cursor-pointer outline-none hover:border-emerald-500/50 transition-colors max-w-[140px] truncate"
+                            >
+                                <option value="all">📦 Conjunto (Tudo)</option>
+                                {availableCampaigns.mediums.map(m => <option key={m} value={m}>{m}</option>)}
+                            </select>
+
+                            <select 
+                                value={contentFilter}
+                                onChange={(e) => setContentFilter(e.target.value)}
+                                className="bg-[#05080f] border border-slate-700/50 text-slate-300 text-[11px] font-semibold rounded-lg px-3 py-2 cursor-pointer outline-none hover:border-emerald-500/50 transition-colors max-w-[140px] truncate"
+                            >
+                                <option value="all">📺 Anúncio (Tudo)</option>
+                                {availableCampaigns.contents.map(c => <option key={c} value={c}>{c}</option>)}
                             </select>
                         </div>
                         
-                        {/* Botões de Ação na Linha 2 */}
-                        <div className="flex flex-wrap items-center justify-end gap-2">
+                        {/* Linha 3: Botões de Ação */}
+                        <div className="flex flex-wrap items-center justify-end gap-2 mt-1">
                             <button onClick={exportCSV} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl font-medium text-sm transition-colors border border-white/5">
                                 <Download className="w-4 h-4" /> CSV
                             </button>
