@@ -14,6 +14,8 @@ export default function AdminLeads() {
     const [loading, setLoading] = useState(true);
     const [expandedLead, setExpandedLead] = useState(null);
     const [dateFilter, setDateFilter] = useState('7d'); // 'today', '7d', '30d', 'all'
+    const [sourceFilter, setSourceFilter] = useState('all');
+    const [campaignFilter, setCampaignFilter] = useState('all');
 
     useEffect(() => {
         if(!isAuthenticated) return;
@@ -44,6 +46,16 @@ export default function AdminLeads() {
         return rawLeads.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
     }, [rawLeads]);
 
+    const availableCampaigns = useMemo(() => {
+        const camps = new Set();
+        leads.forEach(l => {
+            if (l.utm_campaign && l.utm_campaign.trim() !== '') {
+                camps.add(l.utm_campaign.trim());
+            }
+        });
+        return Array.from(camps).sort();
+    }, [leads]);
+
     // Filter Logic
     const processedLeads = useMemo(() => {
         let filtered = leads;
@@ -58,8 +70,11 @@ export default function AdminLeads() {
                 return src.includes(sourceFilter);
             });
         }
+        if (campaignFilter !== 'all') {
+            filtered = filtered.filter(l => l.utm_campaign && l.utm_campaign.trim() === campaignFilter);
+        }
         return filtered;
-    }, [leads, dateFilter, sourceFilter]);
+    }, [leads, dateFilter, sourceFilter, campaignFilter]);
 
     const stats = useMemo(() => {
         let mobileCount = 0;
@@ -366,6 +381,17 @@ export default function AdminLeads() {
                                 <option value="google">Google</option>
                                 <option value="youtube">YouTube</option>
                                 <option value="orgânico">Orgânico</option>
+                            </select>
+
+                            <select 
+                                value={campaignFilter}
+                                onChange={(e) => setCampaignFilter(e.target.value)}
+                                className="bg-[#05080f] border border-slate-700/50 text-slate-300 text-xs font-semibold rounded-lg px-2 py-1.5 cursor-pointer outline-none hover:border-slate-600 transition-colors max-w-[150px] truncate"
+                            >
+                                <option value="all">Todas Campanhas</option>
+                                {availableCampaigns.map(c => (
+                                    <option key={c} value={c}>{c}</option>
+                                ))}
                             </select>
                         </div>
                         
