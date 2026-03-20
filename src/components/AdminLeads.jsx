@@ -650,6 +650,14 @@ export default function AdminLeads() {
                                                                             evtIconColor = 'bg-emerald-500';
                                                                             textCss = 'text-white font-medium';
                                                                         }
+                                                                        if (event.type === 'page_leave') {
+                                                                            evtIconColor = 'bg-red-500/50';
+                                                                            textCss = 'text-slate-500 font-medium italic';
+                                                                        }
+                                                                        if (event.type === 'page_return') {
+                                                                            evtIconColor = 'bg-emerald-500/50';
+                                                                            textCss = 'text-emerald-500/80 font-medium italic';
+                                                                        }
                                                                         if (event.type === 'section_view') {
                                                                             evtIconColor = 'bg-slate-400';
                                                                             textCss = 'text-slate-400';

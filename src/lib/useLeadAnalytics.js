@@ -152,7 +152,7 @@ export function useLeadAnalytics() {
                     }
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.2 });
 
         setTimeout(() => {
             document.querySelectorAll('[data-section]').forEach(el => observer.observe(el));
@@ -178,9 +178,21 @@ export function useLeadAnalytics() {
         // 4. Periodic Sync (every 5 seconds)
         const syncInterval = setInterval(syncToFirebase, 5000);
 
-        // 5. Sync on leave
+        // 5. Sync and Track Exit on leave
         const handleVisibilityChange = () => {
             if (document.visibilityState === 'hidden') {
+                sessionRef.current.journey.push({
+                    type: 'page_leave',
+                    label: 'Saiu ou Mudou de Aba',
+                    time: new Date().toISOString()
+                });
+                syncToFirebase();
+            } else if (document.visibilityState === 'visible') {
+                sessionRef.current.journey.push({
+                    type: 'page_return',
+                    label: 'Retornou para a Página',
+                    time: new Date().toISOString()
+                });
                 syncToFirebase();
             }
         };
