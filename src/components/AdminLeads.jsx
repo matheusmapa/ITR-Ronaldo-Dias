@@ -220,44 +220,6 @@ export default function AdminLeads() {
             .slice(0, 5);
     }, [processedLeads]);
 
-    // Data for VSL Funnel Bar Chart
-    const vslData = useMemo(() => {
-        const counts = { 'Iniciou (Play)': 0, 'Viu 25%': 0, 'Viu 50%': 0, 'Viu 75%': 0, 'Viu 90%': 0 };
-        processedLeads.forEach(l => {
-            let reached25 = false;
-            let reached50 = false;
-            let reached75 = false;
-            let reached90 = false;
-            let played = false;
-
-            if(l.journey) {
-                l.journey.forEach(e => {
-                    if (e.type === 'click' && (e.label === 'play-vsl' || e.label === 'pause-play-vsl')) played = true;
-                    if (e.type === 'video_progress') {
-                        played = true; // progress implies played
-                        if (e.label === '25%') reached25 = true;
-                        if (e.label === '50%') reached50 = true;
-                        if (e.label === '75%') reached75 = true;
-                        if (e.label === '90%') reached90 = true;
-                    }
-                });
-            }
-            if (played) counts['Iniciou (Play)']++;
-            if (reached25) counts['Viu 25%']++;
-            if (reached50) counts['Viu 50%']++;
-            if (reached75) counts['Viu 75%']++;
-            if (reached90) counts['Viu 90%']++;
-        });
-
-        return [
-            { name: 'Iniciou (Play)', Retenção: counts['Iniciou (Play)'], fill: '#3b82f6' },
-            { name: 'Viu 25%', Retenção: counts['Viu 25%'], fill: '#6366f1' },
-            { name: 'Viu 50%', Retenção: counts['Viu 50%'], fill: '#8b5cf6' },
-            { name: 'Viu 75%', Retenção: counts['Viu 75%'], fill: '#a855f7' },
-            { name: 'Viu 90%', Retenção: counts['Viu 90%'], fill: '#d946ef' }
-        ];
-    }, [processedLeads]);
-
     const formatTimeDuration = (seconds) => {
         if (!seconds) return '0s';
         const m = Math.floor(seconds / 60);
@@ -658,34 +620,6 @@ export default function AdminLeads() {
                                     />
                                     <Bar dataKey="cliques" radius={[0, 8, 8, 0]} barSize={20}>
                                         {clickData.map((entry, index) => (
-                                            <cell key={`cell-${index}`} fill={entry.fill} />
-                                        ))}
-                                    </Bar>
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4 mb-8">
-                    {/* Gráfico de Retenção da VSL */}
-                    <div className="bg-[#0a0f18]/80 border border-emerald-500/10 rounded-3xl p-5 shadow-[0_0_30px_rgba(16,185,129,0.03)] backdrop-blur-sm">
-                        <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                            <Activity className="w-4 h-4 text-purple-400" /> Funil de Visualização da VSL (Timeline)
-                        </h3>
-                        <div className="h-[200px] w-full">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={vslData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                                    <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-                                    <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-                                    <RechartsTooltip 
-                                        cursor={{fill: 'rgba(255,255,255,0.02)'}}
-                                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '12px', color: 'white' }}
-                                        itemStyle={{ color: '#c084fc', fontWeight: 'bold' }}
-                                    />
-                                    <Bar dataKey="Retenção" radius={[8, 8, 0, 0]} maxBarSize={60}>
-                                        {vslData.map((entry, index) => (
                                             <cell key={`cell-${index}`} fill={entry.fill} />
                                         ))}
                                     </Bar>

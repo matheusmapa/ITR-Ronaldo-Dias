@@ -28,20 +28,36 @@ export default function HeroPlus() {
     const handleInteract = () => {
         setHasInteracted(true);
         setIsPlaying(true);
+        // Restart the video from the beginning when the user unmutes
+        // ReactPlayer v3 uses youtube-video-element which has HTMLMediaElement API
         const el = playerRef.current;
-        if (el && typeof el.seekTo === 'function') {
-            el.seekTo(0);
+        if (el) {
+            el.play();
         }
-        // Manual tracking because of overlay unmount/stopPropagation
         window.dispatchEvent(new CustomEvent('itr_track', { detail: { type: 'click', label: 'play-vsl' } }));
     };
 
     const handlePlayPause = (e) => {
         e.stopPropagation();
-        setIsPlaying(!isPlaying);
-        
-        // Manual tracking because of stopPropagation
-        window.dispatchEvent(new CustomEvent('itr_track', { detail: { type: 'click', label: 'pause-play-vsl' } }));
+        const el = playerRef.current;
+        if (el) {
+            if (el.paused) {
+                el.play();
+                setIsPlaying(true);
+            } else {
+                el.pause();
+                setIsPlaying(false);
+            }
+        }
+    };
+
+    // Track progress using native HTMLMediaElement timeupdate event
+    const handleTimeUpdate = () => {
+        const el = playerRef.current;
+        if (el && el.duration) {
+            setPlayed(el.currentTime / el.duration);
+            if (!videoReady) setVideoReady(true);
+        }
     };
 
     // Calculate non-linear progress for the visual bar.
@@ -136,27 +152,11 @@ export default function HeroPlus() {
                                     src="https://youtu.be/lh7JU6qSqEQ?si=FBBjLEx1GacJ_ALF"
                                     width="100%"
                                     height="100%"
-                                    playing={isPlaying}
+                                    autoPlay={true}
                                     muted={!hasInteracted}
                                     controls={false}
-                                    playsinline={true}
-                                    onReady={() => setVideoReady(true)}
-                                    onProgress={(progress) => {
-                                        const currentPlayed = progress.played || 0;
-                                        setPlayed(currentPlayed);
-                                        const percents = [25, 50, 75, 90];
-                                        percents.forEach(pct => {
-                                            if (currentPlayed >= pct / 100) {
-                                                const key = `vsl_tracked_${pct}`;
-                                                if (!window[key]) {
-                                                    window[key] = true;
-                                                    window.dispatchEvent(new CustomEvent('itr_track', { 
-                                                        detail: { type: 'video_progress', label: `${pct}%` } 
-                                                    }));
-                                                }
-                                            }
-                                        });
-                                    }}
+                                    playsInline={true}
+                                    onTimeUpdate={handleTimeUpdate}
                                     config={{
                                         youtube: {
                                             playerVars: {
@@ -200,7 +200,6 @@ export default function HeroPlus() {
                                 <div
                                     className="absolute inset-0 z-10 w-full h-full cursor-pointer"
                                     onClick={handlePlayPause}
-                                    data-track="pause-play-vsl"
                                 />
                             )}
 
@@ -212,7 +211,6 @@ export default function HeroPlus() {
                                         exit={{ opacity: 0 }}
                                         className="absolute inset-0 bg-black/40 hover:bg-black/50 transition-colors flex items-center justify-center cursor-pointer z-30"
                                         onClick={handleInteract}
-                                        data-track="play-vsl"
                                     >
                                         <div className="flex flex-col items-center gap-3">
                                             <div className="w-16 h-16 rounded-full bg-emerald-500/90 text-white flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.5)] animate-pulse">
