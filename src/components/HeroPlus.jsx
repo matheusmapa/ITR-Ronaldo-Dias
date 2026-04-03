@@ -144,13 +144,13 @@ export default function HeroPlus() {
                         className="flex flex-col items-start gap-4 md:gap-6 w-full md:w-auto"
                     >
                         {/* Video Player Area */}
-                        <div id="hero-video-container" className="hidden w-full max-w-xl aspect-video relative rounded-2xl overflow-hidden border border-slate-700 bg-black group z-20 shadow-[0_0_50px_-12px_rgba(52,211,153,0.3)]">
+                        <div id="hero-video-container" className="w-full max-w-xl aspect-video relative rounded-2xl overflow-hidden border border-slate-700 bg-black group z-20 shadow-[0_0_50px_-12px_rgba(52,211,153,0.3)]">
 
                             {/* Video wrapper: Slight overscale to hide YouTube's black edge artifact */}
                             <div className="absolute inset-0 z-0 bg-black scale-[1.02]">
                                 <ReactPlayer
                                     ref={playerRef}
-                                    src="https://www.youtube.com/watch?v=b0l5aMp5fHc"
+                                    src="https://youtu.be/lh7JU6qSqEQ?si=FBBjLEx1GacJ_ALF"
                                     width="100%"
                                     height="100%"
                                     autoPlay={true}
