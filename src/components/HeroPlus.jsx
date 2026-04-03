@@ -215,6 +215,7 @@ export default function HeroPlus() {
                                 <div
                                     className="absolute inset-0 z-10 w-full h-full cursor-pointer"
                                     onClick={handlePlayPause}
+                                    data-track="pause-play-vsl"
                                 />
                             )}
 
@@ -226,6 +227,7 @@ export default function HeroPlus() {
                                         exit={{ opacity: 0 }}
                                         className="absolute inset-0 bg-black/40 hover:bg-black/50 transition-colors flex items-center justify-center cursor-pointer z-30"
                                         onClick={handleInteract}
+                                        data-track="play-vsl"
                                     >
                                         <div className="flex flex-col items-center gap-3">
                                             <div className="w-16 h-16 rounded-full bg-emerald-500/90 text-white flex items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.5)] animate-pulse">
