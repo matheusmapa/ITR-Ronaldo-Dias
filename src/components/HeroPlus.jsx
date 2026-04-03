@@ -36,6 +36,8 @@ export default function HeroPlus() {
             el.muted = false;
             el.play();
         }
+        // Manual tracking because of overlay unmount/stopPropagation
+        window.dispatchEvent(new CustomEvent('itr_track', { detail: { type: 'click', label: 'play-vsl' } }));
     };
 
     const handlePlayPause = (e) => {
@@ -50,6 +52,9 @@ export default function HeroPlus() {
                 setIsPlaying(false);
             }
         }
+        
+        // Manual tracking because of stopPropagation
+        window.dispatchEvent(new CustomEvent('itr_track', { detail: { type: 'click', label: 'pause-play-vsl' } }));
     };
 
     // Track progress using native HTMLMediaElement timeupdate event
